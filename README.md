@@ -1,6 +1,6 @@
 # shadowbot-skill
 
-影刀 RPA (ShadowBot) 技能集，用于 Hermes Agent。包含 4 个技能：
+影刀 RPA (ShadowBot) 技能集，用于 AI Agent。包含 4 个技能：
 
 | 技能 | 用途 |
 |------|------|
@@ -13,4 +13,4 @@
 
 ## 使用方式
 
-将本仓库内容放入 Hermes 的 skills 目录（如 `~/AppData/Local/hermes/skills/shadowbot/`）即可被 Hermes 加载。
+将本仓库内容放入skills 目录
