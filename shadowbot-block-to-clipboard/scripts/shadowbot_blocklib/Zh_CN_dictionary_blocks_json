@@ -1,0 +1,239 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "dictionary.create",
+      "function": "xbot_visual.dictionary.create",
+      "title": "新建字典",
+      "description": "新建空的字典",
+      "comment": "新建字典，将字典对象保存到%dict_instance%",
+      "icon": "Dictionary_Create",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/字典操作/新建字典.html",
+      "outputs": [
+        {
+          "id": "dict_instance",
+          "label": "保存字典对象至",
+          "variableLabel": " 新建的字典对象",
+          "tips": "输入一个名字,用来保存新建的字典",
+          "type": "dict",
+          "name": "dict_instance"
+        }
+      ]
+    },
+    {
+      "name": "dictionary.set",
+      "function": "xbot_visual.dictionary.set",
+      "title": "设置键值对",
+      "keywords": "字典",
+      "description": "这个指令用于在字典中设置一对键值，若键名已存在则修改值",
+      "comment": "在字典%dict%中设置新的键值对（%key%，%value%）",
+      "icon": "Dictionary_Set",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/字典操作/设置键值对.html",
+      "inputs": [
+        {
+          "name": "dict",
+          "label": "字典",
+          "required": true,
+          "tips": "输入字典变量",
+          "type": "dict",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "key",
+          "label": "键名",
+          "required": true,
+          "tips": "输入键名",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "value",
+          "label": "值",
+          "required": true,
+          "tips": "输入键值",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dictionary.get_value",
+      "function": "xbot_visual.dictionary.get_value",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Dictionary.GetValueControl, ShadowBot.Shell.Development",
+      "title": "获取键值",
+      "keywords": "字典",
+      "description": "这个指令用于在字典中获取键值",
+      "comment": "在字典%dict%中获取%key%键的值，将结果保存到%value_instance%",
+      "icon": "Dictionary_Get_Value",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/字典操作/获取键值.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Dictionary.GetValueHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "dict",
+          "label": "字典",
+          "required": true,
+          "tips": "输入字典变量",
+          "type": "dict",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "key",
+          "label": "键名",
+          "required": true,
+          "tips": "输入键名",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "key_not_exist_process_way",
+          "label": "键不存在时",
+          "required": true,
+          "default": "10:raise_error",
+          "defaultDisplay": "报错",
+          "tips": "当输入的键不存在时，选择一种处理方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "报错",
+                "value": "raise_error"
+              },
+              {
+                "display": "返回默认值",
+                "value": "return_default_value"
+              }
+            ]
+          }
+        },
+        {
+          "name": "default_value",
+          "label": "默认值",
+          "required": false,
+          "tips": "输入默认键值",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "value_instance",
+          "label": "保存键值至",
+          "variableLabel": "字典的键值",
+          "tips": "输入一个名字,用来保存查找到的键值",
+          "type": "any",
+          "name": "value_instance"
+        }
+      ]
+    },
+    {
+      "name": "dictionary.get_keys",
+      "function": "xbot_visual.dictionary.get_keys",
+      "title": "获取字典键名列表",
+      "description": "这个指令用于在字典中获取键名列表",
+      "comment": "在字典%dict%中获取键名列表，将结果保存到%key_list%",
+      "icon": "Dictionary_Get_Keys",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/字典操作/获取字典键名列表.html",
+      "inputs": [
+        {
+          "name": "dict",
+          "label": "字典",
+          "required": true,
+          "tips": "输入字典变量",
+          "type": "dict",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "key_list",
+          "label": "保存键名列表至",
+          "variableLabel": "字典键名列表",
+          "tips": "输入一个名字,用来保存查找到的键名列表",
+          "type": "list<any>",
+          "name": "key_list"
+        }
+      ]
+    },
+    {
+      "name": "dictionary.get_values",
+      "function": "xbot_visual.dictionary.get_values",
+      "title": "获取字典值列表",
+      "description": "这个指令用于在字典中获取值列表",
+      "comment": "在字典%dict%中获取值列表，将结果保存到%value_list%",
+      "icon": "Dictionary_Get_Values",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/字典操作/获取字典值列表.html",
+      "inputs": [
+        {
+          "name": "dict",
+          "label": "字典",
+          "required": true,
+          "tips": "输入字典变量",
+          "type": "dict",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "value_list",
+          "label": "保存值列表至",
+          "variableLabel": "字典键值列表",
+          "tips": "输入一个名字,用来保存查找到的值列表",
+          "type": "list<any>",
+          "name": "value_list"
+        }
+      ]
+    },
+    {
+      "name": "dictionary.pop",
+      "function": "xbot_visual.dictionary.pop",
+      "title": "删除字典键值对",
+      "description": "这个指令用于在字典中删除键值对",
+      "comment": "在字典%dict%中删除键名为%key%的键值对",
+      "icon": "Dictionary_Pop",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/字典操作/删除字典键值对.html",
+      "inputs": [
+        {
+          "name": "dict",
+          "label": "字典",
+          "required": true,
+          "tips": "输入字典变量",
+          "type": "dict",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "key",
+          "label": "待删除的键名",
+          "required": true,
+          "tips": "输入待删除的键名",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,687 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "pdf.extract_text",
+      "function": "xbot_visual.pdf.extract_text",
+      "title": "PDF提取文本",
+      "description": "这个指令用于从PDF文件中提取文本",
+      "comment": "从%path%文件中提取%page_scope%的文本，将结果保存到%text%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Pdf.ExtractTextControl, ShadowBot.Shell.Development",
+      "icon": "Pdf_Extract_Text",
+      "helpUrl": "language/zh-cn/指令文档/其他/pdf文件/提取文本.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Pdf.ExtractTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "请输入PDF文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "PDF文件 (.pdf)|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "page_scope",
+          "label": "提取范围",
+          "required": true,
+          "default": "10:all",
+          "defaultDisplay": "全部",
+          "tips": "选择提取页码范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all"
+              },
+              {
+                "display": "单页",
+                "value": "single"
+              },
+              {
+                "display": "部分",
+                "value": "part"
+              }
+            ]
+          }
+        },
+        {
+          "name": "page",
+          "label": "页码",
+          "required": false,
+          "tips": "请输入待提取的单页页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "from_page",
+          "label": "起始页码",
+          "required": false,
+          "tips": "请输入待提取的起始页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "to_page",
+          "label": "终止页码",
+          "required": false,
+          "tips": "请输入待提取的终止页码, 输入-1表示最后一页",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_password",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "打开文件是否需要输入密码",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用密码",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "请输入文件密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text",
+          "label": "保存文本至",
+          "variableLabel": "PDF中提取的文本",
+          "tips": "请输入一个名字,用来保存文本",
+          "type": "str",
+          "name": "text"
+        }
+      ]
+    },
+    {
+      "name": "pdf.extract_images",
+      "function": "xbot_visual.pdf.extract_images",
+      "title": "PDF提取图片",
+      "description": "这个指令用于从PDF文件中提取图片",
+      "comment": "从%path%文件中提取%page_scope%的图片，并以%image_name%为名称前缀保存到%save_to_dir%目录下，将图片路径保存到%image_paths%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Pdf.ExtractImageControl, ShadowBot.Shell.Development",
+      "icon": "Pdf_Extract_Images",
+      "helpUrl": "language/zh-cn/指令文档/其他/pdf文件/提取图片.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Pdf.ExtractImageHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "请输入PDF文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "PDF文件 (.pdf)|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "page_scope",
+          "label": "提取范围",
+          "required": true,
+          "default": "10:all",
+          "defaultDisplay": "全部",
+          "tips": "选择提取页码范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all"
+              },
+              {
+                "display": "单页",
+                "value": "single"
+              },
+              {
+                "display": "部分",
+                "value": "part"
+              }
+            ]
+          }
+        },
+        {
+          "name": "page",
+          "label": "页码",
+          "required": false,
+          "tips": "请输入待提取的单页页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "from_page",
+          "label": "起始页码",
+          "required": false,
+          "tips": "请输入待提取的起始页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "to_page",
+          "label": "终止页码",
+          "required": false,
+          "tips": "请输入待提取的终止页码, 输入-1表示最后一页",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "name_prefix",
+          "label": "图片名称前缀",
+          "required": true,
+          "tips": "请输入图片名称前缀",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_to_dir",
+          "label": "保存图片至",
+          "required": true,
+          "tips": "请输入保存图片的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "use_password",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "打开文件是否需要输入密码",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用密码",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "请输入文件密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "image_paths",
+          "label": "保存图片路径列表至",
+          "variableLabel": "PDF中提取的图片路径列表",
+          "tips": "请输入一个名字,用来保存图片路径列表至",
+          "type": "list<str>",
+          "name": "image_paths"
+        }
+      ]
+    },
+    {
+      "name": "pdf.extract_pages",
+      "function": "xbot_visual.pdf.extract_pages",
+      "title": "导出新PDF文档",
+      "description": "这个指令用于从当前PDF文件中导出新的PDF文档",
+      "comment": "从文件%path%中导出部分页，将内容保存到新文件%file_path%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Pdf.ExtractPdfControl, ShadowBot.Shell.Development",
+      "icon": "Pdf_Extract_Pages",
+      "helpUrl": "language/zh-cn/指令文档/其他/pdf文件/导出新的pdf文件.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Pdf.ExtractPdfHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "原始文件路径",
+          "required": true,
+          "tips": "请输入原始文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "PDF文件 (.pdf)|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "page_scope",
+          "label": "提取范围",
+          "required": true,
+          "default": "10:single",
+          "defaultDisplay": "单页",
+          "tips": "选择提取页码范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单页",
+                "value": "single"
+              },
+              {
+                "display": "部分",
+                "value": "part"
+              }
+            ]
+          }
+        },
+        {
+          "name": "page",
+          "label": "页码",
+          "required": false,
+          "tips": "请输入待导出的单页页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "from_page",
+          "label": "起始页码",
+          "required": false,
+          "tips": "请输入待导出的起始页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "to_page",
+          "label": "终止页码",
+          "required": false,
+          "tips": "请输入待导出的终止页码, 输入-1表示最后一页",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_to",
+          "label": "新文件保存到",
+          "required": true,
+          "tips": "请输入新文件保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "PDF 文件|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "save_way",
+          "label": "如果文件存在",
+          "required": true,
+          "default": "10:add_sequential_suffix",
+          "defaultDisplay": "文件名称末尾添加序号",
+          "tips": "请选择若文件已经存在时，文件保存方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "终止导出新文件",
+                "value": "stop_extract_if_exist"
+              },
+              {
+                "display": "文件名称末尾添加序号",
+                "value": "add_sequential_suffix"
+              }
+            ]
+          }
+        },
+        {
+          "name": "use_password",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "打开文件是否需要输入密码",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用密码",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "请输入文件密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_path",
+          "label": "保存新文件路径至",
+          "variableLabel": "导出的PDF文件路径",
+          "tips": "请输入一个名字,用来保存新文件路径",
+          "type": "str",
+          "name": "file_path"
+        }
+      ]
+    },
+    {
+      "name": "pdf.merge_pdfs",
+      "function": "xbot_visual.pdf.merge_pdfs",
+      "title": "合并PDF文档",
+      "description": "这个指令用于合并PDF文档，并保存到指定的新文档",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Pdf.MergePdfControl, ShadowBot.Shell.Development",
+      "comment": "合并%paths%这些文件，将结果保存到%save_to%",
+      "icon": "Pdf_Merge_Pdfs",
+      "helpUrl": "language/zh-cn/指令文档/其他/pdf文件/合并pdf文档.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Pdf.MergePdfHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "paths",
+          "label": "待合并的文件列表",
+          "required": true,
+          "tips": "可同时选择多个文件。或切换到Python模式下，输入列表变量，比如： ['文件1路径','文件2路径']",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFiles",
+              "filter": "PDF文件 (.pdf)|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "save_to",
+          "label": "合并后保存至",
+          "required": true,
+          "tips": "请输入合并后的文件保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "PDF 文件|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "save_way",
+          "label": "如果文件存在",
+          "required": true,
+          "default": "10:add_sequential_suffix",
+          "defaultDisplay": "文件名称末尾添加序号",
+          "tips": "请选择若文件已经存在时，文件保存方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "终止合并",
+                "value": "stop_extract_if_exist"
+              },
+              {
+                "display": "文件名称末尾添加序号",
+                "value": "add_sequential_suffix"
+              }
+            ]
+          }
+        },
+        {
+          "name": "use_password",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "打开文件是否需要输入密码",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用密码",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "passwords",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "请输入文件密码，文件密码和文件路径一一对应",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "delimiter",
+          "label": "分割符",
+          "required": false,
+          "category": "advanced",
+          "tips": "请输入密码分割符",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_path",
+          "label": "保存合并的路径至",
+          "variableLabel": "合并后的PDF文件路径",
+          "tips": "请输入一个名字,用来保存新文件路径",
+          "type": "str",
+          "name": "file_path"
+        }
+      ]
+    },
+    {
+      "name": "pdf.save_pages_to_images",
+      "function": "xbot_visual.pdf.save_pages_to_images",
+      "title": "将PDF指定页另存为图片",
+      "description": "这个指令用于将指定页另存为图片",
+      "comment": "将文件%path%的指定页另存为图片，并以%name_prefix%为名称前缀保存到目录%save_to_dir%中，将图片保存路径保存到%page_image_paths%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Pdf.SavePagesToImageControl, ShadowBot.Shell.Development",
+      "icon": "Pdf_Save_Pages_To_Images",
+      "helpUrl": "language/zh-cn/指令文档/其他/pdf文件/将指定页另存为图片.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Pdf.SavePagesToImagesHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "请输入PDF文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "PDF文件 (.pdf)|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "page_scope",
+          "label": "提取范围",
+          "required": true,
+          "default": "10:all",
+          "defaultDisplay": "全部",
+          "tips": "选择提取页码范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all"
+              },
+              {
+                "display": "单页",
+                "value": "single"
+              },
+              {
+                "display": "部分",
+                "value": "part"
+              }
+            ]
+          }
+        },
+        {
+          "name": "page",
+          "label": "页码",
+          "required": false,
+          "tips": "请输入待提取的单页页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "from_page",
+          "label": "起始页码",
+          "required": false,
+          "tips": "请输入待提取的起始页码",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "to_page",
+          "label": "终止页码",
+          "required": false,
+          "tips": "请输入待提取的终止页码, 输入-1表示最后一页",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "name_prefix",
+          "label": "图片名称前缀",
+          "required": true,
+          "tips": "请输入图片名称前缀",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_to_dir",
+          "label": "保存图片至",
+          "required": true,
+          "tips": "请输入保存图片的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "use_password",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "打开文件是否需要输入密码",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用密码",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "请输入文件密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "page_image_paths",
+          "label": "保存图片路径列表至",
+          "variableLabel": "PDF中另存为的图片路径列表",
+          "tips": "请输入一个名字,用来保存图片路径列表至",
+          "type": "list<str>",
+          "name": "page_image_paths"
+        }
+      ]
+    }
+  ]
+}

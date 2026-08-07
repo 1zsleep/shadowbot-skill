@@ -1,0 +1,101 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "base64.encode",
+      "function": "xbot_visual.base64.encode",
+      "title": "Base64编码",
+      "description": "Base64编码",
+      "comment": "Base64编码%source%，将编码结果保存到%base64_encode_result%",
+      "icon": "Base64_Encode",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/base64编解码/base64编码.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Base64.EncodeHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "source",
+          "label": "内容",
+          "required": true,
+          "tips": "输入待编码的内容",
+          "type": "any",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "output_string",
+          "label": "",
+          "required": true,
+          "tips": "输出字符串",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "输出字符串",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "base64_encode_result",
+          "label": "保存编码结果至",
+          "variableLabel": "Base64编码结果",
+          "tips": "输入一个名字，用来保存Base64编码结果",
+          "type": "any",
+          "name": "base64_encode_result"
+        }
+      ]
+    },
+    {
+      "name": "base64.decode",
+      "function": "xbot_visual.base64.decode",
+      "title": "Base64解码",
+      "description": "Base64解码",
+      "comment": "Base64解码%source%，将解码结果保存到%base64_decode_result%",
+      "icon": "Base64_Decode",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/base64编解码/base64解码.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Base64.DecodeHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "source",
+          "label": "待解码内容",
+          "required": true,
+          "tips": "输入待解码的内容",
+          "type": "any",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "output_string",
+          "label": "",
+          "required": true,
+          "tips": "输出字符串",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "输出字符串",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "base64_decode_result",
+          "label": "保存解码结果至",
+          "variableLabel": "base64解码结果",
+          "tips": "输入一个名字，用来保存base64解码结果",
+          "type": "any",
+          "name": "base64_decode_result"
+        }
+      ]
+    }
+  ]
+}

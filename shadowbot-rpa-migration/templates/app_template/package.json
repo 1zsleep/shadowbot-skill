@@ -1,0 +1,51 @@
+{
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "name": "应用模板",
+  "icon": null,
+  "version": "1",
+  "tags": null,
+  "software": null,
+  "software_title": null,
+  "package_version": 2,
+  "feature_list": [
+    2
+  ],
+  "description": null,
+  "instruction": "",
+  "use_latest_pip": false,
+  "videoName": "",
+  "startup": "main",
+  "robot_type": "app",
+  "activity_code": null,
+  "flows": [
+    {
+      "name": "main",
+      "filename": "main",
+      "kind": "Visual",
+      "opened": false,
+      "groupName": null,
+      "enableCopilot": false
+    }
+  ],
+  "flow_groups": [],
+  "variables": [],
+  "external_dependencies": [],
+  "internaldependencies": [],
+  "selectordependencies": [],
+  "internalautodependencies": [],
+  "ipaasDependencies": [],
+  "databook_columns": [],
+  "authority": "use",
+  "internalautoupgrade": false,
+  "isbrief": false,
+  "uia_type": "PC",
+  "persist_databook": false,
+  "encrypt_bot": false,
+  "customItems": {
+    "gifUrl": null,
+    "videoUrl": "",
+    "imageUrl": "",
+    "imageName": ""
+  },
+  "terminalTags": null
+}

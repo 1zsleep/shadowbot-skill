@@ -1,0 +1,150 @@
+[
+  {
+    "name": "any",
+    "localName": "任意类型",
+    "group_order": "6"
+  },
+  {
+    "name": "int",
+    "localName": "整数",
+    "pythonName": "int",
+    "group": "Common",
+    "group_order": "2",
+    "methods": [
+      {
+        "display": "转字符串",
+        "function": "str($0)",
+        "type": "str"
+      }
+    ]
+  },
+  {
+    "name": "float",
+    "localName": "小数",
+    "pythonName": "float",
+    "group_order": "7",
+    "methods": [
+      {
+        "display": "转字符串",
+        "function": "str($0)",
+        "type": "str"
+      },
+      {
+        "display": "取整数部分",
+        "function": "int($0)",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "name": "bool",
+    "localName": "布尔值",
+    "pythonName": "bool",
+    "group": "Common",
+    "group_order": "3"
+  },
+  {
+    "name": "str",
+    "localName": "字符串",
+    "pythonName": "str",
+    "group": "Common",
+    "group_order": "1",
+    "methods": [
+      {
+        "display": "删除两端空格",
+        "function": "$0.strip()",
+        "type": "str"
+      },
+      {
+        "display": "转数字(整数)",
+        "function": "int($0)",
+        "type": "int"
+      },
+      {
+        "display": "转数字(小数)",
+        "function": "float($0)",
+        "type": "float"
+      }
+    ]
+  },
+  {
+    "name": "list",
+    "localName": "列表",
+    "pythonName": "list,set,tuple",
+    "group": "Common",
+    "group_order": "4",
+    "methods": [
+      {
+        "display": "列表第$1项",
+        "function": "$0[--$1]",
+        "type": "any",
+        "params": [
+          {
+            "name": "$1",
+            "default": "1"
+          }
+        ],
+        "editor": "spin"
+      },
+      {
+        "display": "列表倒数第$1项",
+        "function": "$0[-$1]",
+        "type": "any",
+        "params": [
+          {
+            "name": "$1",
+            "default": "1"
+          }
+        ],
+        "editor": "spin"
+      },
+      {
+        "display": "列表长度",
+        "function": "len($0)",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "name": "dict",
+    "localName": "字典",
+    "group": "Common",
+    "pythonName": "dict",
+    "group_order": "5"
+  },
+  {
+    "name": "file",
+    "localName": "文件路径",
+    "pythonName": "str",
+    "scope": "appMainFlowParameter"
+  },
+  {
+    "name": "directory",
+    "localName": "文件夹路径",
+    "pythonName": "str",
+    "scope": "appMainFlowParameter"
+  },
+  {
+    "name": "password",
+    "localName": "密码",
+    "pythonName": "str",
+    "scope": "appMainFlowParameter"
+  },
+  {
+    "name": "bytes",
+    "localName": "二进制数据",
+    "pythonName": "bytes",
+    "methods": [
+      {
+        "display": "转字符串",
+        "function": "str($0)",
+        "type": "str"
+      }
+    ]
+  },
+  {
+    "name": "datetime",
+    "localName": "日期时间",
+    "pythonName": "datetime.datetime"
+  }
+]

@@ -1,0 +1,83 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "clipboard.get_text",
+      "function": "xbot_visual.win32.clipboard_get_text",
+      "title": "获取剪切板文本",
+      "keywords": "剪贴板",
+      "description": "这个指令用来获取剪切板文本内容",
+      "comment": "获取剪切板中的文本内容，将结果保存到%clipboard_text%",
+      "icon": "Clipboard_Get_Text",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/剪切板/获取剪切板内容.html",
+      "outputs": [
+        {
+          "id": "clipboard_text",
+          "label": "保存剪切板文本至",
+          "variableLabel": "剪切板文本",
+          "tips": "获取剪切板中文本内容",
+          "type": "str",
+          "name": "clipboard_text"
+        }
+      ]
+    },
+    {
+      "name": "clipboard.set_text",
+      "function": "xbot_visual.win32.clipboard_set_text",
+      "title": "设置剪切板内容",
+      "keywords": "剪贴板",
+      "description": "这个指令用来设置剪切板内容",
+      "comment": "将内容源%text%设置到剪切板中",
+      "icon": "Clipboard_Set_Text",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/剪切板/设置剪切板内容.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "内容源",
+          "required": true,
+          "tips": "请输入要设置到剪切板中的文本内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "clipboard.clear",
+      "function": "xbot_visual.win32.clipboard_clear",
+      "title": "清空剪切板",
+      "keywords": "剪贴板",
+      "description": "这个指令用来清空剪切板内容",
+      "comment": "清空当前剪切板中的内容",
+      "icon": "Clipboard_Clear",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/剪切板/清空剪切板.html"
+    },
+    {
+      "name": "clipboard.set_file",
+      "function": "xbot_visual.win32.clipboard_set_file",
+      "title": "将文件添加到剪切板",
+      "keywords": "剪贴板",
+      "description": "这个指令用来将文件添加到剪切板中，可用于文件的快捷发送",
+      "comment": "将文件%file_path%添加到剪切板中",
+      "icon": "Clipboard_Set_File",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/剪切板/将文件添加到剪切板.html",
+      "inputs": [
+        {
+          "name": "file_path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "请输入资源文件名或文件名列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件(.*)|*.*"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

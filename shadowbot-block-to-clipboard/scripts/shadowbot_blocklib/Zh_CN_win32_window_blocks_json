@@ -1,0 +1,1563 @@
+{
+  "types": [
+    {
+      "name": "xbot.win32.element.Win32Element",
+      "localName": "win元素",
+      "methods": [
+        {
+          "display": "该元素的文本内容",
+          "function": "$0.get_text()",
+          "type": "str"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "win32.window.get_window",
+      "title": "获取窗口对象",
+      "icon": "Win32_Window_Get_Window",
+      "comment": " ",
+      "description": "在对指定窗口进行自动化操作,先需要获取软件运行窗口对象",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.GetWindowControl,ShadowBot.Shell.Development",
+      "function": "xbot_visual.win32.window.get",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/获取窗口对象.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.GetWindowHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:win_title_or_class",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "active"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              },
+              {
+                "display": "桌面",
+                "value": "desktop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result_window_instance",
+          "label": "保存窗口对象至",
+          "variableLabel": "窗口实例",
+          "tips": "该变量保存的是窗口对象,使用此窗口对象可以对窗口进行自动化操作",
+          "name": "software_window",
+          "type": "xbot.win32.window.Win32Window"
+        }
+      ]
+    },
+    {
+      "name": "win32.window.get_window_list",
+      "title": "获取窗口对象列表",
+      "icon": "Win32_Window_Get_Window_List",
+      "comment": "",
+      "description": "获取所有满足条件的窗口对象",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.GetWindowListControl,ShadowBot.Shell.Development",
+      "function": "xbot_visual.win32.window.get_list",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/获取窗口对象列表.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.GetWindowListHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "title",
+          "label": "窗口标题包含",
+          "tips": "窗口包含的标题,标题为空时表示获取全部窗口对象",
+          "required": false,
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result_window_list",
+          "label": "保存窗口列表对象至",
+          "variableLabel": "窗口列表实列",
+          "tips": "该变量保存的是窗口对象列表,遍历窗口列表可通过窗口对象对窗口进行自动化操作",
+          "name": "software_window_list",
+          "type": "list<xbot.win32.window.Win32Window>"
+        }
+      ]
+    },
+    {
+      "name": "win32.window.get_details",
+      "title": "获取窗口信息",
+      "icon": "Win32_Window_Get_Details",
+      "comment": "%operation%，目标窗口为%window%，将结果保存到%window_property%",
+      "description": "获取指定窗口的标题、内容、进程名等信息",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.GetWindowDetail,ShadowBot.Shell.Development",
+      "function": "xbot_visual.win32.window.get_details",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/获取窗口信息.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.GetWindowDetailHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:title",
+          "defaultDisplay": "获取窗口标题",
+          "tips": "选择一种对窗口的操作方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取窗口标题",
+                "value": "title"
+              },
+              {
+                "display": "获取窗口内容",
+                "value": "text"
+              },
+              {
+                "display": "获取窗口进程名",
+                "value": "process_name"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "window_property",
+          "label": "保存窗口属性至",
+          "variableLabel": "属性对象",
+          "tips": "该对象保存的是窗口的属性对象",
+          "name": "win_property",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "win32.window.set_state",
+      "title": "设置窗口状态",
+      "keywords": "最大化;最小化",
+      "icon": "Win32_Window_Set_State",
+      "comment": "设置窗口%window%状态为%flag%",
+      "description": "对窗口还原、最大化或最小化的操作",
+      "function": "xbot_visual.win32.window.set_state",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.SetWindowStateControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/设置窗口状态.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.SetWindowStateHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "flag",
+          "label": "要设置窗口的状态",
+          "required": true,
+          "tips": "选择想要设置的窗口状态",
+          "type": "str",
+          "defaultDisplay": "还原",
+          "default": "10:restore",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "还原",
+                "value": "restore"
+              },
+              {
+                "display": "最大化窗口",
+                "value": "maximize"
+              },
+              {
+                "display": "最小化窗口",
+                "value": "minimize"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.set_visibility",
+      "title": "设置窗口是否显示",
+      "keywords": "隐藏",
+      "icon": "Win32_Window_Set_Visibility",
+      "comment": "%flag%%window%",
+      "description": "设置窗口显示、隐藏状态",
+      "function": "xbot_visual.win32.window.set_visibility",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.SetWindowVisibilityControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/设置窗口是否显示.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.SetWindowVisibilityHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "flag",
+          "label": "窗体可见性",
+          "required": true,
+          "tips": "选择想要设置的窗口可见性",
+          "default": "10:hide",
+          "defaultDisplay": "隐藏窗口",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "显示窗口",
+                "value": "show"
+              },
+              {
+                "display": "隐藏窗口",
+                "value": "hide"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.activate",
+      "title": "激活软件窗口",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.FocusWindowControl,ShadowBot.Shell.Development",
+      "icon": "Win32_Window_Activate",
+      "comment": " ",
+      "description": "激活指定窗口使其在前台运行",
+      "function": "xbot_visual.win32.window.activate",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/激活软件窗口.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.FocusWindowHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.close",
+      "title": "关闭软件窗口",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.CloseWindowControl,ShadowBot.Shell.Development",
+      "icon": "Win32_Window_Close",
+      "comment": " ",
+      "description": "此操作将关闭指定窗口",
+      "function": "xbot_visual.win32.window.close",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/关闭软件窗口.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.CloseWindowHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.move",
+      "title": "移动窗口位置",
+      "icon": "Win32_Window_Move",
+      "comment": " ",
+      "description": "移动窗口至指定位置",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.MoveWindowControl,ShadowBot.Shell.Development",
+      "function": "xbot_visual.win32.window.move",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/移动窗口位置.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.MoveWindowHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "x",
+          "label": "X",
+          "required": true,
+          "tips": "输入窗口移动的目标横坐标x",
+          "default": "10:400",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "y",
+          "label": "Y",
+          "required": true,
+          "tips": "输入窗口移动的目标纵坐标y",
+          "default": "10:400",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.resize",
+      "title": "调整窗口大小",
+      "keywords": "缩放",
+      "icon": "Win32_Window_Resize",
+      "comment": " ",
+      "description": "对窗口大小进行调整",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.ResizeWindowControl,ShadowBot.Shell.Development",
+      "function": "xbot_visual.win32.window.resize",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/窗口操作/调整窗口大小.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.ResizeWindowHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "width",
+          "label": "宽度",
+          "required": true,
+          "tips": "设置窗口宽度",
+          "default": "10:400",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "height",
+          "label": "高度",
+          "required": true,
+          "tips": "设置窗口高度",
+          "default": "10:400",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.contains_element",
+      "statement": "workflow.if",
+      "title": "IF 窗口包含",
+      "description": "检测指定的元素是否包含在指定窗口中",
+      "comment": "检查窗口%window%中是否%content_type%%element%",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Win32_Window_Contains_Element",
+      "function": "xbot_visual.win32.window.contains_element",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if窗口包含.html",
+      "video": {
+        "time": "01:03"
+      },
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "tips": "选择一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "content_type",
+          "label": "检测指定窗口是否",
+          "required": true,
+          "default": "10:contains_element",
+          "defaultDisplay": "包含元素",
+          "tips": "检测窗口是否存在某个元素",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "包含元素",
+                "value": "contains_element"
+              },
+              {
+                "display": "不包含元素",
+                "value": "not_contains_element"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.exists",
+      "statement": "workflow.if",
+      "title": "IF 窗口存在",
+      "description": "检测指定窗口是否存在",
+      "comment": "检查窗口%window%是否是%window_status%",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Win32_Window_Exists",
+      "function": "xbot_visual.win32.window.exists",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.WindowExistedControl,ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.WindowExistedHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if窗口存在.html",
+      "video": {
+        "time": "01:50"
+      },
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "default": "10:window_instance",
+          "defaultDisplay": "窗口对象",
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "窗口对象",
+                "value": "window_instance"
+              },
+              {
+                "display": "捕获窗口元素",
+                "value": "window_selector"
+              },
+              {
+                "display": "窗口标题或类型名",
+                "value": "win_title_or_class"
+              },
+              {
+                "display": "窗口句柄",
+                "value": "win_handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "选择或输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "选择或输入窗口类型。一般用于标题相同的窗口有多个，无法只根据标题来区分窗口的情况",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配，比如‘*记事本’表示以’记事本‘结尾的任意文本",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "window_status",
+          "label": "窗口是否",
+          "required": true,
+          "default": "10:existed",
+          "defaultDisplay": "存在",
+          "tips": "选择需要判断的窗口存在或不存在",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "existed"
+              },
+              {
+                "display": "不存在",
+                "value": "not_existed"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.window.wait_window",
+      "title": "等待窗口",
+      "description": "等待窗口发生状态变化",
+      "comment": "等待窗口%window%%wait_way%，最多等待%timeout%秒",
+      "icon": "Win32_Window_Wait_Window",
+      "function": "xbot_visual.win32.window.wait_window",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.WindowWaitControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/等待/等待窗口.html",
+      "video": {
+        "time": "02:35"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.WindowWaitHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_type",
+          "label": "获取窗口方式",
+          "required": true,
+          "tips": "选择获取窗口方式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "输入一个通过\"获取窗口对象\"获取的窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "从元素列表中选择一个录制好的窗口元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "handle",
+          "label": "窗口句柄",
+          "tips": "输入一个窗口句柄",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "title",
+          "label": "窗口标题",
+          "tips": "输入窗口标题",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "handle_checked",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "添加窗口类型",
+          "type": "bool",
+          "editor": {
+            "label": "添加窗口类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "class_name",
+          "label": "窗口类型",
+          "tips": "输入窗口类型",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "wait_way",
+          "label": "等待状态",
+          "required": true,
+          "default": "10:appear",
+          "defaultDisplay": "存在",
+          "tips": "选择需要等待的窗口状态",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "appear"
+              },
+              {
+                "display": "不存在",
+                "value": "disappear"
+              },
+              {
+                "display": "激活",
+                "value": "be_focus"
+              },
+              {
+                "display": "未激活",
+                "value": "lost_focus"
+              }
+            ]
+          }
+        },
+        {
+          "name": "use_timeout",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "设置超时时间, 如果不设置则一直等待",
+          "type": "bool",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间(s)",
+          "required": false,
+          "default": "10:20",
+          "tips": "请输入超时时间（单位：秒）",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "window_wait_result",
+          "label": "等待结果",
+          "tips": "窗口是否出现或消失的结果",
+          "name": "win_wait_result",
+          "type": "bool"
+        }
+      ]
+    }
+  ]
+}

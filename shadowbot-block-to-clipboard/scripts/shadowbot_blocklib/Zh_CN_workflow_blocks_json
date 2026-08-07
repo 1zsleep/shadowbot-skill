@@ -1,0 +1,876 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "workflow.if",
+      "statement": "workflow.if",
+      "function": "xbot_visual.workflow.test",
+      "title": "IF 条件",
+      "description": "条件判断开始标记",
+      "comment": "如果%operand1%%operator%%operand2%，则执行以下操作",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Workflow_If",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if条件.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.ConditonalControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.ConditonalHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "operand1",
+          "label": "对象1",
+          "required": true,
+          "tips": "输入前面指令创建的变量、Python表达式、文本或数字,与对象2进行比较",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operator",
+          "label": "关系",
+          "required": true,
+          "default": "10:==",
+          "defaultDisplay": "等于",
+          "tips": "选择对象1和对象2的比较方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等于",
+                "value": "=="
+              },
+              {
+                "display": "不等于",
+                "value": "!="
+              },
+              {
+                "display": "大于",
+                "value": ">"
+              },
+              {
+                "display": "大于等于",
+                "value": ">="
+              },
+              {
+                "display": "小于",
+                "value": "<"
+              },
+              {
+                "display": "小于等于",
+                "value": "<="
+              },
+              {
+                "display": "包含",
+                "value": "in"
+              },
+              {
+                "display": "不包含",
+                "value": "not in"
+              },
+              {
+                "display": "等于True",
+                "value": "is true"
+              },
+              {
+                "display": "等于False",
+                "value": "is false"
+              },
+              {
+                "display": "是空值",
+                "value": "empty value"
+              },
+              {
+                "display": "不是空值",
+                "value": "not empty value"
+              },
+              {
+                "display": "以对象2开头",
+                "value": "starts with"
+              },
+              {
+                "display": "不以对象2开头",
+                "value": "not starts with"
+              },
+              {
+                "display": "以对象2结束",
+                "value": "ends with"
+              },
+              {
+                "display": "不以对象2结束",
+                "value": "not ends with"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operand2",
+          "label": "对象2",
+          "tips": "输入前面指令创建的变量、Python表达式、文本或数字,与对象1进行比较",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operator_options",
+          "label": "操作符参数",
+          "tips": "操作符参数不展示",
+          "default": "10:{}",
+          "type": "any",
+          "editor": {
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "workflow.elseif",
+      "statement": "workflow.elseif",
+      "function": "xbot_visual.workflow.test",
+      "title": "Else IF",
+      "description": "条件分支判断",
+      "comment": "如果%operand1%%operator%%operand2%，则执行以下操作",
+      "indent": "3",
+      "scope": "3",
+      "isCondition": true,
+      "icon": "Workflow_Elseif",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/elseif.html",
+      "video": {
+        "time": "03:23"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.ConditonalControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.ConditonalHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "operand1",
+          "label": "对象1",
+          "required": true,
+          "tips": "输入前面指令创建的变量、Python表达式、文本或数字,与对象2进行比较",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operator",
+          "label": "关系",
+          "required": true,
+          "default": "10:==",
+          "defaultDisplay": "等于",
+          "tips": "选择对象1和对象2的比较方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等于",
+                "value": "=="
+              },
+              {
+                "display": "不等于",
+                "value": "!="
+              },
+              {
+                "display": "大于",
+                "value": ">"
+              },
+              {
+                "display": "大于等于",
+                "value": ">="
+              },
+              {
+                "display": "小于",
+                "value": "<"
+              },
+              {
+                "display": "小于等于",
+                "value": "<="
+              },
+              {
+                "display": "包含",
+                "value": "in"
+              },
+              {
+                "display": "不包含",
+                "value": "not in"
+              },
+              {
+                "display": "等于True",
+                "value": "is true"
+              },
+              {
+                "display": "等于False",
+                "value": "is false"
+              },
+              {
+                "display": "是空值",
+                "value": "empty value"
+              },
+              {
+                "display": "不是空值",
+                "value": "not empty value"
+              },
+              {
+                "display": "以对象2开头",
+                "value": "starts with"
+              },
+              {
+                "display": "不以对象2开头",
+                "value": "not starts with"
+              },
+              {
+                "display": "以对象2结束",
+                "value": "ends with"
+              },
+              {
+                "display": "不以对象2结束",
+                "value": "not ends with"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operand2",
+          "label": "对象2",
+          "tips": "输入前面指令创建的变量、Python表达式、文本或数字,与对象1进行比较",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operator_options",
+          "label": "操作符参数",
+          "tips": "操作符参数不展示",
+          "default": "10:{}",
+          "type": "any",
+          "editor": {
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "workflow.multiple_conditions_if",
+      "statement": "workflow.multiple_conditions_if",
+      "function": "xbot_visual.workflow.multiconditional_judgment",
+      "title": "IF 多条件",
+      "description": "条件判断开始标记",
+      "comment": "判断条件列表中的条件是否全部满足",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Workflow_Multiple_Conditions_If",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if多条件.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.MultipleConditionalControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.MultipleConditonalHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "relation",
+          "label": "条件关系",
+          "tips": "下面使用的条件将会以此关系进行合并得到最终的结果",
+          "default": "10:and",
+          "defaultDisplay": "符合以下全部条件",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "符合以下全部条件",
+                "value": "and"
+              },
+              {
+                "display": "符合以下任意条件",
+                "value": "or"
+              }
+            ]
+          }
+        },
+        {
+          "name": "conditionals",
+          "type": "str",
+          "lable": "条件列表",
+          "tips": "要使用的条件列表，可通过'添加条件'和条件后方的'x'按钮经行添加的添加或删除，至少保证使用一个条件",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "workflow.else",
+      "statement": "workflow.else",
+      "icon": "Workflow_Else",
+      "indent": "3",
+      "scope": "3",
+      "canDebug": false,
+      "comment": "否则执行以下操作",
+      "description": "如果不满足前面IF指令中指定的条件,则执行以下操作",
+      "title": "Else",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/else.html",
+      "video": {
+        "time": "02:53"
+      }
+    },
+    {
+      "name": "workflow.multiple_conditions_elseif",
+      "statement": "workflow.multiple_conditions_elseif",
+      "function": "xbot_visual.workflow.multiconditional_judgment",
+      "title": "Else IF 多条件",
+      "description": "条件分支判断",
+      "comment": "判断条件列表中的条件是否全部满足",
+      "indent": "3",
+      "scope": "3",
+      "isCondition": true,
+      "icon": "Workflow_Multiple_Conditions_Elseif",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/elseif多条件.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.MultipleConditionalControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.MultipleConditonalHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "relation",
+          "label": "条件关系",
+          "tips": "下面使用得的条件将会以次关系进行合并等到最终的结果",
+          "default": "10:and",
+          "defaultDisplay": "符合以下全部条件",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "符合以下全部条件",
+                "value": "and"
+              },
+              {
+                "display": "符合以下任意条件",
+                "value": "or"
+              }
+            ]
+          }
+        },
+        {
+          "name": "conditionals",
+          "type": "str",
+          "lable": "条件列表",
+          "tips": "要使用的条件列表，可通过'添加条件'和条件后方的'x'按钮经行添加的添加或删除，至少保证使用一个条件",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "workflow.endif",
+      "statement": "workflow.endif",
+      "icon": "Workflow_Endif",
+      "indent": "2",
+      "scope": "2",
+      "isCondition": true,
+      "isPseudo": true,
+      "canDebug": false,
+      "description": "条件判断结束标记",
+      "comment": "结束判断",
+      "title": "End IF",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/endif.html",
+      "video": {
+        "time": "00:31"
+      }
+    },
+    {
+      "name": "workflow.for",
+      "statement": "workflow.for",
+      "function": "xbot_visual.workflow.range_iterator",
+      "title": "For次数循环",
+      "description": "对一组指令进行指定次数的循环操作",
+      "comment": "从%start%开始到%stop%结束，递增值为%step%，将当前循环值保存到%loop_index%",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "icon": "Workflow_For",
+      "helpUrl": "language/zh-cn/指令文档/循环/for次数循环.html",
+      "video": {
+        "time": "02:40"
+      },
+      "inputs": [
+        {
+          "name": "start",
+          "label": "起始数",
+          "required": true,
+          "tips": "设置循环计数器的起点数值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "stop",
+          "label": "结束数",
+          "required": true,
+          "tips": "设置循环计数器的终点数值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "step",
+          "label": "递增值",
+          "required": true,
+          "tips": "设置每次循环后递增的数值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_index",
+          "label": "保存当前循环项至",
+          "variableLabel": "当前循环项",
+          "type": "int",
+          "tips": "输入一个名称作为保存当前循环数值的变量,从起始值开始,此变量的值将随每次循环的增量而变化",
+          "name": "loop_index"
+        }
+      ]
+    },
+    {
+      "name": "workflow.while",
+      "statement": "workflow.while",
+      "function": "xbot_visual.workflow.test",
+      "title": "While条件循环",
+      "description": "当条件为真时,对一组指令进行循环操作",
+      "comment": "如果%operand1%%operator%%operand2%，则执行以下操作",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "icon": "Workflow_While",
+      "helpUrl": "language/zh-cn/指令文档/循环/while条件循环.html",
+      "video": {
+        "time": "02:55"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.ConditonalControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.ConditonalHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "operand1",
+          "label": "对象1",
+          "required": true,
+          "tips": "输入前面指令创建的变量、Python表达式、文本或数字,与对象2进行比较",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operator",
+          "label": "关系",
+          "required": true,
+          "default": "10:==",
+          "defaultDisplay": "等于",
+          "tips": "选择对象1和对象2的比较方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等于",
+                "value": "=="
+              },
+              {
+                "display": "不等于",
+                "value": "!="
+              },
+              {
+                "display": "大于",
+                "value": ">"
+              },
+              {
+                "display": "大于等于",
+                "value": ">="
+              },
+              {
+                "display": "小于",
+                "value": "<"
+              },
+              {
+                "display": "小于等于",
+                "value": "<="
+              },
+              {
+                "display": "包含",
+                "value": "in"
+              },
+              {
+                "display": "不包含",
+                "value": "not in"
+              },
+              {
+                "display": "等于True",
+                "value": "is true"
+              },
+              {
+                "display": "等于False",
+                "value": "is false"
+              },
+              {
+                "display": "是空值",
+                "value": "empty value"
+              },
+              {
+                "display": "不是空值",
+                "value": "not empty value"
+              },
+              {
+                "display": "以对象2开头",
+                "value": "starts with"
+              },
+              {
+                "display": "不以对象2开头",
+                "value": "not starts with"
+              },
+              {
+                "display": "以对象2结束",
+                "value": "ends with"
+              },
+              {
+                "display": "不以对象2结束",
+                "value": "not ends with"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operand2",
+          "label": "对象2",
+          "tips": "输入前面指令创建的变量、Python表达式、文本或数字,与对象1进行比较",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operator_options",
+          "label": "操作符参数",
+          "tips": "操作符参数不展示",
+          "default": "10:{}",
+          "type": "any",
+          "editor": {
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "workflow.forin",
+      "statement": "workflow.forin",
+      "function": "xbot_visual.workflow.list_iterator",
+      "title": "ForEach列表循环",
+      "description": "依次循环列表中的每一项进行自动化操作",
+      "comment": "对列表%list%中的每一项进行循环操作，将当前循环项保存到%loop_item%",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.UseOutputTypeByInputListItemTypeHandler",
+          "settings": {
+            "inputName": "list",
+            "outputName": "loop_item"
+          }
+        },
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.OutputForeachItemIndexHandler",
+          "settings": {
+            "inputName": "output_with_index",
+            "outputName": "loop_index"
+          }
+        }
+      ],
+      "icon": "Workflow_Forin",
+      "helpUrl": "language/zh-cn/指令文档/循环/foreach列表循环.html",
+      "video": {
+        "time": "02:34"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.ForInControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "list",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表项或者选择前面指令创建的列表。(列表:表示多个数据项的一组,如列表:[\"中国\",\"美国\",\"法国\"])",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "loop_start_index",
+          "label": "循环开始位置",
+          "category": "advanced",
+          "required": false,
+          "default": "10:0",
+          "tips": "循环开始位置，0表示第一项",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "loop_end_index",
+          "label": "循环结束位置",
+          "category": "advanced",
+          "required": false,
+          "default": "10:-1",
+          "tips": "循环结束位置，-1表示倒数第一项，结果包含结束位置的项",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "output_with_index",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否输出循环项的位置",
+          "type": "bool",
+          "editor": {
+            "label": "输出循环项的位置",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_item",
+          "label": "存储循环项至",
+          "variableLabel": "当前循环项",
+          "tips": "指定一个变量名称,保存当前的循环项(循环项可以为具体列表的一项、行或单元格)",
+          "type": "any",
+          "name": "loop_item"
+        },
+        {
+          "id": "loop_index",
+          "label": "存储当前循环位置至",
+          "variableLabel": "当前循环项的位置",
+          "tips": "指定一个变量名称,用于存储一组相似元素中的当前循环项的位置",
+          "type": "int",
+          "name": "loop_item_index"
+        }
+      ]
+    },
+    {
+      "name": "workflow.forin_expr",
+      "statement": "workflow.forin_expr",
+      "function": "xbot_visual.workflow.list_iterator",
+      "title": "循环",
+      "description": "依次循环对象中的每一项进行自动化操作",
+      "comment": "对%list%中的每一项进行循环操作, 将当前循环项保存到%loop_item1%",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WorkFlow.ForInExprHandler"
+        }
+      ],
+      "icon": "Loops",
+      "helpUrl": "language/zh-cn/指令文档/循环/foreach列表循环.html",
+      "video": {
+        "time": "02:34"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Workflow.ForInExprControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "list",
+          "label": "循环对象",
+          "required": true,
+          "tips": "选择之前创建的可迭代对象，或输入表达式生成循环内容。\n例如，在点亮 表达式图标 后输入：\n- 次数循环示例：range(5) \n- 列表循环示例：[\"A\",\"B\",\"C\"] ",
+          "type": "list",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选择要循环的对象，或输入表达式（详见悬浮提示）"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_item1",
+          "label": "存储循环项1至",
+          "variableLabel": "循环项1",
+          "tips": "",
+          "type": "any",
+          "name": "loop_item1"
+        },
+        {
+          "id": "loop_item2",
+          "label": "存储循环项2至",
+          "variableLabel": "循环项2",
+          "tips": "",
+          "type": "any",
+          "name": "loop_item2",
+          "isEnable": false
+        },
+        {
+          "id": "loop_item3",
+          "label": "存储循环项3至",
+          "variableLabel": "循环项3",
+          "tips": "",
+          "type": "any",
+          "name": "loop_item3",
+          "isEnable": false
+        },
+        {
+          "id": "loop_item4",
+          "label": "存储循环项4至",
+          "variableLabel": "循环项4",
+          "tips": "",
+          "type": "any",
+          "name": "loop_item4",
+          "isEnable": false
+        },
+        {
+          "id": "loop_item5",
+          "label": "存储循环项5至",
+          "variableLabel": "循环项5",
+          "tips": "",
+          "type": "any",
+          "name": "loop_item5",
+          "isEnable": false
+        }
+      ]
+    },
+    {
+      "name": "workflow.continue",
+      "statement": "workflow.continue",
+      "canDebug": false,
+      "icon": "Workflow_Continue",
+      "description": "忽略本次循环，继续下一次循环",
+      "comment": "忽略本次循环，继续下一次循环",
+      "title": "继续下一次循环",
+      "helpUrl": "language/zh-cn/指令文档/循环/继续下一次循环.html",
+      "video": {
+        "time": "03:37"
+      }
+    },
+    {
+      "name": "workflow.break",
+      "statement": "workflow.break",
+      "canDebug": false,
+      "icon": "Workflow_Break",
+      "description": "退出当前循环",
+      "comment": "退出当前循环",
+      "title": "退出循环",
+      "helpUrl": "language/zh-cn/指令文档/循环/循环退出.html",
+      "video": {
+        "time": "02:40"
+      }
+    },
+    {
+      "name": "workflow.endloop",
+      "statement": "workflow.endloop",
+      "icon": "Workflow_Endloop",
+      "indent": "2",
+      "scope": "2",
+      "isPseudo": true,
+      "description": "表示一个循环区域的结尾",
+      "comment": "表示一个循环区域的结尾",
+      "title": "循环结束标记",
+      "helpUrl": "language/zh-cn/指令文档/循环/循环结束.html",
+      "video": {
+        "time": "00:35"
+      }
+    },
+    {
+      "name": "workflow.infinite_loop",
+      "statement": "workflow.infinite_loop",
+      "icon": "Workflow_Infinite_Loop",
+      "title": "无限循环",
+      "comment": "无限循环",
+      "description": "无限循环",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "helpUrl": "language/zh-cn/指令文档/循环/无限循环.html",
+      "video": {
+        "time": "04:01"
+      },
+      "outputs": [
+        {
+          "id": "loop_index",
+          "label": "存储当前循环位置至",
+          "variableLabel": "当前循环的位置",
+          "tips": "",
+          "type": "int",
+          "name": "loop_index"
+        }
+      ]
+    },
+    {
+      "name": "workflow.loop_dict",
+      "statement": "excel.forin",
+      "function": "xbot_visual.workflow.dict_iterator",
+      "title": "ForEach字典循环",
+      "description": "依次循环字典中的每一项进行自动化操作",
+      "comment": "对字典%dict%中的每一项进行循环操作，当前循环项键名保存至变量%loop_key%中，键值保存至变量%loop_value%中",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "icon": "Workflow_Loop_Dict",
+      "helpUrl": "language/zh-cn/指令文档/循环/foreach字典循环.html",
+      "inputs": [
+        {
+          "name": "dict",
+          "label": "字典",
+          "required": true,
+          "tips": "输入字典或者选择前面指令创建的字典对象",
+          "type": "dict",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_key",
+          "label": "存储循环项键名至",
+          "variableLabel": "当前循环项的键名",
+          "tips": "指定一个变量名称,保存当前的循环项的键名",
+          "type": "any",
+          "name": "loop_key"
+        },
+        {
+          "id": "loop_value",
+          "label": "存储循环项键值至",
+          "variableLabel": "当前循环项的键值",
+          "tips": "指定一个变量名称,保存当前的循环项的键值",
+          "type": "any",
+          "name": "loop_value"
+        }
+      ]
+    }
+  ]
+}

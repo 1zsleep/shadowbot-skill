@@ -1,0 +1,1211 @@
+{
+  "types": [
+    {
+      "name": "Word.Document",
+      "localName": "Word对象",
+      "props": []
+    }
+  ],
+  "blocks": [
+    {
+      "name": "word.launch",
+      "title": "打开/新建Word",
+      "keywords": "新建word;打开word;启动word",
+      "icon": "Word_Launch",
+      "comment": "%launch_way%:%open_filename%，将Word对象保存到%word_instance%",
+      "description": "打开已有Word文件，或新建Word，以实现Word程序的自动化",
+      "function": "xbot_visual.word.launch",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.LaunchWordControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/启动word.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.LaunchWordHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "launch_way",
+          "label": "启动方式",
+          "required": true,
+          "default": "10:open",
+          "defaultDisplay": "打开已有的Word",
+          "tips": "选择要新建一个Word文件还是打开一个Word文件",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "新建Word",
+                "value": "create"
+              },
+              {
+                "display": "打开已有的Word",
+                "value": "open"
+              }
+            ]
+          }
+        },
+        {
+          "name": "driver_way",
+          "label": "驱动方式",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动检测",
+                "value": "auto_check"
+              },
+              {
+                "display": "office",
+                "value": "office"
+              },
+              {
+                "display": "wps",
+                "value": "wps"
+              }
+            ]
+          }
+        },
+        {
+          "name": "open_filename",
+          "label": "Word文件路径",
+          "required": false,
+          "tips": "填写或选择要打开的Word文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "Word 工作簿|*.docx;*.doc"
+            }
+          }
+        },
+        {
+          "name": "save_filename",
+          "label": "Word文件路径",
+          "required": false,
+          "tips": "填写打开的Word路径或保存Word的路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Document",
+              "filter": "Word 工作簿|*.docx;*.doc"
+            }
+          }
+        },
+        {
+          "name": "isvisible",
+          "label": "",
+          "default": "13:True",
+          "tips": "此选项并不会限制Word自动化的能力，只是用于控制可视化操作是否用户可见，如果是非可视化下操作Word，保存之后必须要关闭Word",
+          "type": "bool",
+          "editor": {
+            "label": "是否可视化",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "open_password",
+          "label": "打开密码",
+          "category": "advanced",
+          "tips": "用于打开加密Word文件的打开密码",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "edit_password",
+          "label": "编辑密码",
+          "category": "advanced",
+          "tips": "用于打开加密Word文件编辑权限的编辑密码",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "word_instance",
+          "label": "保存Word对象至",
+          "variableLabel": "打开的Word对象",
+          "tips": "该变量保存的是Word对象，使用此Word对象可以对Word进行自动化操作",
+          "name": "word_instance",
+          "type": "Word.Document"
+        }
+      ]
+    },
+    {
+      "name": "word.save",
+      "title": "保存Word",
+      "keywords": "另存为Word;导出Word",
+      "comment": "将Word对象%word_instance%%save_way%Word文件%filename%",
+      "description": "保存Word",
+      "icon": "Word_Save",
+      "function": "xbot_visual.word.save",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.SaveWordControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/保存word.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.SaveWordHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "save_way",
+          "label": "保存方式",
+          "required": true,
+          "default": "10:save",
+          "defaultDisplay": "保存",
+          "tips": "保存对Word的更改或另存为到新的路径",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "保存",
+                "value": "save"
+              },
+              {
+                "display": "另存为",
+                "value": "saveas"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filename",
+          "label": "Word文件路径",
+          "tips": "填写或选择要打开的Word文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Document",
+              "filter": "Word 工作簿 (.docx)|*.docx"
+            }
+          }
+        },
+        {
+          "name": "overwrite_file",
+          "label": "",
+          "default": "13:True",
+          "tips": "若文件已存在，又选择不覆盖，会报错提示文件已存在",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "is_close_after_save",
+          "label": "",
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "保存后关闭",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.close",
+      "title": "关闭Word",
+      "comment": "关闭Word",
+      "description": "关闭Word",
+      "icon": "Word_Close",
+      "function": "xbot_visual.word.close",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.CloseWordControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/关闭word.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.CloseWordHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:close_specified",
+          "defaultDisplay": "关闭指定Word文件",
+          "tips": "选择要关闭一个指定的Word文件还是关闭所有Word文件",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "关闭指定Word文件",
+                "value": "close_specified"
+              },
+              {
+                "display": "关闭所有Word文件",
+                "value": "close_all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "close_way",
+          "label": "关闭方式",
+          "required": true,
+          "default": "10:save",
+          "defaultDisplay": "保存",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "不保存",
+                "value": "notsave"
+              },
+              {
+                "display": "保存",
+                "value": "save"
+              },
+              {
+                "display": "另存为",
+                "value": "saveas"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filename",
+          "label": "文件路径",
+          "tips": "填写或选择要打开的Word文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Document",
+              "filter": "Word 工作簿 (.docx)|*.docx"
+            }
+          }
+        },
+        {
+          "name": "overwrite_file",
+          "label": "",
+          "default": "13:True",
+          "tips": "若文件已存在，又选择不覆盖，会报错提示文件已存在",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "close_process",
+          "label": "关闭进程",
+          "required": true,
+          "default": "10:office",
+          "defaultDisplay": "office",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "office",
+                "value": "office"
+              },
+              {
+                "display": "wps",
+                "value": "wps"
+              }
+            ]
+          }
+        },
+        {
+          "name": "task_kill",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "如果勾选，将强制结束属于当前用户的指定Word进程和由它启动的所有子进程",
+          "type": "bool",
+          "editor": {
+            "label": "终止Word进程",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.read_text_from_document",
+      "title": "读取Word文本",
+      "icon": "Word_Read_Text_From_Document",
+      "comment": "从Word对象%document%中读取%read_range%中的文本，将结果保存到%word_text%",
+      "description": "从Word文件中读取文本",
+      "function": "xbot_visual.word.read_text_from_document",
+      "helpUrl": "language/zh-cn/指令文档/word/读取word文本.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "read_range",
+          "label": "读取范围",
+          "required": true,
+          "default": "10:entire_document",
+          "defaultDisplay": "整个文档",
+          "tips": "提供Word内容读取范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "整个文档",
+                "value": "entire_document"
+              },
+              {
+                "display": "选中区域",
+                "value": "select_area"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "word_text",
+          "label": "保存Word内容为",
+          "variableLabel": "Word数据对象",
+          "tips": "指定一个变量名称，该变量用于保存域数据内容",
+          "name": "word_text",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "word.write_text_to_document",
+      "title": "写入文本至Word中",
+      "keywords": "写入word",
+      "icon": "Word_Write_Text_To_Document",
+      "comment": "在Word对象%word_instance%文档当前选择区域中写入文本%content%",
+      "description": "在Word文档当前选择区域中写入或覆盖文本",
+      "function": "xbot_visual.word.write_text_to_document",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.WriteTextToDocumentControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/写入文本至word中.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "content",
+          "label": "文本内容",
+          "required": true,
+          "tips": "写入到当前选择区域的文本",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "text_format",
+          "label": "文本格式",
+          "required": true,
+          "tips": "可直接在此设置简单的格式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "newline",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，则在写入前换行",
+          "type": "bool",
+          "editor": {
+            "label": "写入文本前换行",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.export_to_pdf",
+      "title": "Word导出PDF",
+      "icon": "Word_Export_To_Pdf",
+      "description": "将Word文档导出为PDF",
+      "comment": "将Word对象%word_instance%导出为PDF文件，将文件保存到%pdf_name%",
+      "function": "xbot_visual.word.export_to_pdf",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.WordExportToPDFControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/word导出pdf.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.WordExportToPDFHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "export_range",
+          "label": "导出范围",
+          "required": true,
+          "default": "10:0",
+          "defaultDisplay": "所有页面",
+          "tips": "提供多种Word导出范围",
+          "type": "int",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "所有页面",
+                "value": 0
+              },
+              {
+                "display": "当前页面",
+                "value": 2
+              },
+              {
+                "display": "指定页面",
+                "value": 3
+              },
+              {
+                "display": "当前选区",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "page_from",
+          "label": "起始页数",
+          "tips": "要导出为PDF内容的起始页数",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "placeholder": "输入页数，从1开始",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "page_to",
+          "label": "结束页数",
+          "tips": "要导出为PDF内容的结束页数",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "placeholder": "输入页数，从1开始",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "pdf_name",
+          "label": "PDF保存到",
+          "tips": "填写要导出的PDF保存的文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "PDF|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "overwrite",
+          "label": "",
+          "default": "13:True",
+          "tips": "如果PDF文件存在则覆盖，PDF保存路径若不存在会自动创建",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.locate_cursor",
+      "title": "定位Word光标",
+      "icon": "Word_Locate_Cursor",
+      "description": "将Word文档中定位到指定位置的光标",
+      "comment": "在Word对象%word_instance%中定位光标，定位到文本%text_content%后",
+      "function": "xbot_visual.word.locate_cursor",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.LocateCursorControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/定位word光标.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.LocateCursorHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "locate_type",
+          "label": "相对于",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "文本",
+          "tips": "选择定位类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本",
+                "value": "text"
+              },
+              {
+                "display": "文档",
+                "value": "document"
+              },
+              {
+                "display": "书签",
+                "value": "bookmark"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text_content",
+          "label": "文本内容",
+          "tips": "要定位的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "text_index",
+          "label": "文本出现的位置",
+          "tips": "文本出现的位置",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "placeholder": "1表示第一个，2表示第二个，以此类推，-2表示倒数第二个，-1表示最后一个",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "text_cursor_position",
+          "label": "光标定位到",
+          "required": true,
+          "default": "10:after_text",
+          "defaultDisplay": "文本后",
+          "tips": "选择光标定位在文本前面还是后面",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本前",
+                "value": "before_text"
+              },
+              {
+                "display": "文本后",
+                "value": "after_text"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text_from_start",
+          "label": "",
+          "default": "13:True",
+          "tips": "若勾选，则从头开始查找，否则从当前位置开始",
+          "type": "bool",
+          "editor": {
+            "label": "从头开始查找文本",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "document_cursor_position",
+          "label": "光标定位到",
+          "required": true,
+          "default": "10:end_document",
+          "defaultDisplay": "文档结尾",
+          "tips": "选择光标定位在文档开头还是结尾",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文档开头",
+                "value": "begin_document"
+              },
+              {
+                "display": "文档结尾",
+                "value": "end_document"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bookmark_name",
+          "label": "书签名称",
+          "tips": "要定位书签的名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "bookmark_cursor_position",
+          "label": "光标定位到",
+          "required": true,
+          "default": "10:after_bookmark",
+          "defaultDisplay": "书签后",
+          "tips": "选择光标定位在书签前面还是后面",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "书签前",
+                "value": "before_bookmark"
+              },
+              {
+                "display": "书签后",
+                "value": "after_bookmark"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.move_cursor",
+      "title": "移动Word光标",
+      "icon": "Word_Move_Cursor",
+      "description": "移动Word文档中光标",
+      "comment": "在Word对象%word_instance%中%move_direction%%move_count%个字符单位长度光标",
+      "function": "xbot_visual.word.move_cursor",
+      "helpUrl": "language/zh-cn/指令文档/word/移动word光标.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "move_direction",
+          "label": "移动方向",
+          "required": true,
+          "default": "10:move_right",
+          "defaultDisplay": "向右移动",
+          "tips": "选择光标移动方向",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "向左移动",
+                "value": "move_left"
+              },
+              {
+                "display": "向上移动",
+                "value": "move_up"
+              },
+              {
+                "display": "向右移动",
+                "value": "move_right"
+              },
+              {
+                "display": "向下移动",
+                "value": "move_down"
+              }
+            ]
+          }
+        },
+        {
+          "name": "move_count",
+          "label": "移动长度",
+          "tips": "输入需要移动的单位长度",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "placeholder": "需要移动的单位长度",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "press_shift",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，则在移动时按下shift键，移动区域的文本被选中",
+          "type": "bool",
+          "editor": {
+            "label": "是否按下Shift键",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.replace_text",
+      "title": "替换Word文本",
+      "icon": "Word_Replace_Text",
+      "description": "替换Word文档中文本内容",
+      "comment": "将Word对象%word_instance%中文本%search_text%替换为%replace_text%，将替换个数保存到%replace_count%",
+      "function": "xbot_visual.word.replace_text",
+      "helpUrl": "language/zh-cn/指令文档/word/替换word文本.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "search_text",
+          "label": "查找文本",
+          "required": true,
+          "tips": "要查找的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "replace_text",
+          "label": "替换为",
+          "tips": "要替换的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "replace_all",
+          "label": "",
+          "default": "13:True",
+          "tips": "若勾选，则替换全部查找到的文本",
+          "type": "bool",
+          "editor": {
+            "label": "全部替换",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "case_sensitive",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，则区分大小写",
+          "type": "bool",
+          "editor": {
+            "label": "区分大小写",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "replace_count",
+          "label": "保存文本替换个数至",
+          "variableLabel": "文本替换个数",
+          "tips": "指定一个变量名称，该变量用于保存文本替换个数",
+          "type": "int",
+          "name": "word_replace_count"
+        }
+      ]
+    },
+    {
+      "name": "word.read_table_from_document",
+      "title": "读取Word表格",
+      "icon": "Word_Read_Table_From_Document",
+      "description": "读取Word文档中表格内容",
+      "comment": "在%word_instance%中读取第%table_index%个表格内容，将数据存储到%table_data%",
+      "function": "xbot_visual.word.read_table_from_document",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.ReadTableFromDocumentControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/读取word表格.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.ReadTableFromDocumentHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "find_way",
+          "label": "表格查找方式",
+          "required": true,
+          "default": "10:index",
+          "defaultDisplay": "根据表格位置",
+          "tips": "选择一个表格查找方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据表格位置",
+                "value": "index"
+              },
+              {
+                "display": "根据表格内容",
+                "value": "content"
+              }
+            ]
+          }
+        },
+        {
+          "name": "table_index",
+          "label": "表格出现位置",
+          "tips": "输入表格出现位置",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "table_content",
+          "label": "表格查找内容",
+          "tips": "输入查找表格所需的内容",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "table_data",
+          "label": "表格内容保存至",
+          "variableLabel": "Word表格数据对象",
+          "tips": "指定一个变量名称，该变量用于保存区域数据内容",
+          "type": "any",
+          "name": "word_table_data"
+        }
+      ]
+    },
+    {
+      "name": "word.insert_table",
+      "title": "插入Word表格",
+      "icon": "Word_Insert_Table",
+      "description": "在Word文档中插入表格",
+      "comment": "在Word对象%word_instance%插入表格，表格数据为%table_data%",
+      "function": "xbot_visual.word.insert_table",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.InsertTableControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/插入word表格.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "table_data",
+          "label": "表格数据",
+          "required": true,
+          "tips": "内容的数据格式需要跟写入范围对应，写入行、列、区域的内容需要是列表类型",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "table_data_format",
+          "label": "表格数据格式",
+          "required": true,
+          "tips": "可直接在此设置简单的格式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "grid",
+          "label": "",
+          "default": "13:True",
+          "tips": "若勾选，则表格含有边框",
+          "type": "bool",
+          "editor": {
+            "label": "表格是否有边框",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "newline",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，则在插入表格前换行",
+          "type": "bool",
+          "editor": {
+            "label": "插入表格前换行",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.insert_picture",
+      "title": "Word插入图片",
+      "icon": "Word_Insert_Picture",
+      "description": "在Word文档中插入图片",
+      "comment": "在Word对象%word_instance%中插入图片%image_path%，缩放比例为%image_scale%%",
+      "function": "xbot_visual.word.insert_picture",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Word.InsertPictureControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/word/插入图片.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Word.InsertPictureHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图片来源",
+          "required": true,
+          "default": "10:file",
+          "defaultDisplay": "本地图片",
+          "tips": "选择一个图片来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地图片",
+                "value": "file"
+              },
+              {
+                "display": "剪贴板",
+                "value": "clipboard"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png;*.pdf)|*.jpg;*.bmp;*.png;*.pdf"
+            }
+          }
+        },
+        {
+          "name": "image_scale",
+          "label": "图像缩放百分比",
+          "tips": "插入图像的缩放比例",
+          "default": "10:100",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入缩放比例",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "newline",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，则在插入图片前换行",
+          "type": "bool",
+          "editor": {
+            "label": "插入图片前换行",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.insert_hyperlink",
+      "title": "Word插入超链接",
+      "icon": "Word_Insert_Hyperlink",
+      "description": "在Word文档中插入超链接",
+      "comment": "在Word对象%word_instance%中插入超链接%hyperlink_url%，显示文字为%text%",
+      "function": "xbot_visual.word.insert_hyperlink",
+      "helpUrl": "language/zh-cn/指令文档/word/插入超链接.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "text",
+          "label": "要显示的文字",
+          "tips": "写在超链前的文字",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "若不输入，则显示超链接地址"
+          }
+        },
+        {
+          "name": "hyperlink_url",
+          "label": "超链接地址",
+          "required": true,
+          "tips": "用于访问的超链接地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "newline",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，则在插入超链前换行",
+          "type": "bool",
+          "editor": {
+            "label": "插入超链前换行",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.copy",
+      "title": "拷贝Word内容",
+      "keywords": "复制word",
+      "icon": "Word_Copy",
+      "comment": "从Word对象%word_instance%中拷贝选择区域的内容",
+      "description": "从Word文件中拷贝内容",
+      "function": "xbot_visual.word.copy",
+      "helpUrl": "doc/指令文档/17Word/拷贝Word内容.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "word.paste",
+      "title": "粘贴Word内容",
+      "icon": "Word_Paste",
+      "comment": "在Word对象%word_instance%当前选择区域中粘贴内容",
+      "description": "从Word文件中拷贝内容",
+      "function": "xbot_visual.word.paste",
+      "helpUrl": "doc/指令文档/17Word/粘贴Word内容.html",
+      "inputs": [
+        {
+          "name": "word_instance",
+          "label": "Word对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Word\"或\"打开Word\"创建的Word对象",
+          "type": "Word.Document",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    }
+  ]
+}

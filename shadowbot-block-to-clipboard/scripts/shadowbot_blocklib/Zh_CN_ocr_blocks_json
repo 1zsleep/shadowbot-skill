@@ -1,0 +1,4165 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual_ocr_general_word",
+      "localName": "文本项(通用文字识别)",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_general_word",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "text",
+          "type": "str",
+          "label": "文本"
+        },
+        {
+          "name": "left",
+          "type": "str",
+          "label": "左边距"
+        },
+        {
+          "name": "top",
+          "type": "str",
+          "label": "上边距"
+        },
+        {
+          "name": "width",
+          "type": "str",
+          "label": "宽度"
+        },
+        {
+          "name": "height",
+          "type": "str",
+          "label": "高度"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_form_cell",
+      "localName": "单元格(表格识别)",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_form_cell",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "content",
+          "type": "str",
+          "label": "内容"
+        },
+        {
+          "name": "start_x",
+          "type": "int",
+          "label": "起始位置X"
+        },
+        {
+          "name": "start_y",
+          "type": "int",
+          "label": "起始位置Y"
+        },
+        {
+          "name": "end_x",
+          "type": "int",
+          "label": "结束位置X"
+        },
+        {
+          "name": "end_y",
+          "type": "int",
+          "label": "结束位置Y"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_form",
+      "localName": "单个表格(表格识别)",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_form",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "form_cells",
+          "type": "list<xbot_visual_ocr_form_cell>",
+          "label": "多个单元格"
+        }
+      ]
+    },
+    {
+      "name": "list<xbot_visual_ocr_form_cell>",
+      "localName": "单元格列表(表格识别)",
+      "base": "list",
+      "listItemType": "xbot_visual_ocr_form_cell"
+    },
+    {
+      "name": "list<xbot_visual_ocr_general_word>",
+      "localName": "文本项列表(通用文字识别)",
+      "base": "list",
+      "listItemType": "xbot_visual_ocr_general_word"
+    },
+    {
+      "name": "list<xbot_visual_ocr_form>",
+      "localName": "表格列表(表格识别)",
+      "base": "list",
+      "listItemType": "xbot_visual_ocr_form"
+    },
+    {
+      "name": "xbot.ai.AIEngine",
+      "localName": "AI引擎",
+      "props": []
+    },
+    {
+      "name": "xbot.ai.BaiduAIEngine",
+      "localName": "百度AI引擎",
+      "pythonName": "xbot.ai.baidu.BaiduAI",
+      "base": "xbot.ai.AIEngine",
+      "props": []
+    },
+    {
+      "name": "xbot.ai.AliyunAIEngine",
+      "localName": "阿里云AI引擎",
+      "pythonName": "xbot.ai.aliyun.AliyunAI",
+      "base": "xbot.ai.AIEngine",
+      "props": []
+    },
+    {
+      "name": "xbot.ai.TencentAIEngine",
+      "localName": "腾讯AI引擎",
+      "pythonName": "xbot.ai.tencent.TencentAI",
+      "base": "xbot.ai.AIEngine",
+      "props": []
+    },
+    {
+      "name": "xbot.ai.ShadowBotAIEngine",
+      "localName": "影刀AI引擎",
+      "pythonName": "xbot.ai.shadowbot.ShadowBotAI",
+      "base": "xbot.ai.AIEngine",
+      "props": []
+    },
+    {
+      "name": "xbot_visual_ocr_vat_invoice",
+      "localName": "增值税发票信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_vat_invoice",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "invoice_code",
+          "type": "str",
+          "label": "发票代码"
+        },
+        {
+          "name": "invoice_num",
+          "type": "str",
+          "label": "发票号码"
+        },
+        {
+          "name": "invoice_date",
+          "type": "str",
+          "label": "开票日期"
+        },
+        {
+          "name": "check_code",
+          "type": "str",
+          "label": "校验码"
+        },
+        {
+          "name": "total_amount",
+          "type": "str",
+          "label": "合计金额"
+        },
+        {
+          "name": "total_tax",
+          "type": "str",
+          "label": "合计税额"
+        },
+        {
+          "name": "seller_name",
+          "type": "str",
+          "label": "销售方名称"
+        },
+        {
+          "name": "seller_register_num",
+          "type": "str",
+          "label": "销售方纳税人识别号"
+        },
+        {
+          "name": "seller_address",
+          "type": "str",
+          "label": "销售方地址及电话"
+        },
+        {
+          "name": "seller_bank",
+          "type": "str",
+          "label": "销售方开户行及账号"
+        },
+        {
+          "name": "purchaser_name",
+          "type": "str",
+          "label": "购方名称"
+        },
+        {
+          "name": "purchaser_register_num",
+          "type": "str",
+          "label": "购方纳税人识别号"
+        },
+        {
+          "name": "purchaser_address",
+          "type": "str",
+          "label": "购方地址及电话"
+        },
+        {
+          "name": "purchaser_bank",
+          "type": "str",
+          "label": "购方开户行及账号"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_id_card",
+      "localName": "身份证信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_id_card",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "name",
+          "type": "str",
+          "label": "姓名"
+        },
+        {
+          "name": "sex",
+          "type": "str",
+          "label": "性别"
+        },
+        {
+          "name": "nation",
+          "type": "str",
+          "label": "民族"
+        },
+        {
+          "name": "birth",
+          "type": "str",
+          "label": "出生"
+        },
+        {
+          "name": "address",
+          "type": "str",
+          "label": "住址"
+        },
+        {
+          "name": "id_num",
+          "type": "str",
+          "label": "公民身份号码"
+        },
+        {
+          "name": "authority",
+          "type": "str",
+          "label": "签发机关"
+        },
+        {
+          "name": "valid_date",
+          "type": "str",
+          "label": "有效期"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_license_plate",
+      "localName": "车牌信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_license_plate",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "number",
+          "type": "str",
+          "label": "车牌号"
+        },
+        {
+          "name": "left",
+          "type": "str",
+          "label": "左边距"
+        },
+        {
+          "name": "top",
+          "type": "str",
+          "label": "上边距"
+        },
+        {
+          "name": "width",
+          "type": "str",
+          "label": "宽度"
+        },
+        {
+          "name": "height",
+          "type": "str",
+          "label": "高度"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_bank_card",
+      "localName": "银行卡信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_bank_card",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "bank_name",
+          "type": "str",
+          "label": "银行名"
+        },
+        {
+          "name": "card_number",
+          "type": "str",
+          "label": "卡号"
+        },
+        {
+          "name": "valid_date",
+          "type": "str",
+          "label": "有效期"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_train_ticket",
+      "localName": "火车票信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_train_ticket",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "starting_station",
+          "type": "str",
+          "label": "始发站"
+        },
+        {
+          "name": "train_num",
+          "type": "str",
+          "label": "车次号"
+        },
+        {
+          "name": "destination_station",
+          "type": "str",
+          "label": "到达站"
+        },
+        {
+          "name": "date",
+          "type": "str",
+          "label": "出发日期"
+        },
+        {
+          "name": "time",
+          "type": "str",
+          "label": "出发时间"
+        },
+        {
+          "name": "seat_num",
+          "type": "str",
+          "label": "座位号"
+        },
+        {
+          "name": "price",
+          "type": "str",
+          "label": "车票金额"
+        },
+        {
+          "name": "seat_category",
+          "type": "str",
+          "label": "席别"
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "label": "乘客姓名"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_taxi_invoice",
+      "localName": "出租车票信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_taxi_invoice",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "invoice_num",
+          "type": "str",
+          "label": "发票号码"
+        },
+        {
+          "name": "invoice_code",
+          "type": "str",
+          "label": "发票代号"
+        },
+        {
+          "name": "date",
+          "type": "str",
+          "label": "日期"
+        },
+        {
+          "name": "plate_number",
+          "type": "str",
+          "label": "车牌号"
+        },
+        {
+          "name": "geton_time",
+          "type": "str",
+          "label": "上车时间"
+        },
+        {
+          "name": "getoff_time",
+          "type": "str",
+          "label": "下车时间"
+        },
+        {
+          "name": "distance",
+          "type": "str",
+          "label": "里程"
+        },
+        {
+          "name": "fare",
+          "type": "str",
+          "label": "总金额"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_general_text_with_location",
+      "localName": "AI识别结果(含位置)",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_general_text_with_location",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "words",
+          "type": "list<xbot_visual_ocr_general_word>",
+          "label": "识别结果集"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_general_text",
+      "localName": "AI识别结果",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_general_text",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "text",
+          "type": "str",
+          "label": "识别结果"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_table",
+      "localName": "表格信息",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_table",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "forms",
+          "type": "list<xbot_visual_ocr_form>",
+          "label": "多个表格"
+        },
+        {
+          "name": "raw_data",
+          "type": "dict",
+          "label": "原始数据"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "ocr.OCRToText",
+      "icon": "Ocr_OCRToText",
+      "description": "识别图像文本",
+      "comment": "使用%ai_engine%AI引擎，识别%image_source%文本，将结果保存到%ocr_text%",
+      "title": "识别图像文本(OCR)",
+      "keywords": "文字识别;图像识别;识图;图文识别;图片识别",
+      "function": "xbot_visual.ocr.ocr_to_text",
+      "helpUrl": "language/zh-cn/指令文档/ocr/识别图像文本（ocr）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.OCRToTextControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              },
+              {
+                "display": "本地硬盘图片",
+                "value": "image_on_disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard_image"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_path",
+          "label": "图片路径",
+          "required": false,
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "image_region",
+          "label": "提取区域",
+          "required": false,
+          "default": "10:all_region",
+          "defaultDisplay": "提取区域",
+          "tips": "选择图片提取区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all_region"
+              },
+              {
+                "display": "指定部分区域",
+                "value": "sub_region"
+              }
+            ]
+          }
+        },
+        {
+          "name": "region_x1",
+          "label": "X1",
+          "required": false,
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y1",
+          "label": "Y1",
+          "required": false,
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_x2",
+          "label": "X2",
+          "required": false,
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y2",
+          "label": "Y2",
+          "required": false,
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ocr_text",
+          "label": "保存文本至变量",
+          "variableLabel": "图象文本",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的文本",
+          "type": "str",
+          "name": "ocr_text"
+        }
+      ]
+    },
+    {
+      "name": "ocr.CreateAIEngine",
+      "icon": "Ocr_CreateAIEngine",
+      "description": "配置一个AI引擎, 用于人工智能类指令引用",
+      "comment": "创建%engine%AI引擎，将对象保存到%ai_engine%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.CreateAIEngineControl, ShadowBot.Shell.Development",
+      "title": "配置AI引擎",
+      "keywords": "创建;创建AI引擎",
+      "function": "xbot_visual.ocr.create_ai_engine",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/创建ai引擎.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.CreateAIEngineHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "engine",
+          "label": "AI引擎",
+          "required": true,
+          "default": "10:shadowbot",
+          "defaultDisplay": "{{ProductName}}",
+          "tips": "选择AI引擎类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              },
+              {
+                "display": "百度",
+                "value": "baidu"
+              },
+              {
+                "display": "腾讯",
+                "value": "tencent"
+              },
+              {
+                "display": "阿里云",
+                "value": "aliyun"
+              }
+            ]
+          }
+        },
+        {
+          "name": "use_custom_account",
+          "label": "",
+          "required": true,
+          "tips": "是否使用自定义AI账号",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用自定义账号",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "param1",
+          "label": "认证参数1",
+          "tips": "请输入AI引擎的认证参数1",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "param2",
+          "label": "认证参数2",
+          "tips": "请输入AI引擎的认证参数2",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ai_engine",
+          "label": "保存AI引擎至",
+          "variableLabel": "AI引擎",
+          "tips": "指定一个变量名称，该变量用于存储创建的AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "name": "ai_engine"
+        }
+      ]
+    },
+    {
+      "name": "ocr.general_text_with_location",
+      "icon": "Ocr_General_Text_With_Location",
+      "description": "通用文字识别(含位置)",
+      "keywords": "文字识别;图像识别;识图;图文识别;图片识别",
+      "comment": "使用%ai_engine%AI引擎，识别%image_source%文本，将结果保存到%general_text_with_location%",
+      "title": "通用文字识别(含位置)",
+      "function": "xbot_visual.ocr.general_text_with_location",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.GeneralTextWithLocationControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/文字识别ocr/通用文字识别（含位置）.html",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "default": "10:general",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "default": "10:GeneralBasicOCR",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "default": "10:ocr_general",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              },
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png;*.pdf)|*.jpg;*.bmp;*.png;*.pdf"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region",
+          "label": "提取区域",
+          "default": "10:all_region",
+          "defaultDisplay": "提取区域",
+          "tips": "选择图片提取区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all_region"
+              },
+              {
+                "display": "指定部分区域",
+                "value": "sub_region"
+              }
+            ]
+          }
+        },
+        {
+          "name": "region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_pdf",
+          "label": "",
+          "tips": "是否开启PDF识别，默认值为false，开启后可同时支持图片和PDF的识别",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:False",
+          "editor": {
+            "label": "开启PDF识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "pdf_page_number",
+          "label": "PDF页码",
+          "default": "10:1",
+          "category": "advanced",
+          "tips": "需要识别的PDF页面的对应页码，仅支持PDF单页识别，当上传文件为PDF且IsPdf参数值为true时有效，默认值为1",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "recognize_granularity",
+          "label": "定位单字符位置",
+          "default": "10:big",
+          "category": "advanced",
+          "tips": "是否定位单字符位置，big：不定位单字符位置，默认值；small：定位单字符位置",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "vertexes_location",
+          "label": "",
+          "tips": "是否返回文字外接多边形顶点位置，不支持单字位置。默认为false",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "获取文字外接多边形顶点位置",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_direction",
+          "label": "",
+          "tips": "是否检测图像朝向，默认不检测，即：false。朝向是指输入图像是正常方向、逆时针旋转90/180/270度。可选值包括: true：检测朝向, false：不检测朝向",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "检测朝向",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_language",
+          "label": "",
+          "tips": "是否检测语言，默认不检测。当前支持（中文、英语、日语、韩语）",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "检测语言",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "paragraph",
+          "label": "",
+          "tips": "是否输出段落信息",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "输出段落信息",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "probability",
+          "label": "",
+          "tips": "是否返回识别结果中每一行的置信度",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "获取识别结果中每一行的置信度",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "min_size",
+          "label": "文字最小高度",
+          "default": "10:16",
+          "category": "advanced",
+          "tips": "图片中文字的最小高度，单位像素",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "output_prob",
+          "label": "",
+          "tips": "是否输出文字框的概率",
+          "type": "bool",
+          "default": "13:True",
+          "category": "advanced",
+          "editor": {
+            "label": "输出文字框的概率",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "output_keypoints",
+          "label": "",
+          "tips": "是否输出文字框角点",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "输出文字框角点",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "skip_detection",
+          "label": "",
+          "tips": "是否跳过文字检测步骤直接进行文字识别",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "跳过文字检测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "without_predicting_direction",
+          "label": "",
+          "tips": "是否关闭文字行方向预测",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "关闭文字行方向预测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "prob",
+          "label": "",
+          "tips": "是否需要识别结果中每一行的置信度，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "获取每一行的置信度",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "char_info",
+          "label": "",
+          "tips": "是否需要单字识别功能，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "单字识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "rotate",
+          "label": "",
+          "tips": "是否需要自动旋转功能，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "自动旋转",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "table",
+          "label": "",
+          "tips": "是否需要表格识别功能，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "表格识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sort_page",
+          "label": "",
+          "tips": "字块返回顺序，false表示从左往右，从上到下的顺序，true表示从上到下，从左往右的顺序，默认false",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "字块返回顺序",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "general_text_with_location",
+          "label": "保存识别结果至变量",
+          "variableLabel": "通用文字识别结果",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的通用文字识别结果",
+          "type": "xbot_visual_ocr_general_text_with_location",
+          "name": "general_text_with_location"
+        }
+      ]
+    },
+    {
+      "name": "ocr.general_text",
+      "icon": "Ocr_General_Text",
+      "description": "通用文字识别",
+      "keywords": "文字识别;图像识别;识图;图文识别;图片识别",
+      "comment": "使用%ai_engine%AI引擎，识别%image_source%文本，将结果保存到%general_text%",
+      "title": "通用文字识别",
+      "function": "xbot_visual.ocr.general_text",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.GeneralTextControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/文字识别ocr/通用文字识别.html",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "default": "10:general_basic",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general_basic"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate_basic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "default": "10:GeneralBasicOCR",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "default": "10:ocr_general",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              },
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png;*.pdf)|*.jpg;*.bmp;*.png;*.pdf"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region",
+          "label": "提取区域",
+          "default": "10:all_region",
+          "defaultDisplay": "提取区域",
+          "tips": "选择图片提取区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all_region"
+              },
+              {
+                "display": "指定部分区域",
+                "value": "sub_region"
+              }
+            ]
+          }
+        },
+        {
+          "name": "region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_pdf",
+          "label": "",
+          "tips": "是否开启PDF识别，默认值为false，开启后可同时支持图片和PDF的识别",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "开启PDF识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "pdf_page_number",
+          "label": "PDF页码",
+          "default": "10:1",
+          "category": "advanced",
+          "tips": "需要识别的PDF页面的对应页码，仅支持PDF单页识别，当上传文件为PDF且IsPdf参数值为true时有效，默认值为1",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "detect_direction",
+          "label": "",
+          "tips": "是否检测图像朝向，默认不检测，即：false。朝向是指输入图像是正常方向、逆时针旋转90/180/270度。可选值包括: true：检测朝向, false：不检测朝向",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "检测朝向",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_language",
+          "label": "",
+          "tips": "是否检测语言，默认不检测。当前支持（中文、英语、日语、韩语）",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "检测语言",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "paragraph",
+          "label": "",
+          "tips": "是否输出段落信息",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "输出段落信息",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "probability",
+          "label": "",
+          "tips": "是否返回识别结果中每一行的置信度",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "获取识别结果中每一行的置信度",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "min_size",
+          "label": "文字最小高度",
+          "default": "10:16",
+          "category": "advanced",
+          "tips": "图片中文字的最小高度，单位像素",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "output_prob",
+          "label": "",
+          "tips": "是否输出文字框的概率",
+          "type": "bool",
+          "default": "13:True",
+          "category": "advanced",
+          "editor": {
+            "label": "输出文字框的概率",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "output_keypoints",
+          "label": "",
+          "tips": "是否输出文字框角点",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "输出文字框角点",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "skip_detection",
+          "label": "",
+          "tips": "是否跳过文字检测步骤直接进行文字识别",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "跳过文字检测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "without_predicting_direction",
+          "label": "",
+          "tips": "是否关闭文字行方向预测",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "关闭文字行方向预测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "prob",
+          "label": "",
+          "tips": "是否需要识别结果中每一行的置信度，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "获取每一行的置信度",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "char_info",
+          "label": "",
+          "tips": "是否需要单字识别功能，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "单字识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "rotate",
+          "label": "",
+          "tips": "是否需要自动旋转功能，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "自动旋转",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "table",
+          "label": "",
+          "tips": "是否需要表格识别功能，默认不需要",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "表格识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sort_page",
+          "label": "",
+          "tips": "字块返回顺序，false表示从左往右，从上到下的顺序，true表示从上到下，从左往右的顺序，默认false",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "字块返回顺序",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "general_text",
+          "label": "保存识别结果至变量",
+          "variableLabel": "通用文字识别结果",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的通用文字识别结果",
+          "type": "xbot_visual_ocr_general_text",
+          "name": "general_text"
+        }
+      ]
+    },
+    {
+      "name": "ocr.if_text_on_screen",
+      "statement": "workflow.if",
+      "icon": "Ocr_If_Text_On_Screen",
+      "description": "如果屏幕上存在/不存在指定的文本",
+      "comment": "通过%ai_engine%AI引擎识别%image_source%上是否存在文本%text%",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "title": "IF 屏幕上存在文本(OCR)",
+      "function": "xbot_visual.ocr.if_text_on_screen",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if屏幕上存在文本（ocr）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.IfTextOnScreenHandler"
+        }
+      ],
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.IfTextOnScreenControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate"
+              },
+              {
+                "display": "标准版(不含位置)",
+                "value": "general_basic"
+              },
+              {
+                "display": "高精度版(不含位置)",
+                "value": "accurate_basic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "待查找文本",
+          "required": true,
+          "tips": "请输入待查找的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_regular_expression",
+          "label": "",
+          "required": true,
+          "tips": "输入的文本是正则表达式",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "正则表达式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "desired_state",
+          "label": "如果文本",
+          "required": true,
+          "default": "10:exist",
+          "defaultDisplay": "存在",
+          "tips": "指定查找范围内指定的文本存在or不存在",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "exist"
+              },
+              {
+                "display": "不存在",
+                "value": "not_exist"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "查找来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "可选择整个屏幕或指定的窗口",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_region",
+          "label": "查找区域",
+          "required": true,
+          "default": "10:all_region",
+          "defaultDisplay": "全部",
+          "tips": "选择整个查找区域or局部区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all_region"
+              },
+              {
+                "display": "指定部分区域",
+                "value": "sub_region"
+              }
+            ]
+          }
+        },
+        {
+          "name": "region_x1",
+          "label": "X1",
+          "required": false,
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y1",
+          "label": "Y1",
+          "required": false,
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_x2",
+          "label": "X2",
+          "required": false,
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y2",
+          "label": "Y2",
+          "required": false,
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ocr.wait_text_on_screen",
+      "icon": "Ocr_Wait_Text_On_Screen",
+      "description": "【高消耗】每2秒检测一次屏幕指定区域,直至识别到指定文本出现或消失",
+      "comment": "通过%ai_engine%AI引擎识别%image_source%上是否存在文本%text%",
+      "title": "等待文本(OCR)",
+      "function": "xbot_visual.ocr.wait_text_on_screen",
+      "helpUrl": "language/zh-cn/指令文档/等待/等待文本（ocr）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.WaitTextOnScreenHandler"
+        }
+      ],
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.WaitTextOnScreenControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate"
+              },
+              {
+                "display": "标准版(不含位置)",
+                "value": "general_basic"
+              },
+              {
+                "display": "高精度版(不含位置)",
+                "value": "accurate_basic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "待查找文本",
+          "required": true,
+          "tips": "请输入待查找的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_regular_expression",
+          "label": "",
+          "required": true,
+          "tips": "输入的文本是正则表达式",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "正则表达式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "desired_state",
+          "label": "如果文本",
+          "required": true,
+          "default": "10:appear",
+          "defaultDisplay": "出现",
+          "tips": "选择等待文本出现或消失",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "出现",
+                "value": "appear"
+              },
+              {
+                "display": "消失",
+                "value": "disappear"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "查找来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个查找来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_region",
+          "label": "查找区域",
+          "required": true,
+          "default": "10:all_region",
+          "defaultDisplay": "全部",
+          "tips": "选择文本查找区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all_region"
+              },
+              {
+                "display": "指定部分区域",
+                "value": "sub_region"
+              }
+            ]
+          }
+        },
+        {
+          "name": "region_x1",
+          "label": "X1",
+          "required": false,
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y1",
+          "label": "Y1",
+          "required": false,
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_x2",
+          "label": "X2",
+          "required": false,
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y2",
+          "label": "Y2",
+          "required": false,
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_wait",
+          "label": "",
+          "required": true,
+          "tips": "默认超时20秒。设置时间越长，可能产生的费用越高，请谨慎调整",
+          "default": "13:True",
+          "type": "bool",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout_seconds",
+          "label": "超时时间(s)",
+          "required": false,
+          "default": "10:20",
+          "tips": "每 2 秒调用一次OCR检测，请注意费用消耗",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text_wait_result",
+          "label": "等待结果",
+          "tips": "如果为True则等待成功,否则等待超时",
+          "name": "text_wait_result",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "ocr.hover_on_text",
+      "icon": "Ocr_Hover_On_Text",
+      "title": "鼠标悬停在文本上(OCR)",
+      "description": "鼠标悬停在文本上(OCR)",
+      "keywords": "悬浮",
+      "comment": "通过%ai_engine%AI引擎，识别%image_source%上文本%text%的位置，将鼠标移动到图像%anchor_type%位置",
+      "function": "xbot_visual.ocr.hover_on_text",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/鼠标悬停在文本上（ocr）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.HoverOnTextControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.HoverTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "待查找文本",
+          "required": true,
+          "tips": "请输入待查找的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "查找来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个查找来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": true,
+          "tips": "支持点击目标中心位置(元素矩形区域的中心点)、随机位置(自动随机指定目标矩形范围内的点)、自定义位置(手动指定目标点)",
+          "category": "advanced",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "目标文本的部位",
+          "default": "10:middleCenter",
+          "tips": "选择你要将鼠标移动到文本的哪个部位上",
+          "category": "advanced",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "category": "advanced",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "category": "advanced",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "occurrence",
+          "label": "相似结果位置",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "如果识别到多个结果, 可以指定位置序号，从1开始。排序规则先从左向右，再从上至下",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "ocr.click_text",
+      "icon": "Ocr_Click_Text",
+      "title": "点击文本(OCR)",
+      "description": "点击文本(OCR)",
+      "comment": "通过%ai_engine%AI引擎，识别%image_source%上文本%text%的位置，%button%%clicks%文本",
+      "function": "xbot_visual.ocr.click_text",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/点击文本（ocr）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.ClickTextControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.ClickTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "baidu_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择百度AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "general"
+              },
+              {
+                "display": "高精度版",
+                "value": "accurate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tencent_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择腾讯AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "GeneralBasicOCR"
+              },
+              {
+                "display": "高精度版",
+                "value": "GeneralAccurateOCR"
+              },
+              {
+                "display": "精简版",
+                "value": "GeneralEfficientOCR"
+              },
+              {
+                "display": "高速版",
+                "value": "GeneralFastOCR"
+              }
+            ]
+          }
+        },
+        {
+          "name": "aliyun_ocr_edition",
+          "label": "AI版本",
+          "tips": "选择阿里云AI识别版本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准版",
+                "value": "ocr_general"
+              },
+              {
+                "display": "高精度版",
+                "value": "advanced"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "待查找文本",
+          "required": true,
+          "tips": "请输入待查找的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "查找来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个查找来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": true,
+          "tips": "支持点击目标中心位置(元素矩形区域的中心点)、随机位置(自动随机指定目标矩形范围内的点)、自定义位置(手动指定目标点)",
+          "category": "advanced",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "目标文本的部位",
+          "default": "10:middleCenter",
+          "tips": "选择你要将鼠标移动到文本的哪个部位上",
+          "category": "advanced",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "category": "advanced",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "category": "advanced",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "clicks",
+          "label": "点击次数",
+          "required": true,
+          "default": "10:click",
+          "defaultDisplay": "单击",
+          "tips": "选择点击的方式是单击还是双击",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单击",
+                "value": "click"
+              },
+              {
+                "display": "双击",
+                "value": "dbclick"
+              }
+            ]
+          }
+        },
+        {
+          "name": "button",
+          "label": "鼠标",
+          "required": true,
+          "default": "10:left",
+          "defaultDisplay": "鼠标左键",
+          "tips": "选择用于触发点击的鼠标按键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "鼠标左键",
+                "value": "left"
+              },
+              {
+                "display": "鼠标右键",
+                "value": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "keys",
+          "label": "辅助按键",
+          "required": true,
+          "default": "10:null",
+          "defaultDisplay": "无",
+          "category": "advanced",
+          "tips": "在点击时需要按下的键盘功能键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无",
+                "value": "null"
+              },
+              {
+                "display": "Alt",
+                "value": "alt"
+              },
+              {
+                "display": "Ctrl",
+                "value": "ctrl"
+              },
+              {
+                "display": "Shift",
+                "value": "shift"
+              },
+              {
+                "display": "Win",
+                "value": "win"
+              }
+            ]
+          }
+        },
+        {
+          "name": "move_mouse",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "是否显示鼠标移动轨迹",
+          "type": "bool",
+          "editor": {
+            "label": "显示鼠标移动轨迹",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "occurrence",
+          "label": "相似结果位置",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "如果识别到多个结果, 可以指定位置序号，从1开始。排序规则先从左向右，再从上至下",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "ocr.vat_invoice",
+      "icon": "Ocr_Vat_Invoice",
+      "description": "增值税发票识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别增值税发票 %image_source% 中的内容，将结果保存到%vat_invoice%",
+      "title": "增值税发票识别",
+      "function": "xbot_visual.ocr.vat_invoice",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/文字识别ocr/票据识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.VatInvoiceControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.VatInvoiceHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png;*.pdf)|*.jpg;*.bmp;*.png;*.pdf"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_pdf",
+          "label": "",
+          "tips": "默认值为false，开启后可同时支持图片和PDF的识别",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "是否开启PDF识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "pdf_page_number",
+          "label": "PDF页面页码",
+          "tips": "需要识别的PDF页面的对应页码，仅支持PDF单页识别，当上传文件为PDF且IsPdf参数值为true时有效，默认值为1",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "vat_invoice",
+          "label": "保存发票信息至",
+          "variableLabel": "增值税发票信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的增值税发票信息",
+          "type": "xbot_visual_ocr_vat_invoice",
+          "name": "vat_invoice"
+        }
+      ]
+    },
+    {
+      "name": "ocr.id_card",
+      "icon": "Ocr_Id_Card",
+      "description": "身份证识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别身份证%image_source%中的内容，将结果保存到%id_card%",
+      "title": "身份证识别",
+      "function": "xbot_visual.ocr.id_card",
+      "helpUrl": "language/zh-cn/指令文档/ocr/身份证识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.IdCardControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "side",
+          "label": "正反面",
+          "required": true,
+          "default": "10:front",
+          "defaultDisplay": "正面",
+          "tips": "选择身份证正反面",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "正面",
+                "value": "front"
+              },
+              {
+                "display": "反面",
+                "value": "back"
+              }
+            ]
+          }
+        },
+        {
+          "name": "detect_risk",
+          "label": "",
+          "tips": "是否开启身份证风险类型(身份证复印件、临时身份证、身份证翻拍、修改过的身份证)功能，默认不开启，请查看返回参数risk_type",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "开启身份证风险类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_photo",
+          "label": "",
+          "tips": "是否检测头像内容，默认不检测。可选值：true-检测头像并返回头像的 base64 编码及位置信息",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "检测头像内容",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "crop_idcard",
+          "label": "",
+          "tips": "身份证照片裁剪（去掉证件外多余的边缘、自动矫正拍摄角度）",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "身份证照片裁剪",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "crop_portrait",
+          "label": "",
+          "tips": "人像照片裁剪（自动抠取身份证头像区域）",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "人像照片裁剪",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "quality",
+          "label": "",
+          "tips": "图片质量分数（评价图片的模糊程度）",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "图片质量分数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "copy_warn",
+          "label": "",
+          "tips": "复印件告警",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "复印件告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "border_check_warn",
+          "label": "",
+          "tips": "边框和框内遮挡告警",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "边框和框内遮挡告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "reshoot_warn",
+          "label": "",
+          "tips": "翻拍告警",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "翻拍告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_ps_warn",
+          "label": "",
+          "tips": "PS检测告警",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "PS检测告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "tempid_warn",
+          "label": "",
+          "tips": "临时身份证告警",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "临时身份证告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "invalid_date_warn",
+          "label": "",
+          "tips": "身份证有效日期不合法告警",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "身份证有效日期不合法告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "reflect_warn",
+          "label": "",
+          "tips": "是否开启反光检测",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "开启反光检测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "multi_card_detect",
+          "label": "",
+          "tips": "是否开启多卡证检测",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "开启多卡证检测",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "id_card",
+          "label": "保存身份证信息至",
+          "variableLabel": "身份证信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的身份证信息",
+          "type": "xbot_visual_ocr_id_card",
+          "name": "id_card"
+        }
+      ]
+    },
+    {
+      "name": "ocr.license_plate",
+      "icon": "Ocr_License_Plate",
+      "description": "车牌识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别图片%image_source%中的车牌信息，将结果保存到%license_plate%",
+      "title": "车牌识别",
+      "function": "xbot_visual.ocr.license_plate",
+      "helpUrl": "language/zh-cn/指令文档/ocr/车牌识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.LicensePlateControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "multi_crop",
+          "label": "",
+          "tips": "当设成true时,会做多crop预测，只有当多crop返回的结果一致，并且置信度>0.9时，才返回结果",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "开启多crop预测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "multi_detect",
+          "label": "",
+          "tips": "是否检测多张车牌，默认为false，当置为true的时候可以对一张图片内的多张车牌进行识别",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "检测多张车牌",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "license_plate",
+          "label": "保存车牌信息至",
+          "variableLabel": "车牌信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的车牌信息",
+          "type": "xbot_visual_ocr_license_plate",
+          "name": "license_plate"
+        }
+      ]
+    },
+    {
+      "name": "ocr.bank_card",
+      "icon": "Ocr_Bank_Card",
+      "description": "银行卡识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别图片%image_source%中的银行卡信息，将结果保存到%bank_card%",
+      "title": "银行卡识别",
+      "function": "xbot_visual.ocr.bank_card",
+      "helpUrl": "language/zh-cn/指令文档/ocr/银行卡识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.BankCardControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "detect_direction",
+          "label": "",
+          "tips": "是否检测图像朝向，默认检测，即：true。可选值包括true - 检测朝向；false - 不检测朝向。朝向是指输入图像是正常方向、逆时针旋转90/180/270度",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "检测图像朝向",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "bank_card",
+          "label": "保存银行卡信息至",
+          "variableLabel": "银行卡信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的银行卡信息",
+          "type": "xbot_visual_ocr_bank_card",
+          "name": "bank_card"
+        }
+      ]
+    },
+    {
+      "name": "ocr.id_license_discern",
+      "icon": "Ocr_Id_License_Discern",
+      "description": "对身份证、银行卡、车牌号等多种卡证进行识别",
+      "title": "卡证识别",
+      "function": "xbot_visual.ocr.id_license_discern",
+      "comment": "",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/文字识别ocr/卡证识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.IdLicenseDiscernControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.IdLicenseDiscernHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "id_type",
+          "label": "卡证类型",
+          "required": true,
+          "tips": "选择一个卡证类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "身份证",
+                "value": "id_card"
+              },
+              {
+                "display": "银行卡",
+                "value": "blank_card"
+              },
+              {
+                "display": "车牌",
+                "value": "license_plate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "side",
+          "label": "正反面",
+          "required": true,
+          "default": "10:front",
+          "defaultDisplay": "正面",
+          "tips": "选择身份证正反面",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "正面",
+                "value": "front"
+              },
+              {
+                "display": "反面",
+                "value": "back"
+              }
+            ]
+          }
+        },
+        {
+          "name": "detect_risk",
+          "label": "",
+          "tips": "是否开启身份证风险类型(身份证复印件、临时身份证、身份证翻拍、修改过的身份证)功能，默认不开启，请查看返回参数risk_type",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "开启身份证风险类型",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_photo",
+          "label": "",
+          "tips": "是否检测头像内容，默认不检测。可选值：true-检测头像并返回头像的 base64 编码及位置信息",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "检测头像内容",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "crop_idcard",
+          "label": "",
+          "tips": "身份证照片裁剪（去掉证件外多余的边缘、自动矫正拍摄角度）",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "身份证照片裁剪",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "crop_portrait",
+          "label": "",
+          "tips": "人像照片裁剪（自动抠取身份证头像区域）",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "人像照片裁剪",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "quality",
+          "label": "",
+          "tips": "图片质量分数（评价图片的模糊程度）",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "图片质量分数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "copy_warn",
+          "label": "",
+          "tips": "复印件告警",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "复印件告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "border_check_warn",
+          "label": "",
+          "tips": "边框和框内遮挡告警",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "边框和框内遮挡告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "reshoot_warn",
+          "label": "",
+          "tips": "翻拍告警",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "翻拍告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_ps_warn",
+          "label": "",
+          "tips": "PS检测告警",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "PS检测告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "tempid_warn",
+          "label": "",
+          "tips": "临时身份证告警",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "临时身份证告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "invalid_date_warn",
+          "label": "",
+          "tips": "身份证有效日期不合法告警",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "身份证有效日期不合法告警",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "reflect_warn",
+          "label": "",
+          "tips": "是否开启反光检测",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "开启反光检测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "multi_card_detect",
+          "label": "",
+          "tips": "是否开启多卡证检测",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "开启多卡证检测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "detect_direction",
+          "label": "",
+          "tips": "是否检测图像朝向，默认检测，即：true。可选值包括true - 检测朝向；false - 不检测朝向。朝向是指输入图像是正常方向、逆时针旋转90/180/270度",
+          "type": "bool",
+          "default": "13:True",
+          "category": "advanced",
+          "editor": {
+            "label": "检测图像朝向",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "multi_crop",
+          "label": "",
+          "tips": "当设成true时,会做多crop预测，只有当多crop返回的结果一致，并且置信度>0.9时，才返回结果",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "开启多crop预测",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "multi_detect",
+          "label": "",
+          "tips": "是否检测多张车牌，默认为false，当置为true的时候可以对一张图片内的多张车牌进行识别",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "检测多张车牌",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "id_license",
+          "label": "识别结果保存至",
+          "variableLabel": "卡证信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的卡证信息",
+          "type": "any",
+          "name": "id_license"
+        }
+      ]
+    },
+    {
+      "name": "ocr.train_ticket",
+      "icon": "Ocr_Train_Ticket",
+      "description": "火车票识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别图片%image_source%中的火车票信息，将结果保存到%train_ticket%",
+      "title": "火车票识别",
+      "function": "xbot_visual.ocr.train_ticket",
+      "helpUrl": "language/zh-cn/指令文档/ocr/火车票识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.TrainTicketControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "train_ticket",
+          "label": "保存火车票信息至",
+          "variableLabel": "火车票信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的火车票信息",
+          "type": "xbot_visual_ocr_train_ticket",
+          "name": "train_ticket"
+        }
+      ]
+    },
+    {
+      "name": "ocr.taxi_invoice",
+      "icon": "Ocr_Taxi_Invoice",
+      "description": "出租车票识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别图片%image_source%中的出租车票信息，将结果保存到%taxi_invoice%",
+      "title": "出租车票识别",
+      "function": "xbot_visual.ocr.taxi_invoice",
+      "helpUrl": "language/zh-cn/指令文档/ocr/出租车票识别.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.TaxiInvoiceControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "taxi_invoice",
+          "label": "保存出租车票信息至",
+          "variableLabel": "出租车票信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的出租车票信息",
+          "type": "xbot_visual_ocr_taxi_invoice",
+          "name": "taxi_invoice"
+        }
+      ]
+    },
+    {
+      "name": "ocr.note_discern",
+      "icon": "Ocr_Note_Discern",
+      "description": "对增值税发票、火车票、出租车票等各种票据进行识别",
+      "title": "票据识别",
+      "function": "xbot_visual.ocr.note_discern",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.NoteDiscernControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/文字识别ocr/票据识别.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Ocr.NoteDiscernHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "note_type",
+          "label": "票据类型",
+          "required": true,
+          "tips": "选择一个票据类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "增值税发票",
+                "value": "vat_invoice"
+              },
+              {
+                "display": "出租车票",
+                "value": "taxi_invoice"
+              },
+              {
+                "display": "火车票",
+                "value": "train_ticket"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png;*.pdf)|*.jpg;*.bmp;*.png;*.pdf"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_pdf",
+          "label": "",
+          "tips": "默认值为false，开启后可同时支持图片和PDF的识别",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "是否开启PDF识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "pdf_page_number",
+          "label": "PDF页面页码",
+          "tips": "需要识别的PDF页面的对应页码，仅支持PDF单页识别，当上传文件为PDF且IsPdf参数值为true时有效，默认值为1",
+          "type": "int",
+          "default": "10:1",
+          "category": "advanced",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "note_invoice",
+          "label": "保存票据信息至",
+          "variableLabel": "票据信息信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的票据信息",
+          "type": "any",
+          "name": "note_invoice"
+        }
+      ]
+    },
+    {
+      "name": "ocr.table",
+      "icon": "Ocr_Table",
+      "description": "表格识别(OCR)",
+      "comment": "使用%ai_engine%AI引擎，识别图片%image_source%中的表格信息，将结果保存到%table%",
+      "title": "表格识别",
+      "function": "xbot_visual.ocr.table",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Ocr.TableControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/文字识别ocr/表格识别.html",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像源",
+          "required": true,
+          "default": "10:disk",
+          "defaultDisplay": "本地硬盘图片",
+          "tips": "选择一个图像源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地硬盘图片",
+                "value": "disk"
+              },
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "网络图片",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "图片路径",
+          "tips": "请选择硬盘上的图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.bmp;*.png;*.pdf)|*.jpg;*.bmp;*.png;*.pdf"
+            }
+          }
+        },
+        {
+          "name": "url",
+          "label": "图片URL",
+          "tips": "图片URL",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_to_excel",
+          "label": "",
+          "required": true,
+          "tips": "将表格识别结果直接保存到Excel表格",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "识别结果保存到Excel",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "excel_path",
+          "label": "Excel文件路径",
+          "tips": "填写或选择要打开的Excel文件路径，若不存在将自动创建",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Workbook",
+              "filter": "Excel 工作簿 (.xlsx)|*.xlsx"
+            }
+          }
+        },
+        {
+          "name": "dir_assure",
+          "label": "",
+          "tips": "图片方向是否确定是正向的: true(确定)/false(不确定)",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "图片方向确定为正向",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "line_less",
+          "label": "",
+          "tips": "是否无线条: true(无线条,或者只有横线没有竖线)/false(有线条)",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "无线条",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "is_pdf",
+          "label": "",
+          "tips": "是否开启PDF识别，默认值为false，开启后可同时支持图片和PDF的识别",
+          "type": "bool",
+          "default": "13:False",
+          "category": "advanced",
+          "editor": {
+            "label": "开启PDF识别",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "pdf_page_number",
+          "label": "PDF页码",
+          "default": "10:1",
+          "category": "advanced",
+          "tips": "需要识别的PDF页面的对应页码，仅支持PDF单页识别，当上传文件为PDF且IsPdf参数值为true时有效，默认值为1",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "table",
+          "label": "保存表格信息至",
+          "variableLabel": "表格信息",
+          "tips": "指定一个变量名称，该变量用于存储识别出来的表格信息",
+          "type": "xbot_visual_ocr_table",
+          "name": "table"
+        }
+      ]
+    }
+  ]
+}

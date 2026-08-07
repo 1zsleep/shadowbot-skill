@@ -1,0 +1,808 @@
+{
+  "types": [
+    {
+      "name": "xbot.win32.window.Win32Window",
+      "localName": "窗口对象",
+      "methods": [
+        {
+          "display": "该窗口的标题",
+          "function": "$0.get_detail('title')",
+          "type": "str"
+        },
+        {
+          "display": "该窗口的进程名称",
+          "function": "$0.get_detail('process_name')",
+          "type": "str"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "win32.manual_motion_on",
+      "title": "开启模拟真人操作",
+      "description": "一次对多个鼠标操作指令用模拟真人的操作习惯运行（从开启到结束区间内的指令）",
+      "comment": "开启仿真操作，区间内的所有鼠标操作指令将依据设置，模拟真人操作习惯运行",
+      "icon": "Win32_Manual_Motion_On",
+      "indent": "1",
+      "scope": "1",
+      "canDebug": false,
+      "function": "xbot_visual.win32.manual_motion_on",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/开启模拟真人操作.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.ManualMotionOnControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "motion_move",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "模拟真人按随机路线和速度移动鼠标",
+          "type": "bool",
+          "editor": {
+            "label": "仿真移动鼠标",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "motion_click",
+          "label": "",
+          "default": "13:True",
+          "tips": "模拟真人在随机位置点击元素",
+          "type": "bool",
+          "editor": {
+            "label": "仿真点击元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "motion_delay",
+          "label": "",
+          "default": "13:False",
+          "tips": "模拟真人在操作之间随机停顿",
+          "type": "bool",
+          "editor": {
+            "label": "仿真操作停顿",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "min_time",
+          "label": "最小停顿时长(秒)",
+          "required": false,
+          "tips": "指令执行完成后的最短等待时间",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "max_time",
+          "label": "最大停顿时长(秒)",
+          "required": false,
+          "tips": "指令执行完成后的最长等待时间",
+          "type": "int",
+          "default": "10:3",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.manual_motion_off",
+      "title": "结束模拟真人操作",
+      "description": "结束模拟真人操作",
+      "comment": "结束模拟真人操作",
+      "icon": "Win32_Manual_Motion_Off",
+      "indent": "2",
+      "scope": "2",
+      "canDebug": false,
+      "function": "xbot_visual.win32.manual_motion_off",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/结束模拟真人操作.html"
+    },
+    {
+      "name": "win32.minimize_all",
+      "title": "最小化所有窗口",
+      "icon": "Win32_Minimize_All",
+      "comment": "最小化所有窗口",
+      "description": "最小化所有窗口",
+      "function": "xbot_visual.win32.minimize_all",
+      "helpUrl": ""
+    },
+    {
+      "name": "win32.move_mouse",
+      "title": "移动鼠标",
+      "icon": "Win32_Move_Mouse",
+      "comment": "将鼠标相对于%relative_to%%move_speed%移动到指定坐标位置（%point_x%，%point_y%）",
+      "description": "将鼠标移动到指定位置",
+      "function": "xbot_visual.win32.move_mouse",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.MoveMouseControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/移动鼠标.html",
+      "inputs": [
+        {
+          "name": "point_x",
+          "label": "移动鼠标至  X",
+          "required": true,
+          "default": "10:0",
+          "tips": "鼠标移动到指定位置的坐标 ,通过快捷键Ctrl+Alt可捕获当前鼠标位置,支持在ShadowBot窗口最小化的状况下通过快捷键来输入坐标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "point_y",
+          "label": "移动鼠标至  Y",
+          "required": true,
+          "default": "10:0",
+          "tips": "鼠标移动到指定位置的坐标 ,通过快捷键Ctrl+Alt可捕获当前鼠标位置,支持在ShadowBot窗口最小化的状况下通过快捷键来输入坐标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "relative_to",
+          "label": "相对于",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕左上角",
+          "tips": "选择新鼠标位置是相对于屏幕左上角、激活窗口左上角或 运行过程中鼠标当前位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕左上角",
+                "value": "screen"
+              },
+              {
+                "display": "激活窗口左上角",
+                "value": "currentactivatedwindow"
+              },
+              {
+                "display": "运行中当前鼠标位置",
+                "value": "currentmouseposition"
+              }
+            ]
+          }
+        },
+        {
+          "name": "move_speed",
+          "label": "移动速度",
+          "required": true,
+          "default": "10:middle",
+          "defaultDisplay": "中速",
+          "tips": "选择移动鼠标的速度",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "瞬间",
+                "value": "instant"
+              },
+              {
+                "display": "快速",
+                "value": "fast"
+              },
+              {
+                "display": "中速",
+                "value": "middle"
+              },
+              {
+                "display": "慢速",
+                "value": "slow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.send_keys",
+      "title": "键盘输入",
+      "icon": "Win32_Send_Keys",
+      "keywords": "填写;填入",
+      "comment": "将文本内容%keys%发送给当前激活的窗口",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.SendKeysControl, ShadowBot.Shell.Development",
+      "description": "给当前激活窗口发送文本",
+      "function": "xbot_visual.win32.send_keys",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/键盘输入.html",
+      "inputs": [
+        {
+          "name": "keys",
+          "label": "文本内容",
+          "required": true,
+          "tips": "键盘的输入可以分为两种模式，普通模式和特殊按键模式。通过勾选高级->输入内容包含特殊按键来使用特殊按键模式，不勾选则使用普通模式，默认为特殊按键模式。",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "hardware_driver_input",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "通过硬件驱动的方式输入",
+          "type": "bool",
+          "editor": {
+            "label": "驱动输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "force_ime_eng",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "使用模拟输入时会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题。存在不常见的输入法切换英文输入状态不成功的情况, 需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响, 默认值为`False`",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "contains_hotkey",
+          "label": "",
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "特殊按键模式，即可输入特殊的按键，包括快捷键（ctrl+a等）和按键特殊操作（持续按下shift键不弹起等）。",
+          "type": "bool",
+          "editor": {
+            "label": "输入内容包含特殊按键（快捷键和按键特殊操作）",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔（毫秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间, 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.click_mouse",
+      "title": "鼠标点击",
+      "keywords": "单击;双击;右键",
+      "icon": "Win32_Click_Mouse",
+      "comment": "鼠标%button%%click_type%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.ClickMouseControl, ShadowBot.Shell.Development",
+      "description": "可进行鼠标按下、弹起、单击、双击、右键点击等动作",
+      "function": "xbot_visual.win32.click_mouse",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/鼠标点击.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.ClickMouseHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "is_move_mouse_before_click",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "type": "bool",
+          "editor": {
+            "label": "点击前将鼠标移动到指定位置",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "point_x",
+          "label": "移动鼠标至  X",
+          "required": true,
+          "default": "10:0",
+          "tips": "",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "point_y",
+          "label": "移动鼠标至  Y",
+          "required": true,
+          "default": "10:0",
+          "tips": "",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "relative_to",
+          "label": "相对于",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕左上角",
+          "tips": "选择新鼠标位置是相对于屏幕左上角、激活窗口左上角或 运行过程中鼠标当前位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕左上角",
+                "value": "screen"
+              },
+              {
+                "display": "激活窗口左上角",
+                "value": "currentactivatedwindow"
+              },
+              {
+                "display": "运行中当前鼠标位置",
+                "value": "currentmouseposition"
+              }
+            ]
+          }
+        },
+        {
+          "name": "move_speed",
+          "label": "移动速度",
+          "required": true,
+          "default": "10:middle",
+          "defaultDisplay": "中速",
+          "tips": "鼠标移动的速度",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "瞬间",
+                "value": "instant"
+              },
+              {
+                "display": "快速",
+                "value": "fast"
+              },
+              {
+                "display": "中速",
+                "value": "middle"
+              },
+              {
+                "display": "慢速",
+                "value": "slow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "button",
+          "label": "鼠标按钮",
+          "required": true,
+          "default": "10:left",
+          "defaultDisplay": "左键",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "左键",
+                "value": "left"
+              },
+              {
+                "display": "右键",
+                "value": "right"
+              },
+              {
+                "display": "中键",
+                "value": "middle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "click_type",
+          "label": "点击方式",
+          "required": true,
+          "default": "10:click",
+          "defaultDisplay": "单击",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单击",
+                "value": "click"
+              },
+              {
+                "display": "双击",
+                "value": "dbclick"
+              },
+              {
+                "display": "按下",
+                "value": "down"
+              },
+              {
+                "display": "弹起",
+                "value": "up"
+              }
+            ]
+          }
+        },
+        {
+          "name": "hardware_driver_click",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "通过硬件驱动的方式点击",
+          "type": "bool",
+          "editor": {
+            "label": "驱动点击",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "keys",
+          "label": "键盘辅助按钮",
+          "required": true,
+          "default": "10:null",
+          "defaultDisplay": "无",
+          "category": "advanced",
+          "tips": "在点击时需要按下的键盘功能键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无",
+                "value": "null"
+              },
+              {
+                "display": "Alt",
+                "value": "alt"
+              },
+              {
+                "display": "Ctrl",
+                "value": "ctrl"
+              },
+              {
+                "display": "Shift",
+                "value": "shift"
+              },
+              {
+                "display": "Win",
+                "value": "win"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.wheel_mouse",
+      "title": "滚动鼠标滚轮",
+      "icon": "Win32_Wheel_Mouse",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.WheelMouseControl, ShadowBot.Shell.Development",
+      "comment": "%wheel_direction%鼠标滚轮%wheel_times%次",
+      "description": "滚动鼠标滚轮",
+      "function": "xbot_visual.win32.wheel_mouse",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/滚动鼠标滚轮.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Win32.WheelMouseHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "wheel_direction",
+          "label": "滚动方向",
+          "required": true,
+          "default": "10:down",
+          "defaultDisplay": "向下滚动",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "向下滚动",
+                "value": "down"
+              },
+              {
+                "display": "向上滚动",
+                "value": "up"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wheel_times",
+          "label": "滚动次数",
+          "required": true,
+          "default": "10:1",
+          "tips": "指定滚轮需要滚动的次数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": "0"
+          }
+        },
+        {
+          "name": "keys",
+          "label": "键盘辅助按钮",
+          "required": true,
+          "default": "10:null",
+          "defaultDisplay": "无",
+          "category": "advanced",
+          "tips": "在点击时需要按下的键盘功能键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无",
+                "value": "null"
+              },
+              {
+                "display": "Alt",
+                "value": "alt"
+              },
+              {
+                "display": "Ctrl",
+                "value": "ctrl"
+              },
+              {
+                "display": "Shift",
+                "value": "shift"
+              },
+              {
+                "display": "Win",
+                "value": "win"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "is_wheel_point",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "type": "bool",
+          "editor": {
+            "label": "滚动前将鼠标移动至指定位置",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "point_x",
+          "label": "移动鼠标至  X",
+          "required": true,
+          "category": "advanced",
+          "default": "10:0",
+          "tips": "",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "point_y",
+          "label": "移动鼠标至  Y",
+          "required": true,
+          "category": "advanced",
+          "default": "10:0",
+          "tips": "",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "relative_to",
+          "label": "相对于",
+          "required": true,
+          "category": "advanced",
+          "default": "10:screen",
+          "defaultDisplay": "屏幕左上角",
+          "tips": "选择新鼠标位置是相对于屏幕左上角、激活窗口左上角或 运行过程中鼠标当前位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕左上角",
+                "value": "screen"
+              },
+              {
+                "display": "激活窗口左上角",
+                "value": "currentactivatedwindow"
+              },
+              {
+                "display": "运行中当前鼠标位置",
+                "value": "currentmouseposition"
+              }
+            ]
+          }
+        },
+        {
+          "name": "move_speed",
+          "label": "移动速度",
+          "required": true,
+          "category": "advanced",
+          "default": "10:middle",
+          "defaultDisplay": "中速",
+          "tips": "鼠标移动的速度",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "瞬间",
+                "value": "instant"
+              },
+              {
+                "display": "快速",
+                "value": "fast"
+              },
+              {
+                "display": "中速",
+                "value": "middle"
+              },
+              {
+                "display": "慢速",
+                "value": "slow"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.get_mouse_position",
+      "title": "获取鼠标当前位置",
+      "icon": "Win32_Get_Mouse_Position",
+      "comment": "获取应用运行中的鼠标相对于%relative_to%的位置，将坐标保存到（%point_x%，%point_y%）",
+      "description": "获取机器人在运行过程中，执行该条指令时的鼠标位置",
+      "function": "xbot_visual.win32.get_mouse_position",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/获取鼠标当前位置.html",
+      "video": {
+        "time": "06:30"
+      },
+      "inputs": [
+        {
+          "name": "relative_to",
+          "label": "相对于",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕左上角",
+          "tips": "在整个屏幕中的坐标还是在激活窗口中的坐标",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕左上角",
+                "value": "screen"
+              },
+              {
+                "display": "激活窗口左上角",
+                "value": "currentactivatedwindow"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "point_x",
+          "label": "保存横坐标至",
+          "variableLabel": "鼠标的横坐标",
+          "tips": "输入一个名称来保存鼠标横坐标,其类型是整数",
+          "type": "int",
+          "name": "point_x"
+        },
+        {
+          "id": "point_y",
+          "label": "保存纵坐标至",
+          "variableLabel": "鼠标的纵坐标",
+          "tips": "输入一个名称来保存鼠标纵坐标,其类型是整数",
+          "type": "int",
+          "name": "point_y"
+        }
+      ]
+    },
+    {
+      "name": "win32.get_selected_text",
+      "title": "获取选中文本",
+      "icon": "Win32_Get_Selected_Text",
+      "comment": "获取选中的文本，将文本保存到%selected_text%",
+      "description": "获取选中的文本",
+      "function": "xbot_visual.win32.get_selected_text",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/数据提取/获取选中文本.html",
+      "inputs": [
+        {
+          "name": "wait_time",
+          "label": "等待时间（毫秒）",
+          "required": true,
+          "default": "10:0",
+          "tips": "当选中内容过多或系统反应慢时，需要调大此参数，避免获取不到选中内容",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "selected_text",
+          "label": "保存选中文本至",
+          "variableLabel": "选中文本",
+          "tips": "指定一个变量名称,该变量用于保存获取到的选中文本",
+          "name": "selected_text",
+          "type": "str"
+        }
+      ]
+    }
+  ]
+}

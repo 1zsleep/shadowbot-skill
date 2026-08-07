@@ -1,0 +1,4103 @@
+{
+  "types": [
+    {
+      "name": "openpyxl.Workbook",
+      "localName": "Excel对象",
+      "pythonName": "xbot.excel.workbook.officeworkbook.OfficeWorkBook,xbot.excel.workbook.comworkbook.ComWorkBook,xbot.excel.workbook.openpyxlworkbook.OpenPyxlWorkBook",
+      "methods": [
+        {
+          "display": "总行数",
+          "function": "$0.get_active_sheet().get_row_count()",
+          "type": "int"
+        },
+        {
+          "display": "第一个可用行",
+          "function": "$0.get_active_sheet().get_first_free_row()",
+          "type": "int"
+        },
+        {
+          "display": "文件所在位置",
+          "function": "$0.get_full_name()",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "table.row",
+      "base": "list",
+      "localName": "一行数据",
+      "methods": [
+        {
+          "display": "该行第$1列单元格内容",
+          "function": "$0[--$1]",
+          "type": "str",
+          "params": [
+            {
+              "name": "$1",
+              "default": "A"
+            }
+          ],
+          "editor": "letterspin"
+        },
+        {
+          "display": "该行倒数第$1个单元格内容",
+          "function": "$0[-$1]",
+          "type": "any",
+          "params": [
+            {
+              "name": "$1",
+              "default": "1"
+            }
+          ],
+          "editor": "spin"
+        }
+      ]
+    },
+    {
+      "name": "table.column",
+      "base": "list",
+      "localName": "一列数据",
+      "methods": [
+        {
+          "display": "该列第$1个单元格内容",
+          "function": "$0[--$1]",
+          "type": "any",
+          "params": [
+            {
+              "name": "$1",
+              "default": "1"
+            }
+          ],
+          "editor": "spin"
+        },
+        {
+          "display": "该列倒数第$1个单元格内容",
+          "function": "$0[-$1]",
+          "type": "any",
+          "params": [
+            {
+              "name": "$1",
+              "default": "1"
+            }
+          ],
+          "editor": "spin"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "excel.launch",
+      "title": "打开/新建Excel",
+      "keywords": "打开Excel文件;新建Excel;启动Excel",
+      "icon": "Excel_Launch",
+      "comment": "%launch_way% %open_filename%，将Excel对象保存到%excel_instance%",
+      "description": "打开已有Excel文件，或新建Excel，以实现Excel程序的自动化",
+      "function": "xbot_visual.excel.launch",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.LaunchExcelControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/excel/启动excel.html",
+      "video": {
+        "time": "09:51"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.LaunchExcelHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "launch_way",
+          "label": "启动方式",
+          "required": true,
+          "default": "10:open",
+          "defaultDisplay": "打开已有的Excel",
+          "tips": "选择要新建一个Excel文件还是打开一个Excel文件",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "新建Excel",
+                "value": "create"
+              },
+              {
+                "display": "打开已有的Excel",
+                "value": "open"
+              }
+            ]
+          }
+        },
+        {
+          "name": "driver_way",
+          "label": "驱动方式",
+          "required": true,
+          "tips": "选择新建Excel文件或者打开Excel文件的驱动方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动检测",
+                "value": "auto_check"
+              },
+              {
+                "display": "office",
+                "value": "office"
+              },
+              {
+                "display": "wps",
+                "value": "wps"
+              },
+              {
+                "display": "openpyxl",
+                "value": "openpyxl"
+              }
+            ]
+          }
+        },
+        {
+          "name": "open_filename",
+          "label": "Excel文件路径",
+          "required": false,
+          "tips": "填写或选择要打开的Excel文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "Excel 工作簿|*.xlsx;*.xls;*.xlsm;*.csv"
+            }
+          }
+        },
+        {
+          "name": "save_filename",
+          "label": "Excel文件路径",
+          "required": false,
+          "tips": "填写打开的Excel路径或保存Excel的路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Workbook",
+              "filter": "Excel 工作簿|*.xlsx;*.xls;*.csv"
+            }
+          }
+        },
+        {
+          "name": "isvisible",
+          "label": "",
+          "default": "13:True",
+          "tips": "此选项并不会限制Excel自动化的能力，只是用于控制可视化操作是否用户可见，如果是非可视化下操作Excel，保存之后必须要关闭Excel",
+          "type": "bool",
+          "editor": {
+            "label": "是否可视化",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "ignoreformula",
+          "label": "",
+          "default": "13:False",
+          "tips": "忽略Excel中的公式，仅读取公式结果，勾选忽略公式打开文件后不允许保存，以防公式丢失。",
+          "type": "bool",
+          "editor": {
+            "label": "忽略公式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "打开密码",
+          "category": "advanced",
+          "tips": "用于打开加密Excel文件的密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "write_password",
+          "label": "编辑密码",
+          "category": "advanced",
+          "tips": "用于编辑加密Excel文件的密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "update_links",
+          "label": "",
+          "default": "13:False",
+          "tips": "自动从其他Excel文件更新链接数据，以确保内容与外部文件保持同步，建议勾选可视化",
+          "type": "bool",
+          "editor": {
+            "label": "自动更新外部链接",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "excel_instance",
+          "label": "保存Excel对象至",
+          "variableLabel": "打开的Excel对象",
+          "tips": "该变量保存的是Excel对象,使用此Excel对象可以对Excel进行自动化操作",
+          "name": "excel_instance",
+          "type": "openpyxl.Workbook"
+        }
+      ]
+    },
+    {
+      "name": "excel.get_active_workbook",
+      "title": "获取当前激活的Excel对象",
+      "comment": "获取当前激活的Excel对象，将对象保存到%excel_instance%",
+      "description": "获取当前激活的Excel对象",
+      "icon": "Excel_Get_Active_Workbook",
+      "function": "xbot_visual.excel.get_active_workbook",
+      "helpUrl": "language/zh-cn/指令文档/excel/获取当前激活的excel.html",
+      "video": {
+        "time": "03:32"
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "id": "excel_instance",
+          "label": "保存Excel对象至",
+          "variableLabel": "激活的Excel对象",
+          "tips": "该变量保存的是Excel对象,使用此Excel对象可以对Excel进行自动化操作",
+          "name": "excel_instance",
+          "type": "openpyxl.Workbook"
+        }
+      ]
+    },
+    {
+      "name": "excel.save",
+      "title": "保存/另存Excel",
+      "comment": "%save_way%Excel对象%excel_instance%",
+      "description": "保存或另存Excel",
+      "keywords": "保存Excel;另存为Excel;导出Excel",
+      "icon": "Excel_Save",
+      "function": "xbot_visual.excel.save",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.SaveExcelControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/excel/保存excel.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.SaveExcelHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "excel_instance",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "save_way",
+          "label": "保存方式",
+          "required": true,
+          "default": "10:save",
+          "defaultDisplay": "保存",
+          "tips": "保存对Excel的更改或另存为到新的路径",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "保存",
+                "value": "save"
+              },
+              {
+                "display": "另存为",
+                "value": "saveas"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filename",
+          "label": "Excel文件路径",
+          "tips": "填写或选择要保存的Excel文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Workbook",
+              "filter": "Excel 工作簿 (.xlsx)|*.xlsx"
+            }
+          }
+        },
+        {
+          "name": "overwrite_file",
+          "label": "",
+          "default": "13:True",
+          "tips": "若文件已存在，又选择不覆盖，会报错提示文件已存在",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "is_close_after_save",
+          "label": "",
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "保存后关闭",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.close",
+      "title": "关闭Excel",
+      "comment": "关闭Excel",
+      "description": "关闭Excel",
+      "icon": "Excel_Close",
+      "function": "xbot_visual.excel.close",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.CloseExcelControl,ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/excel/关闭excel.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.CloseExcelHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:close_specified",
+          "defaultDisplay": "关闭指定Excel文件",
+          "tips": "选择要关闭一个指定的Excel文件还是关闭所有Excel文件",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "关闭指定Excel文件",
+                "value": "close_specified"
+              },
+              {
+                "display": "关闭所有Excel文件",
+                "value": "close_all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "excel_instance",
+          "label": "Excel对象",
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "close_way",
+          "label": "关闭方式",
+          "required": true,
+          "default": "10:save",
+          "defaultDisplay": "保存",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "不保存",
+                "value": "notsave"
+              },
+              {
+                "display": "保存",
+                "value": "save"
+              },
+              {
+                "display": "另存为",
+                "value": "saveas"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filename",
+          "label": "文件路径",
+          "tips": "填写或选择要打开的Excel文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "defaultFileName": "Workbook",
+              "filter": "Excel 工作簿 (.xlsx)|*.xlsx"
+            }
+          }
+        },
+        {
+          "name": "overwrite_file",
+          "label": "",
+          "default": "13:True",
+          "tips": "若文件已存在，又选择不覆盖，会报错提示文件已存在",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "close_process",
+          "label": "关闭进程",
+          "required": true,
+          "default": "10:office",
+          "defaultDisplay": "office",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "office",
+                "value": "office"
+              },
+              {
+                "display": "wps",
+                "value": "wps"
+              }
+            ]
+          }
+        },
+        {
+          "name": "task_kill",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "如果勾选, 将强制结束属于当前用户的指定Excel进程和由它启动的所有子进程",
+          "type": "bool",
+          "editor": {
+            "label": "终止Excel进程",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.active",
+      "title": "激活Sheet页",
+      "comment": "%mode%激活Excel对象%workbook%中的Sheet页%value%",
+      "description": "根据Sheet页的名称或位置激活指定的Sheet页",
+      "keywords": "切换;选择",
+      "icon": "Excel_Active",
+      "function": "xbot_visual.excel.active",
+      "helpUrl": "language/zh-cn/指令文档/excel/sheet页操作/激活sheet页.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "mode",
+          "label": "激活方式",
+          "required": true,
+          "default": "10:name",
+          "defaultDisplay": "根据Sheet页的名称",
+          "tips": "可根据名称或Sheet页中的位置(从1开始)",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据Sheet页的名称",
+                "value": "name"
+              },
+              {
+                "display": "根据Sheet页的位置",
+                "value": "index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "value",
+          "label": "Sheet页的名称/位置",
+          "required": true,
+          "tips": "填写要打开激活的Sheet页的名称或位置(从1开始)",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.create_sheet",
+      "title": "添加Sheet页",
+      "comment": "在Excel对象%workbook%中添加一个Sheet页，%create_way%，命名为%sheet_name%",
+      "description": "在Excel对象中添加一个新的sheet页，可以指定在头部添加或尾部添加",
+      "icon": "Excel_Create_Sheet",
+      "function": "xbot_visual.excel.create_sheet",
+      "helpUrl": "language/zh-cn/指令文档/excel/sheet页操作/添加sheet页.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "请选择一个已打开的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "required": true,
+          "tips": "请输入待添加的Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "create_way",
+          "label": "添加方式",
+          "required": true,
+          "default": "10:first",
+          "defaultDisplay": "作为第一个sheet页",
+          "tips": "选择添加位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "作为第一个sheet页",
+                "value": "first"
+              },
+              {
+                "display": "作为最后一个sheet页",
+                "value": "last"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.remove_row",
+      "title": "删除Excel行",
+      "keywords": "删除行",
+      "comment": "删除Excel对象%workbook%工作表中的第%index%行",
+      "description": "删除行",
+      "icon": "Excel_Remove_Row",
+      "function": "xbot_visual.excel.remove_row",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/删除行.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "index",
+          "label": "行号",
+          "required": true,
+          "tips": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.remove_all_rows",
+      "title": "删除所有行",
+      "comment": "删除Excel对象%workbook%中的所有行数据",
+      "description": "删除所有行",
+      "icon": "Excel_Remove_All_Rows",
+      "function": "xbot_visual.excel.remove_all_rows",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/删除所有行.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.get_row_count",
+      "title": "读取Excel总行数",
+      "comment": "读取Excel对象%workbook%中Sheet页%sheet_name%的总行数，将结果保存到%row_count%",
+      "description": "读取Excel总行数",
+      "icon": "Excel_Get_Row_Count",
+      "function": "xbot_visual.excel.get_row_count",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/读取总行数.html",
+      "video": {
+        "time": "03:05"
+      },
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "row_count",
+          "label": "保存总行数至",
+          "variableLabel": "Excel总行数",
+          "tips": "指定一个变量名称,该变量用于保存总行数",
+          "type": "int",
+          "name": "excel_row_count"
+        }
+      ]
+    },
+    {
+      "name": "excel.write_data_to_workbook",
+      "title": "写入内容至Excel工作表",
+      "keywords": "写入Excel",
+      "icon": "Excel_Write_Data_To_Workbook",
+      "comment": "写入内容到Excel工作表",
+      "description": "在 Excel 工作表中以写入内容，支持追加、插入或覆盖",
+      "function": "xbot_visual.excel.write_data_to_workbook",
+      "helpUrl": "language/zh-cn/指令文档/excel/写入内容至excel工作表.html",
+      "video": {
+        "time": "13:55"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.WriteDataToWorkBookControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.WriteDataToWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "write_range",
+          "label": "写入范围",
+          "required": true,
+          "default": "10:area",
+          "defaultDisplay": "区域",
+          "tips": "将数据写入到区域（包含单元格）、一行或一列",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "区域",
+                "value": "area"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              }
+            ]
+          }
+        },
+        {
+          "name": "write_way",
+          "label": "写入方式",
+          "default": "10:append",
+          "defaultDisplay": "追加一行",
+          "tips": "支持覆盖、追加、插入",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "追加一行",
+                "value": "append"
+              },
+              {
+                "display": "插入一行",
+                "value": "insert"
+              },
+              {
+                "display": "覆盖一行",
+                "value": "override"
+              }
+            ]
+          }
+        },
+        {
+          "name": "write_column_way",
+          "label": "写入方式",
+          "default": "10:override",
+          "defaultDisplay": "覆盖一列",
+          "tips": "支持覆盖、追加、插入",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "追加一列",
+                "value": "append"
+              },
+              {
+                "display": "插入一列",
+                "value": "insert"
+              },
+              {
+                "display": "覆盖一列",
+                "value": "override"
+              }
+            ]
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "default": "10:1",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名",
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "begin_row_num",
+          "label": "起始行号",
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "begin_column_name",
+          "label": "起始列名",
+          "category": "advanced",
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "content",
+          "label": "写入内容",
+          "required": true,
+          "tips": "内容的数据格式需要跟写入范围对应，写入行、列、非单个单元格的区域的内容需要是列表类型",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        },
+        {
+          "name": "write_as_text_cols",
+          "label": "格式设置为文本的列",
+          "category": "advanced",
+          "required": false,
+          "tips": "纯数字的长文本，写入Excel后会变成科学计数法，比如身份证号码。可在此设置相应列的数字格式为文本。多个列以,分割，比如A,B,C",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "多个列名以,分割，适用于订单号、身份证等纯数字的长文本"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.read_data_from_workbook",
+      "title": "读取Excel内容",
+      "keywords": "读取表格内容",
+      "icon": "Excel_Read_Data_From_Workbook",
+      "comment": "从Excel对象%workbook%中读取单元格（第%cell_row_num%行，第%cell_column_name%列）的内容，将数据保存到%excel_data%",
+      "description": "从Excel文件中读取内容，支持矩形区域范围读取",
+      "function": "xbot_visual.excel.read_data_from_workbook",
+      "helpUrl": "language/zh-cn/指令文档/excel/读取excel内容.html",
+      "video": {
+        "time": "05:39"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.ReadDataFromWorkBookControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.ReadDataFromWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "read_way",
+          "label": "读取方式",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "可读取单元格、一行、一列、区域内容",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格内容",
+                "value": "cell"
+              },
+              {
+                "display": "行内容",
+                "value": "row"
+              },
+              {
+                "display": "列内容",
+                "value": "column"
+              },
+              {
+                "display": "区域内容",
+                "value": "range"
+              },
+              {
+                "display": "已使用区域内容",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "cell_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "cell_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "area_begin_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "row_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "get_display_text",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "获取单元格的值作为纯文本",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "has_header_row",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "区域第一行包含列名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "column_column_name",
+          "label": "列名",
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        },
+        {
+          "name": "using_text",
+          "label": " ",
+          "category": "advanced",
+          "required": false,
+          "default": "13:False",
+          "tips": "若不勾选，整数会被读成小数，比如1->1.0,日期格式值会被读成日期对象。若勾选此项，返回的内容为肉眼看到的文本",
+          "type": "str",
+          "editor": {
+            "kind": "checkbox",
+            "label": "读取单元格显示的内容"
+          }
+        },
+        {
+          "name": "text_cols",
+          "label": "显示内容的列",
+          "category": "advanced",
+          "default": "10:",
+          "tips": "选择哪些列需要显示肉眼可见内容。多个列以逗号分割。\r\n注意！这种读取方法较慢，一列一万行数据，需要13秒",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "多个列名以,分割，若空表示所有列，但读取速度会较慢"
+          }
+        },
+        {
+          "name": "clear_space",
+          "label": " ",
+          "category": "advanced",
+          "required": false,
+          "default": "13:False",
+          "tips": "若勾选，会自动清除读取内容前后的空格、换行符",
+          "type": "str",
+          "editor": {
+            "kind": "checkbox",
+            "label": "清除单元格前后空格"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "excel_data",
+          "label": "保存Excel数据对象至",
+          "variableLabel": "Excel数据对象",
+          "tips": "指定一个变量名称,该变量用于保存区域数据内容",
+          "type": "any",
+          "name": "excel_data"
+        }
+      ]
+    },
+    {
+      "name": "excel.loop_data_from_workbook",
+      "statement": "excel.forin",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "title": "循环Excel内容",
+      "keywords": "循环表格内容",
+      "icon": "Excel_Loop_Data_From_Workbook",
+      "comment": "循环Excel对象%workbook中内容，将每次循环项保存到%loop_item%",
+      "description": "循环Excel对象的内容，并保存循环项",
+      "function": "xbot_visual.excel.loop_data_from_workbook_with_return_item_location",
+      "helpUrl": "language/zh-cn/指令文档/循环/循环excel内容.html",
+      "video": {
+        "time": "04:05"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.ExcelLoopControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.ExcelLoopHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "loop_way",
+          "label": "循环方式",
+          "required": true,
+          "default": "10:used_range",
+          "defaultDisplay": "循环已使用区域",
+          "tips": "可循环连续的行、列或区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "循环区域",
+                "value": "loop_range"
+              },
+              {
+                "display": "循环行",
+                "value": "loop_row"
+              },
+              {
+                "display": "循环列",
+                "value": "loop_column"
+              },
+              {
+                "display": "循环已使用区域",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "begin_row_num",
+          "label": "起始行号",
+          "required": false,
+          "tips": "循环起始行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "起始行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "end_row_num",
+          "label": "结束行号",
+          "required": false,
+          "tips": "循环结束行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "结束行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "begin_column_name",
+          "label": "起始列名",
+          "required": false,
+          "tips": "循环开始列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "起始列名（支持A或1），-n表示倒数第n列数"
+          }
+        },
+        {
+          "name": "end_column_name",
+          "label": "结束列名",
+          "required": false,
+          "tips": "循环结束列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "结束列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "has_header_row",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "区域第一行包含列名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "range_begin_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "range_begin_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "range_end_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "range_end_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        },
+        {
+          "name": "using_text",
+          "label": "",
+          "category": "advanced",
+          "required": false,
+          "default": "13:False",
+          "tips": "若不勾选，整数会被读成小数，比如1->1.0,日期格式值会被读成日期对象。若勾选此项，返回的内容为肉眼看到的文本",
+          "type": "str",
+          "editor": {
+            "kind": "checkbox",
+            "label": "读取单元格显示的内容"
+          }
+        },
+        {
+          "name": "text_cols",
+          "label": "显示内容的列",
+          "category": "advanced",
+          "default": "10:",
+          "tips": "选择哪些列需要显示肉眼可见内容。多个列以逗号分割。\r\n注意！这种读取方法较慢，一列一万行数据，需要13秒",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "多个列名以,分隔，若空表示所有列，但读取速度会较慢"
+          }
+        },
+        {
+          "name": "clear_space",
+          "label": "",
+          "category": "advanced",
+          "required": false,
+          "default": "13:False",
+          "tips": "若勾选，会自动清除读取内容前后的空格、换行符",
+          "type": "str",
+          "editor": {
+            "kind": "checkbox",
+            "label": "清除单元格前后空格"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_item",
+          "label": "当前循环项保存至",
+          "variableLabel": "当前循环项数据对象",
+          "tips": "指定一个变量名称,该变量用于保存Excel循环项",
+          "type": "table.row",
+          "name": "loop_excel"
+        },
+        {
+          "id": "loop_item_rownum",
+          "label": "当前行号保存至",
+          "variableLabel": "当前循环行的行号",
+          "tips": "指定一个变量名称,该变量用于保存Excel当前循环项的行号",
+          "type": "int",
+          "name": "loop_item_rownum"
+        },
+        {
+          "id": "loop_item_columnname",
+          "label": "当前列名保存至",
+          "variableLabel": "当前循环列的列名",
+          "tips": "指定一个变量名称,该变量用于保存Excel当前循环项的列名",
+          "type": "str",
+          "name": "loop_item_columnname"
+        }
+      ]
+    },
+    {
+      "name": "excel.execute_macro",
+      "title": "运行Excel宏",
+      "comment": "在Excel对象%workbook%中运行宏%macro%",
+      "description": "运行Excel宏",
+      "icon": "Excel_Execute_Macro",
+      "function": "xbot_visual.excel.execute_macro",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/运行excel宏.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "macro",
+          "label": "宏",
+          "required": true,
+          "tips": "请输入在Excel中运行的宏",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.select_range",
+      "title": "选中区域",
+      "icon": "Excel_Select_Range",
+      "comment": "在Excel对象%workbook%中选中区域：从起始单元格（第%begin_row_num%行，第%begin_column_name%列）到末尾单元格（第%end_row_num%行，第%end_column_name%列）",
+      "description": "在Excel对象中选中区域",
+      "function": "xbot_visual.excel.select_range",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/选中区域.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.SelectRangeControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.SelectRangeHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "select_way",
+          "label": "选中方式",
+          "required": true,
+          "default": "10:absolute_range",
+          "defaultDisplay": "区域",
+          "tips": "指定需要选中的单元格区域范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "区域",
+                "value": "absolute_range"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "begin_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，若选中方式为‘行’，可以填写多行，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "begin_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1）。若选中方式为‘列’，可以填写多列，多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "end_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "end_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "any",
+          "editor": {
+            "placeholder": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.get_sheet_name",
+      "statement": "excel.get_sheet_name",
+      "title": "获取Sheet页名称",
+      "comment": "在Excel对象%workbook%中获取%sheet_scope%，将结果保存到%sheet_name%",
+      "description": "获取Sheet页名称",
+      "icon": "Excel_Get_Sheet_Name",
+      "function": "xbot_visual.excel.get_sheet_name",
+      "helpUrl": "language/zh-cn/指令文档/excel/sheet页操作/获取sheet页名称.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.GetSheetNameControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.GetSheetNameHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_scope",
+          "label": "Sheet页范围",
+          "required": true,
+          "default": "10:active_sheet",
+          "defaultDisplay": "当前Sheet页名称",
+          "tips": "当前激活的Sheet页或全部的Sheet页名称列表，注意两者返回的结果数据类型不同",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "当前Sheet页名称",
+                "value": "active_sheet"
+              },
+              {
+                "display": "所有Sheet页名称",
+                "value": "all_sheet"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "sheet_name",
+          "label": "Sheet页名称保存至",
+          "variableLabel": "Sheet页名称",
+          "tips": "指定一个变量名称,该变量用于保存Sheet页名称",
+          "type": "any",
+          "name": "sheet_name"
+        },
+        {
+          "id": "sheet_name_list",
+          "label": "Sheet页名称列表保存至",
+          "variableLabel": "Sheet页名称",
+          "tips": "指定一个变量名称,该变量用于保存Sheet页名称列表",
+          "type": "any",
+          "name": "sheet_name_list",
+          "isEnable": false
+        }
+      ]
+    },
+    {
+      "name": "excel.delete_sheet",
+      "title": "删除Sheet页",
+      "comment": "在Excel对象%workbook%中删除指定的Sheet页%sheet_name%",
+      "description": "删除指定的Sheet页",
+      "icon": "Excel_Delete_Sheet",
+      "function": "xbot_visual.excel.delete_sheet",
+      "helpUrl": "language/zh-cn/指令文档/excel/sheet页操作/删除sheet页.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "required": true,
+          "tips": "输入待删除的Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.copy_sheet",
+      "title": "拷贝Sheet页",
+      "comment": "在Excel对象%workbook%中拷贝Sheet页%sheet_name%到新的Sheet页%new_sheet_name%",
+      "description": "拷贝指定的Sheet页",
+      "icon": "Excel_Copy_Sheet",
+      "function": "xbot_visual.excel.copy_sheet",
+      "helpUrl": "language/zh-cn/指令文档/excel/sheet页操作/拷贝sheet页.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.CopySheetControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.CopySheetHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "源Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "源Sheet页名称",
+          "required": true,
+          "tips": "输入待拷贝的Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "copy_way",
+          "label": "拷贝方式",
+          "required": true,
+          "default": "10:copy_in_current_workbook",
+          "defaultDisplay": "当前工作簿内拷贝",
+          "tips": "请选择拷贝方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "当前工作簿内拷贝",
+                "value": "copy_in_current_workbook"
+              },
+              {
+                "display": "拷贝到另外的工作簿",
+                "value": "copy_to_another_workbook"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dest_workbook",
+          "label": "目标Excel对象",
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "new_sheet_name",
+          "label": "新的Sheet页名称",
+          "required": true,
+          "tips": "输入新的Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_cover",
+          "label": "",
+          "default": "13:False",
+          "required": true,
+          "tips": "若新的Sheet页名称存在，勾选后会覆盖原Sheet页，若不勾选，则会提示Sheet页名称已存在",
+          "type": "bool",
+          "editor": {
+            "label": "新的Sheet页存在则覆盖",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.get_first_free_row",
+      "title": "获取第一个可用行",
+      "comment": "在Excel对象%workbook%中的Sheet页%sheet_name%中获取第一个可用行，将行号保存到%row_num%",
+      "description": "获取第一个可用行，即下面不再有值的第一个空行的行号",
+      "icon": "Excel_Get_First_Free_Row",
+      "function": "xbot_visual.excel.get_first_free_row",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/获取第一个可用行.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "row_num",
+          "label": "行号保存至",
+          "variableLabel": "第一个可用行号",
+          "tips": "指定一个变量名称,该变量用于Sheet页第一个可用行号",
+          "type": "int",
+          "name": "row_num"
+        }
+      ]
+    },
+    {
+      "name": "excel.get_first_free_column",
+      "title": "获取第一个可用列",
+      "comment": "在Excel对象%workbook%中的Sheet页%sheet_name%中获取第一个可用列，将列名保存到%column_name%",
+      "description": "获取第一个可用列，即后面不再有值的第一个空列的列名",
+      "icon": "Excel_Get_First_Free_Column",
+      "function": "xbot_visual.excel.get_first_free_column",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/获取第一个可用列.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "column_name",
+          "label": "列名保存至",
+          "variableLabel": "第一个可用列名",
+          "tips": "指定一个变量名称,该变量用于Sheet页第一个可用列名",
+          "type": "str",
+          "name": "column_name"
+        }
+      ]
+    },
+    {
+      "name": "excel.get_last_column",
+      "title": "获取最后一列",
+      "comment": "在Excel对象%workbook%中的Sheet页%sheet_name%中获取最后一列，将列名保存到%last_column_name%",
+      "description": "获取最后一列的列名",
+      "icon": "Excel_Get_Last_Column",
+      "function": "xbot_visual.excel.get_last_column",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/获取最后一列.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "last_column_name",
+          "label": "列名保存至",
+          "variableLabel": "Sheet页列名",
+          "tips": "指定一个变量名称,该变量用于Sheet页最后一列的列名",
+          "type": "str",
+          "name": "last_column_name"
+        }
+      ]
+    },
+    {
+      "name": "excel.remove_column",
+      "title": "删除Excel列",
+      "keywords": "删除列",
+      "comment": "在Excel对象%workbook%中删除第%column_name%列",
+      "description": "删除列",
+      "icon": "Excel_Remove_Column",
+      "function": "xbot_visual.excel.remove_column",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/删除列.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名",
+          "required": true,
+          "tips": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.get_first_free_row_on_column",
+      "title": "获取列上第一个可用行",
+      "comment": "在Excel对象%workbook%中获取第%column_name%列上的第一个可用行，将行号保存到%row_num%",
+      "description": "获取指定列上第一个可用行，即指定列上后面不再有值的第一行的行号",
+      "icon": "Excel_Get_First_Free_Row_On_Column",
+      "function": "xbot_visual.excel.get_first_free_row_on_column",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/获取列上第一个可用行.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名",
+          "required": true,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "row_num",
+          "label": "Sheet页行号保存至",
+          "variableLabel": "列上第一个可用行号",
+          "tips": "指定一个变量名称,该变量用于Sheet页指定列上的第一个可用行号",
+          "type": "int",
+          "name": "row_num"
+        }
+      ]
+    },
+    {
+      "name": "excel.get_first_free_column_on_row",
+      "title": "获取行上第一个可用列",
+      "comment": "在Excel对象%workbook%中获取第%row_num%行上的第一个可用列，将列名保存到%column_name%",
+      "description": "获取指定行上第一个可用列，即指定行上后面不再有值的第一列的列名",
+      "icon": "Excel_Get_First_Free_Column_On_Row",
+      "function": "xbot_visual.excel.get_first_free_column_on_row",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/获取行上第一个可用列.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "required": true,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "column_name",
+          "label": "Sheet页列名保存至",
+          "variableLabel": "行上第一个可用列名",
+          "tips": "指定一个变量名称,该变量用于Sheet页指定行上的第一个可用列名",
+          "type": "str",
+          "name": "column_name"
+        }
+      ]
+    },
+    {
+      "name": "excel.get_selected_range",
+      "title": "获取选中区域",
+      "comment": "获取Excel对象%workbook%当前Sheet页选中区域，将起始行号保存到%begin_row_num%，起始列名保存到%beigin_column_name%，结束行号保存到%end_row_num%，结束列名保存到%end_column_name%",
+      "description": "获取当前Sheet页选中区域",
+      "icon": "Excel_Get_Selected_Range",
+      "function": "xbot_visual.excel.get_selected_range",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/获取选中区域.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "begin_row_num",
+          "label": "起始行号保存至",
+          "variableLabel": "选中区域起始行号",
+          "tips": "指定一个变量名称,该变量用于保存选中区域的起始行号",
+          "type": "int",
+          "name": "begin_row_num"
+        },
+        {
+          "id": "beigin_column_name",
+          "label": "起始列名保存至",
+          "variableLabel": "选中区域起始列名",
+          "tips": "指定一个变量名称,该变量用于保存选中区域的起始列名",
+          "type": "str",
+          "name": "begin_column_name"
+        },
+        {
+          "id": "end_row_num",
+          "label": "结束行号保存至",
+          "variableLabel": "选中区域结束行号",
+          "tips": "指定一个变量名称,该变量用于保存选中区域的结束行号",
+          "type": "int",
+          "name": "end_row_num"
+        },
+        {
+          "id": "end_column_name",
+          "label": "结束列名保存至",
+          "variableLabel": "选中区域结束列名",
+          "tips": "指定一个变量名称,该变量用于保存选中区域的结束列名",
+          "type": "str",
+          "name": "end_column_name"
+        }
+      ]
+    },
+    {
+      "name": "excel.clear_range",
+      "title": "清空Excel内容",
+      "icon": "Excel_Clear_Range",
+      "comment": "从Excel对象%workbook%中清空单元格（第%cell_row_num%行，第%cell_column_name%列）中的内容",
+      "description": "从Excel文件中清空内容或格式",
+      "function": "xbot_visual.excel.clear_range",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/清空excel内容.html",
+      "keywords": "格式,清空表格",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.ClearRangeFromWorkBookControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.ClearRangeFromWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "clear_target",
+          "label": "清除内容",
+          "default": "13:all",
+          "tips": "选择清除内容：全部、内容、格式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all"
+              },
+              {
+                "display": "内容",
+                "value": "content"
+              },
+              {
+                "display": "格式",
+                "value": "format"
+              }
+            ]
+          }
+        },
+        {
+          "name": "clear_way",
+          "label": "清空方式",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "选择清空的区域，单元格、多行、多列、区域等",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "行内容",
+                "value": "row"
+              },
+              {
+                "display": "列内容",
+                "value": "column"
+              },
+              {
+                "display": "区域内容",
+                "value": "range"
+              },
+              {
+                "display": "已使用区域内容",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "cell_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号从1开始。若清空方式为‘行内容’,可以填写多行，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "cell_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "列名（支持A或1）。若清空方式为‘列内容’，多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "area_begin_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "row_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_column_name",
+          "label": "列名",
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.copy_range",
+      "title": "拷贝Excel内容",
+      "icon": "Excel_Copy_Range",
+      "keywords": "复制Excel",
+      "comment": "从Excel对象%workbook%中拷贝单元格（第%cell_row_num%行，第%cell_column_name%列）中的内容",
+      "description": "从Excel文件中拷贝内容",
+      "function": "xbot_visual.excel.copy_range",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/拷贝excel内容.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.CopyRangeFromWorkBookControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.CopyRangeFromWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "copy_way",
+          "label": "拷贝方式",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "可拷贝单元格、多行、多列或区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "行内容",
+                "value": "row"
+              },
+              {
+                "display": "列内容",
+                "value": "column"
+              },
+              {
+                "display": "区域内容",
+                "value": "range"
+              },
+              {
+                "display": "已使用区域内容",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "cell_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号从1开始。若拷贝方式为‘行内容’,可以填写多行，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "cell_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "列名从A或1开始。拷贝方式为‘列内容’，可以填写多列，多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "area_begin_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_column_name",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "row_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号",
+          "type": "any",
+          "editor": {
+            "placeholder": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_column_name",
+          "label": "列名",
+          "tips": "列名",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.paste_range",
+      "title": "粘贴Excel内容",
+      "comment": "在Excel对象%workbook%中单元格（第%row_num%行，第%column_name%列）处粘贴内容",
+      "description": "将剪切板中内容粘贴到Excel中，内容可通过拷贝Excel指令或者剪切板获取",
+      "icon": "Excel_Paste_Range",
+      "function": "xbot_visual.excel.paste_range",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/粘贴excel内容.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "单元格行号",
+          "required": true,
+          "default": "10:1",
+          "tips": "待粘贴的单元格行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入行号,从1开始",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "单元格列名",
+          "required": true,
+          "tips": "待粘贴的单元格列名",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1）",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "copy_formula",
+          "label": "",
+          "default": "13:True",
+          "tips": "勾选时，表示拷贝单元格公式；未勾选时，表示只拷贝单元格值",
+          "type": "bool",
+          "editor": {
+            "label": "拷贝单元格公式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.paste_range_ex",
+      "title": "粘贴Excel内容",
+      "comment": "在Excel对象%workbook%中单元格（第%row_num%行，第%column_name%列）处粘贴%paste_type%内容，粘贴运算为%paste_special_operation%",
+      "description": "粘贴Excel内容",
+      "icon": "Excel_Paste_Range_Ex",
+      "function": "xbot_visual.excel.paste_range_ex",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/粘贴excel内容.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.PasteRangeFromWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "单元格行号",
+          "default": "10:1",
+          "required": true,
+          "tips": "待粘贴的单元格行号,从1开始，-n表示倒数第n行",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "单元格列名",
+          "required": true,
+          "tips": "待粘贴的单元格列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "paste_type",
+          "label": "选择性粘贴",
+          "required": true,
+          "default": "10:-4104",
+          "defaultDisplay": "选择粘贴类型",
+          "tips": "选择粘贴类型",
+          "type": "int",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": -4104
+              },
+              {
+                "display": "公式",
+                "value": -4123
+              },
+              {
+                "display": "数值",
+                "value": -4163
+              },
+              {
+                "display": "格式",
+                "value": -4122
+              },
+              {
+                "display": "批注",
+                "value": -4144
+              },
+              {
+                "display": "有效性验证",
+                "value": 6
+              },
+              {
+                "display": "所有使用源主题的单元",
+                "value": 13
+              },
+              {
+                "display": "边框除外",
+                "value": 7
+              },
+              {
+                "display": "列宽",
+                "value": 8
+              },
+              {
+                "display": "公式和数字格式",
+                "value": 11
+              },
+              {
+                "display": "值和数字格式",
+                "value": 12
+              },
+              {
+                "display": "所有合并条件格式",
+                "value": 14
+              }
+            ]
+          }
+        },
+        {
+          "name": "paste_special_operation",
+          "label": "粘贴运算",
+          "required": true,
+          "default": "10:-4142",
+          "defaultDisplay": "选择粘贴运算方式",
+          "tips": "选择粘贴运算方式",
+          "type": "int",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无",
+                "value": -4142
+              },
+              {
+                "display": "加",
+                "value": 2
+              },
+              {
+                "display": "减",
+                "value": 3
+              },
+              {
+                "display": "乘",
+                "value": 4
+              },
+              {
+                "display": "除",
+                "value": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "skip_blanks",
+          "label": "",
+          "default": "13:False",
+          "tips": "当复制区域中出现空白单元格时，避免替换粘贴区域中的值",
+          "type": "bool",
+          "editor": {
+            "label": "跳过空单元",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "transpose",
+          "label": "",
+          "default": "13:False",
+          "tips": "是否将所复制数据的列更改为行",
+          "type": "bool",
+          "editor": {
+            "label": "转置",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.remove_duplicate_row",
+      "title": "删除重复行",
+      "comment": "在Excel对象%workbook%中根据第%column_name%列删除重复值",
+      "description": "实现Excel删除重复值功能",
+      "keywords": "去重",
+      "icon": "Excel_Remove_Duplicate_Row",
+      "function": "xbot_visual.excel.remove_duplicate_row",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/删除重复行.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "重复值的列名",
+          "required": false,
+          "tips": "检查哪些列的重复信息，输入列名（支持A或1），多列用A,B,C或A:C。若不填,表示所有列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C。 若不填,表示所有列"
+          }
+        },
+        {
+          "name": "start_row",
+          "label": "起始的行号",
+          "required": false,
+          "tips": "自定义需要删除的起始行号，默认为第一行，-n表示倒数第n行",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为第一行，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "contain_header",
+          "label": "",
+          "default": "13:False",
+          "tips": "勾选时，表示第一行是标题，不参与重复值计算；不勾选时，表示第一行也参与重复值计算",
+          "type": "bool",
+          "editor": {
+            "label": "数据包含标题",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.rename_sheet",
+      "title": "重命名Sheet页",
+      "comment": "在Excel对象%workbook%中将Sheet页%sheet_name%重命名为%new_sheet_name%",
+      "description": "重命名Sheet页",
+      "icon": "Excel_Rename_Sheet",
+      "function": "xbot_visual.excel.rename_sheet",
+      "helpUrl": "language/zh-cn/指令文档/excel/sheet页操作/重命名sheet页.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "required": true,
+          "tips": "输入待修改的Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "new_sheet_name",
+          "label": "新的Sheet页名称",
+          "required": true,
+          "tips": "输入新的Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.refresh_data",
+      "title": "刷新Excel数据",
+      "keywords": "刷新表格数据",
+      "comment": "在Excel对象%workbook%中刷新当前工作簿的所有源，以获取最新的数据",
+      "description": "刷新Excel数据",
+      "icon": "Excel_Refresh_Data",
+      "function": "xbot_visual.excel.refresh_data",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/刷新excel数据.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.insert_row",
+      "title": "插入空行",
+      "keywords": "添加行;插入行;新增行",
+      "comment": "在Excel对象%workbook%中第%row_num%行之前插入%amount%行空行",
+      "description": "在Excel表格中插入空行",
+      "icon": "Excel_Insert_Row",
+      "function": "xbot_visual.excel.insert_blank_row",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/插入行.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "在第几行之前",
+          "required": true,
+          "default": "10:",
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "amount",
+          "label": "插入几行",
+          "required": true,
+          "default": "10:1",
+          "tips": "插入几行,默认1行",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.insert_column",
+      "title": "插入空列",
+      "keywords": "添加列;插入列;新增列",
+      "comment": "在Excel对象%workbook%中第%column_name%列之前插入%amount%列空列",
+      "description": "在Excel表格中插入空列",
+      "icon": "Excel_Insert_Column",
+      "function": "xbot_visual.excel.insert_blank_column",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/插入列.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "在第几列之前",
+          "required": true,
+          "tips": "在第几列之前插入,列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "amount",
+          "label": "插入几列",
+          "required": true,
+          "default": "10:1",
+          "tips": "插入几列,默认1列",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.set_format",
+      "title": "设置格式",
+      "icon": "Excel_Set_Format",
+      "description": "设置单元格格式：数字、对齐、字体、边框、填充、保护",
+      "comment": "在Excel对象%workbook%中设置单元格格式",
+      "function": "xbot_visual.excel.set_format",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/设置格式.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.SetFormatControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.SetFormatHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "setting",
+          "label": "格式设置",
+          "required": true,
+          "tips": "可直接在此设置简单的格式，复杂的格式可事先在Excel中设置好，再点击编辑格式内的‘在Excel中指出’提取",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "range_type",
+          "label": "区域",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "指定需要设置格式的区域，单元格、多行、多列、区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "区域",
+                "value": "range"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              },
+              {
+                "display": "已使用区域",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "start_row",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始。若区域为行,可以填写多行，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "start_column",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1）。若区域为列，可以填写多列，多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "end_row",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "end_column",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.clear_format",
+      "title": "清空格式",
+      "icon": "Excel_Clear_Format",
+      "description": "清空单元格格式",
+      "comment": "在Excel对象%workbook%中清空单元格格式",
+      "function": "xbot_visual.excel.clear_fomat",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/清空格式.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.ClearFormatControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.ClearFormatHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "range_type",
+          "label": "区域",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "指定清空格式的区域，单元格、多行、多列、区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "区域",
+                "value": "range"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              },
+              {
+                "display": "已使用区域",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "start_row",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号从1开始。若区域为行,可以填写多行，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号,从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "start_column",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名从A或1开始。若区域为列，可以填写多列，多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名,从A或1开始，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "end_row",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，从1开始，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号,从1开始，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "end_column",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n行列"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.set_row_height",
+      "title": "设置行高",
+      "icon": "Excel_Set_Row_Height",
+      "description": "设置行高",
+      "comment": "在Excel对象%workbook%中设置第%row_num%行的高度为%height%",
+      "function": "xbot_visual.excel.set_row_height",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/设置行高.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.SetRowHeightControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.SetRowHeightHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "required": true,
+          "tips": "输入行号，多行用1,2,3或1:3",
+          "type": "any",
+          "editor": {
+            "placeholder": "输入行号，多行用1,2,3或1:3",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "mode",
+          "label": "方式",
+          "required": true,
+          "default": "10:autoFit",
+          "defaultDisplay": "根据内容自适应高度",
+          "tips": "两种方式：根据内容自适应高度、指定行高",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据内容自适应高度",
+                "value": "autoFit"
+              },
+              {
+                "display": "指定行高",
+                "value": "specific"
+              }
+            ]
+          }
+        },
+        {
+          "name": "height",
+          "label": "行高",
+          "required": false,
+          "tips": "行高",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.set_column_width",
+      "title": "设置列宽",
+      "icon": "Excel_Set_Column_Width",
+      "description": "设置列宽",
+      "comment": "在Excel对象%workbook%中设置第%column_name%列宽度为%width%",
+      "function": "xbot_visual.excel.set_column_width",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/设置列宽.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.SetColumnWidthControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.SetColumnWidthHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名",
+          "required": true,
+          "tips": "输入列名（支持A或1），多列用A,B,C",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），多列用A,B,C"
+          }
+        },
+        {
+          "name": "mode",
+          "label": "方式",
+          "required": true,
+          "default": "10:autoFit",
+          "defaultDisplay": "根据内容自适应宽度",
+          "tips": "两种方式：根据内容自适应宽度、指定列宽",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据内容自适应宽度",
+                "value": "autoFit"
+              },
+              {
+                "display": "指定列宽",
+                "value": "specific"
+              }
+            ]
+          }
+        },
+        {
+          "name": "width",
+          "label": "列宽",
+          "required": false,
+          "tips": "列宽",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.create_pivot_table",
+      "title": "新建数据透视表",
+      "icon": "Excel_Create_Pivot_Table",
+      "description": "新建数据透视表",
+      "comment": "在Excel对象%workbook%中新建数据透视表",
+      "function": "xbot_visual.excel.create_pivot_table",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/新建数据透视表.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.CreatePivotTableControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "setting",
+          "label": "透视表设置",
+          "required": true,
+          "tips": "在Excel中完成透视表的设置，再点击此处的‘在Excel中指出’提取透视表的配置信息",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "pivot_name",
+          "label": "透视表名",
+          "tips": "透视表名称，修改以指向新的透视表名称，否则使用设置中的名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet名",
+          "tips": "透视表所在的Sheet页，修改以指向新的Sheet页，否则使用设置中的Sheet",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "source",
+          "label": "数据源",
+          "required": true,
+          "tips": "设置透视表的数据源",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.refresh_pivot_table",
+      "title": "刷新数据透视表",
+      "icon": "Excel_Refresh_Pivot_Table",
+      "description": "刷新数据透视表",
+      "comment": "在Excel对象%workbook%中刷新数据透视表",
+      "function": "xbot_visual.excel.refresh_pivot_table",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/刷新数据透视表.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.RefreshPivotTableControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "所在Sheet页名称",
+          "tips": "透视所在Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        },
+        {
+          "name": "refresh_mode",
+          "label": "刷新方式",
+          "tips": "指定刷新方式为刷新指定数据透视表或者全部数据透视表",
+          "type": "str",
+          "default": "10:specific",
+          "defaultDisplay": "指定数据透视表",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "指定数据透视表",
+                "value": "specific"
+              },
+              {
+                "display": "全部数据透视表",
+                "value": "all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "name_or_index",
+          "label": "透视表名称或位置",
+          "required": true,
+          "default": "10:1",
+          "tips": "若一个Sheet页中只有一个数据透视表，填1即可，若有多个，可填写透视表名称或位置(从1开始)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.filter_pivot_table",
+      "title": "筛选数据透视表",
+      "icon": "Excel_Filter_Pivot_Table",
+      "description": "筛选数据透视表",
+      "comment": "在Excel对象%workbook%中筛选数据透视表，筛选字段为%field_name%，筛选项为%filter_value_list%",
+      "function": "xbot_visual.excel.filter_pivot_table",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/筛选数据透视表.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.FilterPivotTableControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.FilterPivotTableHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "所在Sheet页名称",
+          "tips": "透视所在Sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        },
+        {
+          "name": "name_or_index",
+          "label": "透视表名称或位置",
+          "required": true,
+          "default": "10:1",
+          "tips": "若一个Sheet页中只有一个数据透视表，填1即可，若有多个，可填写透视表名称或位置(从1开始)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "field_name",
+          "label": "筛选器名称",
+          "required": true,
+          "tips": "输入筛选器字段名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "select_type",
+          "label": "选择方式",
+          "required": true,
+          "default": "10:partial",
+          "defaultDisplay": "部分选择",
+          "tips": "可选择全部选择和部分选择",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部选择",
+                "value": "all"
+              },
+              {
+                "display": "部分选择",
+                "value": "partial"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filter_value_list",
+          "label": "筛选器内容",
+          "tips": "输入筛选器内容列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.add_validation",
+      "title": "新增数据验证",
+      "icon": "Excel_Add_Validation",
+      "description": "新增数据验证",
+      "comment": "在Excel对象%workbook%中新增数据验证",
+      "function": "xbot_visual.excel.add_validation",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/新增数据验证.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.AddValidationControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.AddValidationHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "setting",
+          "label": "数据验证设置",
+          "required": true,
+          "tips": "在Excel中将数据验证设置完成后，通过点击此处的‘在Excel内指出’提取设置信息",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "range_type",
+          "label": "区域",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "可选择单元格、多行、多列和区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "区域",
+                "value": "range"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              },
+              {
+                "display": "已使用区域",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "start_row",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "start_column",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "end_row",
+          "label": "行号",
+          "required": false,
+          "tips": "输入行号，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入行号，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "end_column",
+          "label": "列名",
+          "required": false,
+          "tips": "输入列名（支持A或1），-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.custom_sort",
+      "title": "Excel排序",
+      "keywords": "Excel升序;Excel降序;表格排序",
+      "icon": "Excel_Custom_Sort",
+      "description": "对Excel指定列做升序、降序，或者指定区域做自定义排序操作",
+      "comment": "在Excel对象%workbook%中新增排序",
+      "function": "xbot_visual.excel.custom_sort",
+      "helpUrl": "language/zh-cn/指令文档/excel/高级指令/excel自定义排序.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.CustomSortControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.CustomSortHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sort_way",
+          "label": "排序方法",
+          "required": true,
+          "default": "10:ascending",
+          "defaultDisplay": "升序",
+          "tips": "可选择排序方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "升序",
+                "value": "ascending"
+              },
+              {
+                "display": "降序",
+                "value": "descending"
+              },
+              {
+                "display": "自定义排序",
+                "value": "custom_sort"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sort_column",
+          "label": "排序列",
+          "default": "10:",
+          "required": false,
+          "tips": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+            "useVariableOptions": false
+          }
+        },
+        {
+          "name": "is_expand_selected_area",
+          "label": "",
+          "required": false,
+          "default": "13:True",
+          "tips": "对某列排序时，自动包含与该列相关的所有数据，确保整行内容一起排序，避免数据错位",
+          "type": "bool",
+          "editor": {
+            "label": "扩展选定区域",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "is_firstline_notsort",
+          "label": "",
+          "required": false,
+          "default": "13:True",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "首行不参与排序",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sort_setting",
+          "label": "自定义排序设置",
+          "required": false,
+          "tips": "在Excel中将自定义排序设置完成后，通过点击此处的‘在Excel内指出’提取设置信息",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "range_type",
+          "label": "区域",
+          "required": false,
+          "default": "10:used_range",
+          "defaultDisplay": "已使用区域",
+          "tips": "可选择区域，行，列和已使用区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "区域",
+                "value": "range"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              },
+              {
+                "display": "已使用区域",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range",
+          "label": "区域",
+          "tips": "区域",
+          "type": "str",
+          "editor": {
+            "kind": "excelrange"
+          }
+        },
+        {
+          "name": "start_row",
+          "label": "行号",
+          "required": false,
+          "tips": "起始行号从1开始。若区域为行,可以填写多行，多行用1,2,3或1:3",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "起始行号，从1开始"
+          }
+        },
+        {
+          "name": "start_column",
+          "label": "起始列名",
+          "required": false,
+          "tips": "起始列名从A或1开始。若区域为列，可以填写多列，多列用A,B,C或A:C",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "列名，从A或1开始"
+          }
+        },
+        {
+          "name": "end_row",
+          "label": "行号",
+          "required": false,
+          "tips": "结束行号，从1开始",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "结束行号，从1开始"
+          }
+        },
+        {
+          "name": "end_column",
+          "label": "列名",
+          "required": false,
+          "tips": "结束列名（支持A或1）",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "结束列名，从A或1开始"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.export_to_pdf",
+      "title": "导出为PDF",
+      "icon": "Excel_Export_To_Pdf",
+      "description": "导出为PDF",
+      "comment": "将Excel对象%workbook%导出为PDF文件到%pdf_name%",
+      "function": "xbot_visual.excel.export_to_pdf",
+      "helpUrl": "language/zh-cn/指令文档/excel/导出为pdf.html",
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在的工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        },
+        {
+          "name": "all_sheets",
+          "label": "",
+          "default": "13:False",
+          "tips": "若勾选，导出所有工作表",
+          "type": "bool",
+          "editor": {
+            "label": "全部Sheet页",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "pdf_name",
+          "label": "PDF保存到",
+          "tips": "填写要导出的PDF保存的文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "PDF|*.pdf"
+            }
+          }
+        },
+        {
+          "name": "override",
+          "label": "",
+          "default": "13:True",
+          "tips": "如果PDF文件存在则覆盖,PDF保存路径若不存在会自动创建",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "excel.set_hidden",
+      "title": "设置行列隐藏",
+      "icon": "Excel_Set_Hidden",
+      "comment": "在Excel对象%workbook%中隐藏第%row_num%行",
+      "description": "隐藏/取消隐藏Excel行列",
+      "function": "xbot_visual.excel.set_hidden",
+      "helpUrl": "language/zh-cn/指令文档/excel/读写操作/设置行列隐藏.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Excel.SetHiddenControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Excel.SetHiddenHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workbook",
+          "label": "Excel对象",
+          "required": true,
+          "tips": "输入一个通过\"新建Excel\"或\"打开Excel\"创建的Excel对象",
+          "type": "openpyxl.Workbook",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "hidden_property",
+          "label": "状态",
+          "required": true,
+          "default": "10:True",
+          "defaultDisplay": "隐藏",
+          "tips": "用于设置Excel行列的隐藏属性",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "隐藏",
+                "value": "True"
+              },
+              {
+                "display": "取消隐藏",
+                "value": "False"
+              }
+            ]
+          }
+        },
+        {
+          "name": "range_type",
+          "label": "区域",
+          "required": true,
+          "default": "10:row",
+          "defaultDisplay": "行",
+          "tips": "指定要隐藏/取消隐藏的行或者列",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              }
+            ]
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "tips": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名",
+          "tips": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "default": "10:",
+          "tips": "所在工作表名称，选填，默认为当前激活的Sheet页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认为当前激活的Sheet页"
+          }
+        }
+      ]
+    }
+  ]
+}

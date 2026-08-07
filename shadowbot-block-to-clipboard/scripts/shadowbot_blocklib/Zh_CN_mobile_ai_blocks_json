@@ -1,0 +1,97 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "mobile.ai.operation_screen",
+      "icon": "Mobile_Ai_Operation_Screen",
+      "description": "调用AI智能体操作屏幕完成任务，支持语义与图像识别、数据提取、数据录入等",
+      "comment": "调用AI智能体操作屏幕完成 %prompt%",
+      "title": "自定义AI操作屏幕(AI)",
+      "keywords": "",
+      "function": "xbot_visual.ai_operation_screen.run",
+      "helpUrl": "rpa/zh-CN/854172134475059200",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "target",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "env",
+          "label": "",
+          "required": false,
+          "tips": "",
+          "type": "str",
+          "default": "10:phone",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "输入需求",
+          "required": true,
+          "tips": "输入需求",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请描述您希望执行的操作，例如：“关闭弹窗”或“识别验证码”"
+          }
+        },
+        {
+          "name": "is_limit_max_steps",
+          "label": "",
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "指定最大执行步数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_steps",
+          "label": "最大执行步数",
+          "required": false,
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "default": "10:20",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "placeholder": "请输入 1-100 之间的数字",
+            "minValue": 1,
+            "maxValue": 100
+          }
+        },
+        {
+          "name": "is_print_log",
+          "label": "更多",
+          "tips": "",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:True",
+          "editor": {
+            "label": "输出调试信息到运行日志",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ai_operation_screen_result",
+          "label": "结果保存至",
+          "tips": "",
+          "name": "自定义操作的返回内容",
+          "type": "any"
+        }
+      ]
+    }
+  ]
+}

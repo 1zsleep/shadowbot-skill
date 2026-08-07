@@ -1,0 +1,1181 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "chatgpt.completions",
+      "icon": "Chatgpt_Completions",
+      "description": "可通过自然语言对话让AI完成原创写作、检查纠错、客服对话、翻译等任务",
+      "comment": "通过%ai_engine%的%model%引擎，提问内容%question%，将结果保存到%chatgpt_result%",
+      "title": "AI大语言模型",
+      "keywords": "Chat;gpt",
+      "function": "xbot_visual.chatgpt.completions",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/chatgpt.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.ChatGPT.ChatGPTControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.ChatGPT.ChatGPTHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "厂商",
+          "required": true,
+          "tips": "请选择厂商",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "required": false,
+          "tips": "请选择AI模型（仅企业版 GPT4/3.5支持知识库功能）",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "use_knowledge",
+          "label": "扩展能力",
+          "required": false,
+          "tips": "选择知识库，让GPT生成更懂业务的回答（仅支持企业版 GPT4/3.5模型）",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "kind": "checkbox",
+            "label": "知识库"
+          }
+        },
+        {
+          "name": "use_multiModal",
+          "label": "多模态",
+          "required": false,
+          "tips": "支持输入图片，适用于图片审核、图片理解等场景。注意不同厂商和模型对图片格式、大小有严格要求，了解详情：",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "kind": "checkbox",
+            "label": "多模态"
+          }
+        },
+        {
+          "name": "knowledge",
+          "label": "知识库",
+          "required": false,
+          "tips": "选择知识库，让GPT生成更懂业务的回答（仅支持企业版 GPT4/3.5模型）",
+          "type": "str",
+          "editor": {
+            "kind": "select"
+          }
+        },
+        {
+          "name": "images",
+          "label": "图片路径",
+          "tips": "图片路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "每行代表1张图片路径，支持多张 (Python模式仅支持列表格式)",
+            "dialog": {
+              "type": "OpenFiles",
+              "filter": "图片文件 (*.jpg;*.jpeg;*.png;)|*.jpg;*.jpeg;*.png;"
+            }
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "角色定义",
+          "tips": "定义AI的角色和回答要求。如：扮演客服，回答要专业",
+          "type": "str",
+          "required": false,
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，定义角色与回答要求"
+          }
+        },
+        {
+          "name": "question",
+          "label": "提问",
+          "tips": "输入需求或问题（请勿包含敏感词）",
+          "type": "str",
+          "required": true,
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入需求或问题（请勿包含敏感词）"
+          }
+        },
+        {
+          "name": "maxWords",
+          "label": "最大回答字数",
+          "required": false,
+          "category": "advanced",
+          "tips": "设置模型回答的最大字数/单词数，具体结果可能因内容有所差异",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认不限制"
+          }
+        },
+        {
+          "name": "temperature",
+          "label": "创意性参数",
+          "required": false,
+          "category": "advanced",
+          "tips": "在0-2之间，值越高越有创意性",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，范围0-2，默认为1，值越高越有创意性"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:180",
+          "category": "advanced",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "chatgpt_result",
+          "label": "返回结果保存至",
+          "variableLabel": "ai 文本",
+          "tips": "指定一个变量，该变量用于保存返回的文本",
+          "type": "str",
+          "name": "gpt_result"
+        }
+      ]
+    },
+    {
+      "name": "dynamic.magic",
+      "icon": "Magic",
+      "statement": "programing.empty",
+      "description": "通过文字描述生成处理类指令，包括列表、文本、时间日期、逻辑等",
+      "comment": "",
+      "title": "魔法指令",
+      "function": "",
+      "helpUrl": "language/zh-cn/指令文档/魔法指令/魔法指令说明.html",
+      "inputs": [],
+      "outputs": [],
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Magic.MagicHandler"
+        }
+      ]
+    },
+    {
+      "name": "programming.magic",
+      "icon": "Magic",
+      "description": "通过AI文字描述生成处理类指令",
+      "comment": "通过AI文字描述生成处理类指令",
+      "title": "魔法指令",
+      "function": "",
+      "helpUrl": "",
+      "inputs": [
+        {
+          "name": "settings",
+          "label": "代码",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [],
+      "magicFlow": {
+        "code": ""
+      }
+    },
+    {
+      "name": "ai.power",
+      "statement": "ai.power",
+      "icon": "Ai_Power",
+      "description": "在{{ProductName}}调用并执行{{AIPower}}工作流，实现更多AI自动化的场景与能力",
+      "comment": "执行AI应用%flowId%，将结果保存到%ai_power_result%",
+      "title": "AI工作流（{{AIPower}}）",
+      "keywords": "",
+      "function": "xbot_visual.chatgpt.ai_power",
+      "helpUrl": "language/zh-cn/指令文档/人工智能AI/AI应用.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.AIPower.AIPowerControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.AIPower.AIPowerBlockHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "flowId",
+          "label": "选择AI工作流",
+          "required": true,
+          "tips": "从“我的AI工作流”列表中选择一个工作流",
+          "type": "str",
+          "editor": {
+            "kind": "select"
+          }
+        },
+        {
+          "name": "inputs",
+          "label": "输入参数",
+          "required": false,
+          "tips": "输入参数列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "outputs",
+          "label": "输出参数",
+          "required": false,
+          "tips": "输出参数列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ai_power_result",
+          "label": "输出结果保存至",
+          "tips": "",
+          "name": "ai_power_result",
+          "type": "dict"
+        }
+      ]
+    },
+    {
+      "name": "ai.workflow.intergration",
+      "statement": "ai.workflow.intergration",
+      "title": "AI工作流（{{AIPower}}）",
+      "keywords": "",
+      "description": "使用{{AIPower}}，用大语言模型、多模态模型等AI能力来编排一个AI工作流",
+      "comment": "使用大语言模型、多模态模型等AI能力来编排一个AI工作流",
+      "icon": "Ai_Workflow_Intergration",
+      "function": "xbot_visual.ai_power.run_flow",
+      "helpUrl": "rpa/ai_workflow",
+      "extension": null,
+      "hidden": false,
+      "canDebug": false,
+      "isCondition": false,
+      "isLoop": false,
+      "isPseudo": true,
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "chatgpt.summary",
+      "icon": "Chatgpt_Summary",
+      "description": "将复杂信息提炼成清晰、结构化的总结文本",
+      "comment": "使用%ai_engine%的%model%模型，总结内容%question%，将结果保存到%chatgpt_result%。",
+      "title": "总结文本",
+      "keywords": "Chat;gpt",
+      "function": "xbot_visual.chatgpt.completions",
+      "helpUrl": "rpa/ai_summary",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "厂商",
+          "required": true,
+          "tips": "请选择厂商",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "required": false,
+          "tips": "请选择AI模型（仅企业版 GPT4/3.5支持知识库功能）",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "提示词",
+          "tips": "定义AI的角色和回答要求。如：扮演客服，回答要专业",
+          "type": "str",
+          "default": "10:任务：通过全面文本摘要提升理解与运用能力。\n角色：您是一位专业的内容分析师和摘要撰写人，擅长将复杂信息提炼成清晰、结构化的格式。\n---\n背景：您将收到一份源文本，范围可能包括新闻文章、学术论文、商业报告或其他内容。您的任务是创建一个全面而简洁的摘要，既能捕捉内容的本质，又能保持其核心信息和意图。\n---\n指示：\n仔细分析提供的源文本，并生成结构良好、易于理解的摘要。调整您的摘要方法，以匹配内容类型、目标受众和潜在用例（例如，一般理解、报告或进一步分析的输入）。您的摘要应包括以下部分：\n---\n1. 标题或摘要标题：\n- 撰写一个简洁、引人注目的标题（5-20个字）\n- 概括文本的主题或关键信息\n2. 简要概述（2-4句话）：\n- 提供一个高层次的摘要，回答内容的“谁、什么、哪里、何时、为什么和如何”\n- 让读者快速了解文本的核心主题\n3. 关键点或要点（5-7个要点）：\n- 按重要性顺序列出主要思想、论点或见解\n- 对每个要点使用清晰、简洁的语言\n4. 确保每个要点都可以独立存在并提供有价值的信息\n- 背景或语境（如果适用，2-3句话）：\n- 简要解释任何必要的历史、文化或情境背景，这对于理解内容至关重要\n- 提及文本所依据的任何相关事件、理论或先前作品\n5. 详细分析（3-5段）：\n- 扩展文本的最关键方面，提供比关键点更深入的分析\n- 包括支持主要论点的相关数据、统计数据或引语\n- 用简单的术语解释任何复杂的概念或术语\n6. 结论或结果（1-2段）：\n- 总结文本如何结束或解决其主要主题\n- 如果适用，描述任何行动号召、未来影响或未解决的问题\n7. 语气和风格分析：\n- 识别整体语气（例如，中立、信息性、说服性、情感性、技术性）\n- 注意任何重要的风格元素（例如，幽默的使用、正式语言、叙事技巧）\n8. 相关性和影响（2-3句话）：\n- 简要讨论为什么这些信息很重要或如何应用\n- 提及对相关领域或未来发展的任何潜在影响\n---\n附加指南：\n- 保持客观性，除非源文本明确基于观点\n- 使用您自己的语言以避免抄袭，但对任何直接引语都使用引号\n- 目标摘要长度约为原始文本的25-30％，除非另有说明\n- 定制语言的复杂性以匹配预期的受众（例如，普通大众，主题专家）\n- 如果源包含视觉元素（图表，图形，图像），请在您的摘要中简要提及它们的关键信息\n---\n请记住，您的目标是创建一个可以独立存在的摘要，作为一个有价值的资源，为读者提供对原始文本内容和意义的全面理解。",
+          "required": false,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "选填，定义角色与回答要求"
+          }
+        },
+        {
+          "name": "question",
+          "label": "待总结的内容",
+          "tips": "输入需求或问题（请勿包含敏感词）",
+          "type": "str",
+          "required": true,
+          "editor": {
+            "kind": "memoedit",
+            "placeholder": "请输入"
+          }
+        },
+        {
+          "name": "maxWords",
+          "label": "最大回答字数",
+          "required": false,
+          "category": "advanced",
+          "tips": "设置模型回答的最大字数/单词数，具体结果可能因内容有所差异",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认不限制"
+          }
+        },
+        {
+          "name": "temperature",
+          "label": "创意性参数",
+          "required": false,
+          "category": "advanced",
+          "tips": "在0-2之间，值越高越有创意性",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，范围0-2，默认为1，值越高越有创意性"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:180",
+          "category": "advanced",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "chatgpt_result",
+          "label": "处理后的内容",
+          "variableLabel": "ai 文本",
+          "tips": "指定一个变量，该变量用于保存返回的文本",
+          "type": "str",
+          "name": "AI_summary_output"
+        }
+      ]
+    },
+    {
+      "name": "chatgpt.extract",
+      "icon": "Chatgpt_Extract",
+      "description": "从提供的源文本中提取结构化且有意义的数据",
+      "comment": "使用%ai_engine%的%model%模型，对%question%内容进行提炼，将结果保存到%chatgpt_result%。",
+      "title": "从文本中提炼内容",
+      "keywords": "Chat;gpt",
+      "function": "xbot_visual.chatgpt.completions",
+      "helpUrl": "rpa/ai_extraction",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "厂商",
+          "required": true,
+          "tips": "请选择厂商",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "required": false,
+          "tips": "请选择AI模型（仅企业版 GPT4/3.5支持知识库功能）",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "提示词",
+          "tips": "定义AI的角色和回答要求。如：扮演客服，回答要专业",
+          "type": "str",
+          "default": "10:任务：从提供的源文本中提取结构化且有意义的数据。\n角色：您是一位专业的数据分析师和信息提取专家。您的任务是彻底分析给定的内容，并以结构化的格式提取关键信息。\n---\n指示：仔细检查提供的文本，并提取以下类型的信息。如果某个字段不存在、不相关或无法从给定的上下文中确定，请将其标记为“不适用”（N/A）或“未找到”：\n---\n1. 标题或标题：\n- 识别文本的主要标题或标题\n- 如果未明确说明，请根据主要主题创建一个简洁的标题\n2. 作者或来源名称：\n- 提取作者姓名或信息来源\n3. 提及的日期：\n- 列出文本中提及的所有相关日期\n- 如果有，包括出版日期\n- 尽可能使用 YYYY-MM-DD 格式\n4. 提及的地点：\n- 识别并列出文本中提及的所有地理位置（城市、国家、地区等）\n5. 实体： a. 人物：提及的个人姓名 b. 组织：引用的公司、机构或团体 c. 产品：讨论的任何特定产品或服务 d. 其他：任何其他值得注意的实体（例如，法律、事件、技术）\n6. 主要主题或关键词：\n- 列出文本中讨论的 3-5 个主要主题或关键主题\n- 如果适用，包括相关的标签\n7. 摘要：\n- 以 2-3 句话提供文本的简洁摘要\n- 捕捉要点和关键信息\n8. 行动项目或关键见解：\n- 识别文本中的任何具体行动、建议或重要结论\n- 最多列出 5 项\n9. 情感或语气：\n- 分析文本的整体情感或语气\n- 将其归类为以下之一：\n    - 积极\n    - 中性\n    - 消极\n    - 混合（如果存在多种情感的显著元素）\n- 简要说明您的情感分类\n10. 自定义字段： 根据文本的上下文，提取其他相关信息。 一些例子包括： a. 价格或财务信息 b. 截止日期或重要日期 c. 事件类型或类别 d. 法规或法律信息 e. 统计数据或指标 f. 报价（附带归属） g. 联系方式 h. 网址或参考文献\n---\n附加说明：\n- 分析要彻底和准确\n- 提取信息时保持客观性\n- 如果文本包含多个部分或主题，请确保您的提取涵盖所有相关部分\n- 对于较长的文本，优先考虑最重要和最相关的信息\n- 如果遇到任何含糊不清或不确定的情况，请在输出中注明\n---\n请记住，目标是提供源文本中包含的关键信息的全面且结构化的表示。 您的提取数据应使使用者能够快速掌握基本内容，而无需阅读整个原始文本。",
+          "required": false,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "选填，定义角色与回答要求"
+          }
+        },
+        {
+          "name": "question",
+          "label": "待提炼的内容",
+          "tips": "输入需求或问题（请勿包含敏感词）",
+          "type": "str",
+          "required": true,
+          "editor": {
+            "kind": "memoedit",
+            "placeholder": "请输入"
+          }
+        },
+        {
+          "name": "maxWords",
+          "label": "最大回答字数",
+          "required": false,
+          "category": "advanced",
+          "tips": "设置模型回答的最大字数/单词数，具体结果可能因内容有所差异",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认不限制"
+          }
+        },
+        {
+          "name": "temperature",
+          "label": "创意性参数",
+          "required": false,
+          "category": "advanced",
+          "tips": "在0-2之间，值越高越有创意性",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，范围0-2，默认为1，值越高越有创意性"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:180",
+          "category": "advanced",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "chatgpt_result",
+          "label": "处理后的内容",
+          "variableLabel": "ai 文本",
+          "tips": "指定一个变量，该变量用于保存返回的文本",
+          "type": "str",
+          "name": "AI_summary_output"
+        }
+      ]
+    },
+    {
+      "name": "chatgpt.translate",
+      "icon": "Chatgpt_Translate",
+      "description": "将内容翻译为优雅且地道的目标语言",
+      "comment": "使用%ai_engine%的%model%模型，翻译内容%question%，将结果保存到%chatgpt_result%。",
+      "title": "翻译文本",
+      "keywords": "Chat;gpt",
+      "function": "xbot_visual.chatgpt.completions",
+      "helpUrl": "rpa/ai_translation",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "厂商",
+          "required": true,
+          "tips": "请选择厂商",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "required": false,
+          "tips": "请选择AI模型（仅企业版 GPT4/3.5支持知识库功能）",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "提示词",
+          "tips": "定义AI的角色和回答要求。如：扮演客服，回答要专业",
+          "type": "str",
+          "default": "10:任务：您是一位精通多国语言的高水平专业翻译。您的任务是将源语言文本准确翻译为目标语言：英文。\r\n---\r\n操作指南：\r\n\r\n1. 仔细阅读并理解所提供的文本\r\n2. 将文本翻译成指定目标语言，保持原意、语气和语境\r\n3. 确保习语表达、文化参照和微妙 之处在目标语言文化中得到恰当转化\r\n4. 保留原始格式（包括段落、项目符号或编号列表）\r\n5. 注意专有名词、术语及专业词汇，酌情准确翻译或保留原形式\r\n6. 二次检查译文的准确性、流畅度及目标语言自然性\r\n---\r\n重要事项：\r\n\r\n- 回复中仅提供译文\r\n- 勿包含解释、注释或原文\r\n- 若遇歧义或需澄清的术语，请基于语境尽力翻译\r\n---\r\n示例：\r\n输入：“早起的鸟儿有 虫吃。”\r\n输出：“The early bird catches the worm.”（英文译文）\r\n---\r\n请按上述要求执行翻译任务。\r\n\r\n（注：完 全保留原文结构层级，包括：\r\n- 主标题与副标题层级关系\r\n- 6项操作指南的编号列表\r\n- “重要事项”的破折号条目\r\n- 加 粗标记与示例区块）",
+          "required": false,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "选填，定义角色与回答要求"
+          }
+        },
+        {
+          "name": "question",
+          "label": "待翻译的内容",
+          "tips": "输入需求或问题（请勿包含敏感词）",
+          "type": "str",
+          "required": true,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "请输入"
+          }
+        },
+        {
+          "name": "maxWords",
+          "label": "最大回答字数",
+          "required": false,
+          "category": "advanced",
+          "tips": "设置模型回答的最大字数/单词数，具体结果可能因内容有所差异",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认不限制"
+          }
+        },
+        {
+          "name": "temperature",
+          "label": "创意性参数",
+          "required": false,
+          "category": "advanced",
+          "tips": "在0-2之间，值越高越有创意性",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，范围0-2，默认为1，值越高越有创意性"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:180",
+          "category": "advanced",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "chatgpt_result",
+          "label": "处理后的内容",
+          "variableLabel": "ai 文本",
+          "tips": "指定一个变量，该变量用于保存返回的文本",
+          "type": "str",
+          "name": "AI_summary_output"
+        }
+      ]
+    },
+    {
+      "name": "chatgpt.analyze",
+      "icon": "Chatgpt_Analyze",
+      "description": "详尽、客观地分析内容，输出关键洞见",
+      "comment": "使用%ai_engine%的%model%模型，分析内容%question%，将结果保存到%chatgpt_result%。",
+      "title": "分析文本",
+      "keywords": "Chat;gpt",
+      "function": "xbot_visual.chatgpt.completions",
+      "helpUrl": "rpa/ai_analysis",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "厂商",
+          "required": true,
+          "tips": "请选择厂商",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "required": false,
+          "tips": "请选择AI模型（仅企业版 GPT4/3.5支持知识库功能）",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "提示词",
+          "tips": "定义AI的角色和回答要求。如：扮演客服，回答要专业",
+          "type": "str",
+          "default": "10:任务：作为专业文学分析师和内容策略师，对以下文本进行全面分析，提取关键洞见，识别模式并突出显著特征。分析应详尽、客观， 并提供可操作建议。\r\n---\r\n请按以下框架构建分析内容：\r\n\r\n1. 核心主题与议题\r\n- 识别并阐释文本探讨的核心主题\r\n- 论述反复出现的议题或母题\r\n2. 文风与情感倾向\r\n- 描述整体文风（如正式、随意、乐观、批判）\r\n- 分析情感暗流及其对信息 传达的影响\r\n3. 核心论点与主张\r\n- 概括呈现的主要论点或中心思想\r\n- 评估支撑论点的逻辑与论据\r\n4. 文体与结构\r\n- 检视写作风格（如描述性、说服性、叙事性）\r\n- 分析组织结构及其有效性\r\n5. 潜在偏见与视角\r\n- 识别任何明显偏见或特定立场\r\n- 论述这些偏见如何影响读者解读\r\n6. 优势与不足\r\n- 突出内容最具说服力的方面\r\n- 指出可改进或拓展的领域\r\n7. 建议 与洞见\r\n- 基于分析提供至少三条可操作建议\r\n- 就内容如何优化或应用提出见解\r\n---\r\n回复格式要求：\r\n\r\n- 每部分使 用清晰标题\r\n- 适当时采用项目符号或编号列表\r\n- 引用文本具体案例或语句佐证分析\r\n- 结尾附简要总结（2-3句）概述整体评 估\r\n---\r\n注意：确保分析平衡考量文本正反两面，目标回复长度500-750词（可根据文本复杂度调整）。\r\n---\r\n（注：严格保 留原文技术框架：\r\n1. 任务说明与破折号分隔线完全对应\r\n2. 7大分析模块的层级结构（主项编号+子项破折号）\r\n3. 格式要求 采用四要素分项说明\r\n4. 注意事项保留中英文括号混用规范\r\n5. “文风”对应”tone”，“母题”译”motifs”，专业术语保持学术严谨性）",
+          "required": false,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "选填，定义角色与回答要求"
+          }
+        },
+        {
+          "name": "question",
+          "label": "待分析的内容",
+          "tips": "输入需求或问题（请勿包含敏感词）",
+          "type": "str",
+          "required": true,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "请输入"
+          }
+        },
+        {
+          "name": "maxWords",
+          "label": "最大回答字数",
+          "required": false,
+          "category": "advanced",
+          "tips": "设置模型回答的最大字数/单词数，具体结果可能因内容有所差异",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认不限制"
+          }
+        },
+        {
+          "name": "temperature",
+          "label": "创意性参数",
+          "required": false,
+          "category": "advanced",
+          "tips": "在0-2之间，值越高越有创意性",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，范围0-2，默认为1，值越高越有创意性"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:180",
+          "category": "advanced",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "chatgpt_result",
+          "label": "处理后的内容 ",
+          "variableLabel": "ai 文本",
+          "tips": "指定一个变量，该变量用于保存返回的文本",
+          "type": "str",
+          "name": "AI_summary_output"
+        }
+      ]
+    },
+    {
+      "name": "chatgpt.polishing",
+      "icon": "Chatgpt_Polishing",
+      "description": "润色文本，提升内容写作质量",
+      "comment": "使用%ai_engine%的%model%模型，润色内容%question%，将结果保存到%chatgpt_result%。",
+      "title": "润色文本",
+      "keywords": "Chat;gpt",
+      "function": "xbot_visual.chatgpt.completions",
+      "helpUrl": "rpa/ai_polish",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "厂商",
+          "required": true,
+          "tips": "请选择厂商",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "required": false,
+          "tips": "请选择AI模型（仅企业版 GPT4/3.5支持知识库功能）",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "提示词",
+          "tips": "定义AI的角色和回答要求。如：扮演客服，回答要专业",
+          "type": "str",
+          "default": "10:任务：润色提供的文本。\r\n角色：你是一个专业的论文和文章润色助手，能够帮助用户润色和提升文章的写作质量，提供语法纠正、 结构调整、风格提升等方面的建议。\r\n---\r\n目标：\r\n1. 通读用户文章，理解其主题和主要观点。\r\n2. 逐句深度阅读，注意语 法错误并提供改善建议。\r\n3. 提供结构调整和风格提升的建议。\r\n4. 处理扩展内容和翻译部分。\r\n5. 提供全面审查和总结性的 反馈，确保文章质量达到用户期望。\r\n---\r\n原则：\r\n1. 严格维护文章的原意，不改变用户的核心观点。\r\n2. 确保专业术语的 使用准确。\r\n3. 对敏感词汇展现必要的敏感性。\r\n4. 遵循学术和写作规范，不进行任何抄袭行为。\r\n5. 保护用户隐私，确保文 章内容不泄露。\r\n---\r\n技能 :\r\n1. 语法纠正：识别并纠正文章中的语法错误，使文章符合标准语法规则。\r\n2. 结构调整：根 据内容逻辑对文章进行结构优化，使文章更加条理清晰。\r\n3. 风格提升：根据文章类型和目标读者，提供风格调整建议，使文章更加 流畅和具有吸引力。\r\n4. 内容扩展：根据需要为文章添加补充内容，确保信息的全面性和深度。\r\n5. 翻译处理：对需要翻译的部分进行准确翻译，确保语言的流畅和专业性。\r\n---\r\n附加说明：\r\n润色要彻底和准确\r\n保持客观性\r\n---\r\n请记住，目标是润色文本，不需要发散出一些无关信息。",
+          "required": false,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "选填，定义角色与回答要求"
+          }
+        },
+        {
+          "name": "question",
+          "label": "待润色的内容",
+          "tips": "输入需求或问题（请勿包含敏感词）",
+          "type": "str",
+          "required": true,
+          "editor": {
+            "kind": "memoEdit",
+            "placeholder": "请输入"
+          }
+        },
+        {
+          "name": "maxWords",
+          "label": "最大回答字数",
+          "required": false,
+          "category": "advanced",
+          "tips": "设置模型回答的最大字数/单词数，具体结果可能因内容有所差异",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，默认不限制"
+          }
+        },
+        {
+          "name": "temperature",
+          "label": "创意性参数",
+          "required": false,
+          "category": "advanced",
+          "tips": "在0-2之间，值越高越有创意性",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "选填，范围0-2，默认为1，值越高越有创意性"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:180",
+          "category": "advanced",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "chatgpt_result",
+          "label": "处理后的内容 ",
+          "variableLabel": "ai 文本",
+          "tips": "指定一个变量，该变量用于保存返回的文本",
+          "type": "str",
+          "name": "AI_summary_output"
+        }
+      ]
+    },
+    {
+      "name": "ai.operation_screen.custom",
+      "icon": "Ai_Operation_Screen_Custom",
+      "description": "调用AI智能体操作屏幕完成任务，支持语义与图像识别、数据提取、数据录入等",
+      "comment": "调用AI智能体操作屏幕完成 %prompt% 结果保存至%ai_operation_screen_result%",
+      "title": "自定义AI操作屏幕",
+      "keywords": "",
+      "function": "xbot_visual.ai_operation_screen.run",
+      "helpUrl": "rpa/zh-CN/854172134475059200",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "env",
+          "label": "",
+          "required": false,
+          "tips": "",
+          "type": "str",
+          "default": "10:pc",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "输入需求",
+          "required": true,
+          "tips": "输入需求",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请描述您希望执行的操作，例如：“关闭弹窗”或“处理验证码”"
+          }
+        },
+        {
+          "name": "is_limit_max_steps",
+          "label": "",
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "指定最大执行步数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_steps",
+          "label": "最大执行步数",
+          "required": false,
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "default": "10:20",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "placeholder": "请输入 1-100 之间的数字",
+            "minValue": 1,
+            "maxValue": 100
+          }
+        },
+        {
+          "name": "is_print_log",
+          "label": "更多",
+          "tips": "",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:True",
+          "editor": {
+            "label": "输出调试信息到运行日志",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ai_operation_screen_result",
+          "label": "结果保存至",
+          "tips": "",
+          "name": "自定义操作的返回内容",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "ai.operation_screen.handle_verification_code",
+      "icon": "Ai_Operation_Screen_Handle_Verification_Code",
+      "description": "调用AI智能体操作屏幕完成验证码处理",
+      "comment": "调用AI智能体操作屏幕完成 %prompt%",
+      "title": "处理验证码(AI)",
+      "keywords": "",
+      "function": "xbot_visual.ai_operation_screen.handle_verification_code",
+      "helpUrl": "rpa/zh-CN/854172253834952704",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "env",
+          "label": "",
+          "required": false,
+          "tips": "",
+          "type": "str",
+          "default": "10:pc",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "输入需求",
+          "required": true,
+          "tips": "输入需求",
+          "type": "str",
+          "default": "10:帮我处理并关闭屏幕中的验证码。",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请描述您希望执行的操作，例如：“关闭弹窗”或“处理验证码”"
+          }
+        },
+        {
+          "name": "is_limit_max_steps",
+          "label": "",
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "指定最大执行步数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_steps",
+          "label": "最大执行步数",
+          "required": false,
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "default": "10:20",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "placeholder": "请输入 1-100 之间的数字",
+            "minValue": 1,
+            "maxValue": 100
+          }
+        },
+        {
+          "name": "is_print_log",
+          "label": "更多",
+          "tips": "",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:True",
+          "editor": {
+            "label": "输出调试信息到运行日志",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "ai.operation_screen.if",
+      "statement": "workflow.if",
+      "icon": "Ai_Operation_Screen_If",
+      "description": "调用AI智能体识别屏幕完成判断，适用于判断、或流程效果验证",
+      "comment": "如果 %prompt%, 则执行以下操作",
+      "title": "IF 屏幕满足条件(AI)",
+      "keywords": "",
+      "isCondition": true,
+      "function": "xbot_visual.ai_operation_screen.intelligent_judgment",
+      "helpUrl": "rpa/zh-CN/854172283214749696",
+      "scope": "1",
+      "indent": "1",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "env",
+          "label": "",
+          "required": false,
+          "tips": "",
+          "type": "str",
+          "default": "10:pc",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "触发条件",
+          "required": true,
+          "tips": "触发条件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请输入触发条件，例如：“当屏幕中存在弹窗”、“当周报未生成到桌面”"
+          }
+        },
+        {
+          "name": "is_limit_max_steps",
+          "label": "",
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "指定最大执行步数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_steps",
+          "label": "最大执行步数",
+          "required": false,
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "default": "10:1",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "placeholder": "请输入 1-100 之间的数字",
+            "minValue": 1,
+            "maxValue": 100
+          }
+        },
+        {
+          "name": "is_print_log",
+          "label": "更多",
+          "tips": "",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:True",
+          "editor": {
+            "label": "输出调试信息到运行日志",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "ai.operation_screen.extract_data",
+      "icon": "Ai_Operation_Screen_Extract_Data",
+      "description": "调用AI智能体识别屏幕完成数据提取，支持表格或非结构化数据",
+      "comment": "调用AI智能体操作屏幕完成 %prompt% 结果保存至%ai_operation_screen_result%",
+      "title": "提取屏幕数据(AI)",
+      "keywords": "",
+      "function": "xbot_visual.ai_operation_screen.extract_data",
+      "helpUrl": "rpa/zh-CN/854172202565390336",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "env",
+          "label": "",
+          "required": false,
+          "tips": "",
+          "type": "str",
+          "default": "10:pc",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "输入需求",
+          "required": true,
+          "tips": "输入需求",
+          "type": "str",
+          "default": "10:帮我从屏幕中提取数据，并返回 JSON 格式。",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请描述您希望执行的操作，例如：“关闭弹窗”或“处理验证码”"
+          }
+        },
+        {
+          "name": "is_limit_max_steps",
+          "label": "",
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "指定最大执行步数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_steps",
+          "label": "最大执行步数",
+          "required": false,
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "default": "10:20",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "placeholder": "请输入 1-100 之间的数字",
+            "minValue": 1,
+            "maxValue": 100
+          }
+        },
+        {
+          "name": "is_print_log",
+          "label": "更多",
+          "tips": "",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:True",
+          "editor": {
+            "label": "输出调试信息到运行日志",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ai_operation_screen_result",
+          "label": "结果保存至",
+          "tips": "",
+          "name": "屏幕数据提取结果",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "ai.operation_screen.fill_form_data",
+      "icon": "Ai_Operation_Screen_Fill_Form_Data",
+      "description": "调用AI智能体操作屏幕完成表单填写",
+      "comment": "调用AI智能体操作屏幕完成 %prompt%",
+      "title": "填写表单(AI)",
+      "keywords": "",
+      "function": "xbot_visual.ai_operation_screen.fill_form_data",
+      "helpUrl": "rpa/zh-CN/854172227731214336",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "env",
+          "label": "",
+          "required": false,
+          "tips": "",
+          "type": "str",
+          "default": "10:pc",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "prompt",
+          "label": "输入需求",
+          "required": true,
+          "tips": "输入需求",
+          "type": "str",
+          "default": "10:帮我将 [数据内容] 填写到屏幕中的表单。\r\n数据内容：\r\n",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请描述您希望执行的操作，例如：“关闭弹窗”或“处理验证码”"
+          }
+        },
+        {
+          "name": "is_limit_max_steps",
+          "label": "",
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "指定最大执行步数",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_steps",
+          "label": "最大执行步数",
+          "required": false,
+          "tips": "设置AI可连续执行的最大步骤数,用于防止因错误循环导致过度消耗。输入范围:1-100(默认20)",
+          "default": "10:20",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "placeholder": "请输入 1-100 之间的数字",
+            "minValue": 1,
+            "maxValue": 100
+          }
+        },
+        {
+          "name": "is_print_log",
+          "label": "更多",
+          "tips": "",
+          "type": "bool",
+          "category": "advanced",
+          "default": "13:True",
+          "editor": {
+            "label": "输出调试信息到运行日志",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": []
+    }
+  ]
+}

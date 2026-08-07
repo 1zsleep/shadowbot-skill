@@ -1,0 +1,3504 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual._core.Rectangle",
+      "localName": "元素位置信息",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "left",
+          "type": "int",
+          "label": "左边"
+        },
+        {
+          "name": "top",
+          "type": "int",
+          "label": "顶部"
+        },
+        {
+          "name": "right",
+          "type": "int",
+          "label": "右边"
+        },
+        {
+          "name": "bottom",
+          "type": "int",
+          "label": "底部"
+        },
+        {
+          "name": "center_x",
+          "type": "int",
+          "label": "中心点横坐标"
+        },
+        {
+          "name": "center_y",
+          "type": "int",
+          "label": "中心点纵坐标"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "label": "宽度"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "label": "高度"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "web.element.click",
+      "title": "点击元素(web)",
+      "description": "点击网页中的按钮、链接或者其他任何元素",
+      "comment": "在网页%browser%中，模拟人工%button%%clicks%网页元素%element%，点击%anchor_type%位置",
+      "icon": "Web_Element_Click",
+      "function": "xbot_visual.web.element.click",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.ClickElementControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/点击元素（web）.html",
+      "video": {
+        "time": "04:00"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.ClickBrowserElementHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "注意：由于上方网页指令默认启用“运行时不抢占鼠标键盘”，需关闭后模拟人工点击才可生效。\r\n通过模拟人工点击执行操作，关闭将采用API方式执行操作。",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工点击",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "move_mouse",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "是否显示鼠标移动轨迹",
+          "type": "bool",
+          "editor": {
+            "label": "显示鼠标移动轨迹",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "clicks",
+          "label": "点击方式",
+          "required": true,
+          "default": "10:click",
+          "defaultDisplay": "单击",
+          "category": "advanced",
+          "tips": "选择点击的方式是单击还是双击",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单击",
+                "value": "click"
+              },
+              {
+                "display": "双击",
+                "value": "dbclick"
+              }
+            ]
+          }
+        },
+        {
+          "name": "button",
+          "label": "鼠标按钮",
+          "required": true,
+          "default": "10:left",
+          "defaultDisplay": "鼠标左键",
+          "category": "advanced",
+          "tips": "选择用于触发点击的鼠标按键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "鼠标左键",
+                "value": "left"
+              },
+              {
+                "display": "鼠标右键",
+                "value": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "keys",
+          "label": "辅助按键",
+          "required": true,
+          "default": "10:null",
+          "defaultDisplay": "无",
+          "category": "advanced",
+          "tips": "在点击时需要按下的键盘功能键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无",
+                "value": "null"
+              },
+              {
+                "display": "Alt",
+                "value": "alt"
+              },
+              {
+                "display": "Ctrl",
+                "value": "ctrl"
+              },
+              {
+                "display": "Shift",
+                "value": "shift"
+              },
+              {
+                "display": "Win",
+                "value": "win"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": true,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "category": "advanced",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "default": "10:MiddleCenter",
+          "category": "advanced",
+          "label": "目标元素的部位",
+          "tips": "默认点击目标元素的中心位置，请根据实际情况调整",
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "category": "advanced",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "category": "advanced",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.hover",
+      "title": "鼠标悬停在元素上(web)",
+      "description": "将鼠标悬停在网页中的元素上",
+      "keywords": "悬浮;停留",
+      "comment": "在网页%browser%中，模拟人工将鼠标移动在网页元素%element%上，到达位置为元素%anchor_type%",
+      "icon": "Web_Element_Hover",
+      "function": "xbot_visual.web.element.hover",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.HoverElementControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/鼠标悬停在元素上（web）.html",
+      "video": {
+        "time": "02:33"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.HoverBrowserElementHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "如果使用模拟人工悬停则通过模拟人工的方式触发悬停事件,否则将根据目标元素的自动化接口触发悬停",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工悬停",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "延迟时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": true,
+          "tips": "支持悬停在元素中心位置、随机位置(在元素矩形范围内)、自定义位置",
+          "type": "str",
+          "default": "10:center",
+          "category": "advanced",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "default": "10:middleCenter",
+          "category": "advanced",
+          "label": "目标元素的部位",
+          "tips": "默认悬停在目标元素的中心位置，请根据实际情况调整",
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "category": "advanced",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "category": "advanced",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.input",
+      "title": "填写输入框(web)",
+      "description": "在网页的输入框中输入内容",
+      "comment": "在网页%browser%的%element%中，%input_type%%text%",
+      "icon": "Web_Element_Input",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.InputControl, ShadowBot.Shell.Development",
+      "function": "xbot_visual.web.element.input",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/填写输入框（web）.html",
+      "video": {
+        "time": "06:49"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.InputBrowserHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "text",
+          "label": "输入内容",
+          "tips": "填写要输入的内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "append",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "如果勾选追加输入则在现有内容后继续追加输入,否则清空现有内容后再进行输入",
+          "type": "bool",
+          "editor": {
+            "label": "追加输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_check",
+          "label": "输入验证",
+          "required": true,
+          "default": "13:False",
+          "tips": "勾选后系统会在输入后自动检查，确保输入内容成功写入",
+          "type": "bool",
+          "editor": {
+            "label": "启用输入验证",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "check_value",
+          "label": "验证内容",
+          "required": false,
+          "tips": "若留空，将默认使用上方“输入内容”作为验证值；启用追加输入或输入内容包含快捷键时需手动填写",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "默认使用“输入内容”(启用追加输入或输入内容包含快捷键时必填）"
+          }
+        },
+        {
+          "name": "retry_times",
+          "label": "重试次数",
+          "required": true,
+          "default": "10:3",
+          "tips": "当验证失败时自动重试的次数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "如果使用模拟人工输入则通过模拟人工的方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "driver_input",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "如果使用驱动输入则通过驱动方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "驱动输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "save_to_clipboard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "将输入内容添加到剪切板通过Ctrl+V指令将内容填写到输入框避免输入法问题",
+          "type": "bool",
+          "editor": {
+            "label": "剪切板输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_type",
+          "label": "输入方式",
+          "required": true,
+          "tips": "注意：上方网页指令默认关闭“运行时不抢占鼠标键盘”，保持该选项为关闭状态，模拟人工输入才可生效。\r\n模拟人工输入: 通过模拟人工的方式触发输入事件(会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题)\r\n谷歌系浏览器接口输入 (稳定): 通过Chromium接口直接发送输入事件, 速度快、稳定性高, 不受窗口状态干扰, 避免被拦截\r\n剪切板输入: 将输入内容添加到剪切板通过Ctrl+V指令将内容填写到输入框避免输入法问题\r\n自动化接口输入: 调用元素自身实现的自动化接口输入",
+          "type": "str",
+          "default": "10:simulate",
+          "category": "advanced",
+          "defaultDisplay": "模拟人工输入",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "模拟人工输入",
+                "value": "simulate"
+              },
+              {
+                "display": "谷歌系浏览器接口输入 (稳定)",
+                "value": "cdp"
+              },
+              {
+                "display": "剪切板输入",
+                "value": "clipboard"
+              },
+              {
+                "display": "自动化接口输入",
+                "value": "automatic"
+              },
+              {
+                "display": "驱动输入",
+                "value": "driver"
+              }
+            ]
+          }
+        },
+        {
+          "name": "contains_hotkey",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "可以在输入内容中加入快捷键,如{enter}代表输入回车键",
+          "type": "bool",
+          "editor": {
+            "label": "输入内容包含快捷键",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "force_ime_ENG",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "存在不常见的输入法切换英文输入状态不成功的情况\r\n需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘(ENG)",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔(ms)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间(对{{BrowserName}}该参数无效), 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "focus_timeout",
+          "label": "焦点超时时间(ms)",
+          "category": "advanced",
+          "default": "10:1000",
+          "tips": "设置焦点超时时间(ms), 元素获取焦点后暂停指定时间后进行输入操作",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "click_before_input",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "在执行输入动作前，先点击元素，以便获取焦点",
+          "type": "bool",
+          "editor": {
+            "label": "输入前点击元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": false,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "category": "advanced",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "default": "10:middleCenter",
+          "label": "鼠标点击位置",
+          "category": "advanced",
+          "tips": "该输入指令是通过（先点击输入框，后模拟键盘输入）实现的，默认点击输入框的中心位置，请根据实际情况调整",
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "category": "advanced",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "category": "advanced",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标输入框存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.check",
+      "title": "设置复选框(web)",
+      "keywords": "勾选",
+      "description": "将网页中的复选框的状态设置为勾选或不勾选",
+      "comment": "在网页%browser%中%mode%复选框%element%",
+      "icon": "Web_Element_Check",
+      "function": "xbot_visual.web.element.check",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/设置复选框（web）.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "mode",
+          "label": "操作",
+          "required": true,
+          "default": "10:check",
+          "defaultDisplay": "勾选",
+          "tips": "选择要对复选框进行的操作",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "勾选",
+                "value": "check"
+              },
+              {
+                "display": "取消勾选",
+                "value": "uncheck"
+              },
+              {
+                "display": "反选",
+                "value": "toggle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "延迟时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标复选框存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.select",
+      "title": "设置下拉框(web)",
+      "description": "设置网页中下拉框的选中项",
+      "comment": "在网页%browser%中%mode%元素%element%",
+      "icon": "Web_Element_Select",
+      "function": "xbot_visual.web.element.select",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.SetSelectOptionControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/设置下拉框（web）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Element.SetSelectOptionHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "mode",
+          "label": "选择方式",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "按选项内容选择",
+          "tips": "选择设置选中项的依据",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "按选项内容选择",
+                "value": "text"
+              },
+              {
+                "display": "按选项位置选择",
+                "value": "index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "value",
+          "label": "选择值",
+          "required": true,
+          "tips": "输入选项内容或者选项位置",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "match_mode",
+          "label": "匹配模式",
+          "required": false,
+          "default": "10:fuzzy",
+          "defaultDisplay": "匹配模式",
+          "tips": "选项内容的匹配模式, 默认是模糊匹配",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "模糊匹配",
+                "value": "fuzzy"
+              },
+              {
+                "display": "精准匹配",
+                "value": "exact"
+              },
+              {
+                "display": "正则匹配",
+                "value": "regex"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "延迟时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标下拉框存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.input_password",
+      "title": "填写密码框(web)",
+      "description": "在网页中的密码框中输入密码",
+      "keywords": "输入框",
+      "comment": "在网页%browser%的%element%中%input_type%密码",
+      "icon": "Web_Element_Input_Password",
+      "function": "xbot_visual.web.element.input_password",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.InputPasswordControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/填写密码框（web）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.InputPasswordHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "text",
+          "label": "输入密码",
+          "required": true,
+          "tips": "填写要输入的密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "input_check",
+          "label": "输入验证",
+          "required": true,
+          "default": "13:False",
+          "tips": "勾选后将对输入结果进行校验,确保输入成功",
+          "type": "bool",
+          "editor": {
+            "label": "启用输入验证",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "retry_times",
+          "label": "重试次数",
+          "required": true,
+          "default": "10:3",
+          "tips": "输入验证失败后重试的次数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "如果使用模拟人工输入则通过模拟人工的方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "save_to_clipboard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "将输入内容添加到剪切板通过Ctrl+V指令将内容填写到输入框避免输入法问题",
+          "type": "bool",
+          "editor": {
+            "label": "剪切板输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_type",
+          "label": "输入方式",
+          "category": "advanced",
+          "required": true,
+          "tips": "模拟人工输入: 通过模拟人工的方式触发输入事件(会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题)\r\n谷歌系浏览器接口输入 (稳定): 通过Chromium接口直接发送输入事件, 速度快、稳定性高, 不受窗口状态干扰, 避免被拦截\r\n剪切板输入: 将输入内容添加到剪切板通过Ctrl+V指令将内容填写到输入框避免输入法问题\r\n自动化接口输入: 调用元素自身实现的自动化接口输入",
+          "type": "str",
+          "default": "10:simulate",
+          "defaultDisplay": "模拟人工输入",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "模拟人工输入",
+                "value": "simulate"
+              },
+              {
+                "display": "谷歌系浏览器接口输入 (稳定)",
+                "value": "cdp"
+              },
+              {
+                "display": "剪切板输入",
+                "value": "clipboard"
+              },
+              {
+                "display": "自动化接口输入",
+                "value": "automatic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "force_ime_ENG",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "存在不常见的输入法切换英文输入状态不成功的情况\r\n需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘(ENG)",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔(ms)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间(对{{BrowserName}}该参数无效), 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "focus_timeout",
+          "label": "焦点超时时间(ms)",
+          "category": "advanced",
+          "default": "10:1000",
+          "tips": "设置焦点超时时间(ms), 元素获取焦点后暂停指定时间后进行输入操作",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "延迟时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标密码框存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "click_before_input",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "在执行输入动作前，先点击元素，以便获取焦点",
+          "type": "bool",
+          "editor": {
+            "label": "输入前点击元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": false,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "category": "advanced",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "鼠标点击位置",
+          "default": "10:middleCenter",
+          "category": "advanced",
+          "tips": "该输入指令是通过（先点击输入框，后模拟键盘输入）实现的，默认点击输入框的中心位置，请根据实际情况调整",
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "category": "advanced",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "category": "advanced",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.set_value",
+      "title": "设置元素值(web)",
+      "description": "设置网页中元素的值,一般是input、select元素的value",
+      "comment": "在网页%browser%中设置%element%的值为%value%",
+      "icon": "Web_Element_Set_Value",
+      "function": "xbot_visual.web.element.set_value",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/设置元素值（web）.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素，若存在相似元素，则会默认选择第一个可见元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "value",
+          "label": "元素值",
+          "required": true,
+          "tips": "填写要设置的元素值",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.set_attribute",
+      "title": "设置元素属性(web)",
+      "description": "设置网页元素属性",
+      "comment": "在网页%browser%中设置%element%的属性%attribute_name%值为%value%",
+      "icon": "Web_Element_Set_Attribute",
+      "function": "xbot_visual.web.element.set_attribute",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/设置元素属性（web）.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "required": true,
+          "tips": "填写要设置的属性名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "value",
+          "label": "属性值",
+          "required": true,
+          "tips": "填写要设置的属性值",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.wait",
+      "title": "等待元素(web)",
+      "description": "等待网页中元素出现或消失，再执行接下来的流程",
+      "comment": "等待网页%browser%中元素%element%出现，最多等待%timeout%秒",
+      "icon": "Web_Element_Wait",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.WaitElementControl, ShadowBot.Shell.Development",
+      "function": "xbot_visual.web.element.wait",
+      "helpUrl": "language/zh-cn/指令文档/等待/等待元素（web）.html",
+      "video": {
+        "time": "08:03"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.WaitBrowserElementHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "state",
+          "label": "等待状态",
+          "required": true,
+          "default": "10:appear",
+          "defaultDisplay": "等待元素出现",
+          "tips": "选择等待状态",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等待元素出现",
+                "value": "appear"
+              },
+              {
+                "display": "等待元素消失",
+                "value": "disappear"
+              }
+            ]
+          }
+        },
+        {
+          "name": "iswait",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "设置等待超时时间，超时后流程将自动往下继续执行",
+          "type": "bool",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间(s)",
+          "default": "10:20",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "wait_result",
+          "label": "等待结果",
+          "tips": "如果为True则等待成功,否则等待超时",
+          "name": "web_wait_result",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "web.element.get_details",
+      "title": "获取元素信息(web)",
+      "keywords": "源代码;属性值;元素位置",
+      "description": "获取网页中的元素的文本内容、源代码、属性值、元素位置等信息",
+      "comment": "%operation%，目标元素为%element%，将结果保存到%element_attribute%",
+      "icon": "Web_Element_Get_Details",
+      "function": "xbot_visual.web.element.get_details",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取元素信息（web）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.GetElementDetailsControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetElementDetailsHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "获取元素文本内容",
+          "tips": "选择要获取的网页元素信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取元素文本内容",
+                "value": "text"
+              },
+              {
+                "display": "获取元素源代码",
+                "value": "html"
+              },
+              {
+                "display": "获取元素值",
+                "value": "value"
+              },
+              {
+                "display": "获取网页链接地址",
+                "value": "href"
+              },
+              {
+                "display": "获取元素属性",
+                "value": "other"
+              },
+              {
+                "display": "获取元素位置",
+                "value": "bound"
+              }
+            ]
+          }
+        },
+        {
+          "name": "absolute_url",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "智能识别并补充地址前缀（http:// 或 https://）",
+          "type": "bool",
+          "editor": {
+            "label": "智能识别并补充地址前缀（http:// 或 https://）",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "tips": "填写要获取的网页元素的属性名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "relative_to",
+          "label": "相对于",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕左上角",
+          "tips": "在整个屏幕中的位置还是在浏览器客户区域中的位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕左上角",
+                "value": "screen"
+              },
+              {
+                "display": "浏览器页面左上角",
+                "value": "window"
+              }
+            ]
+          }
+        },
+        {
+          "name": "to96dpi",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:True",
+          "tips": "是否需要将边框属性转换成与设备无关的单位 (每个单位1/96英寸)",
+          "type": "bool",
+          "editor": {
+            "label": "转为dpi为96对应值",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "element_attribute",
+          "label": "保存元素信息至",
+          "variableLabel": "元素信息",
+          "tips": "指定一个变量名称,该变量用于保存获取到的网页元素信息",
+          "name": "web_element_attribute",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web.element.get_bounding",
+      "title": "获取元素位置(web)",
+      "description": "获取元素相对于屏幕或浏览器客户区域左上角的位置信息",
+      "comment": "获取网页%browser%中%element%相对于%relative_to%的位置信息，将结果保存到%bound%",
+      "icon": "Web_Element_Get_Bounding",
+      "function": "xbot_visual.web.element.get_bounding",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取元素位置（web）.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "to96dpi",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:True",
+          "tips": "是否需要将边框属性转换成与设备无关的单位 (每个单位1/96英寸)",
+          "type": "bool",
+          "editor": {
+            "label": "转为dpi为96对应值",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "relative_to",
+          "label": "相对于",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕左上角",
+          "tips": "在整个屏幕中的位置还是在浏览器客户区域中的位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕左上角",
+                "value": "screen"
+              },
+              {
+                "display": "浏览器页面左上角",
+                "value": "window"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "bound",
+          "label": "保存位置信息至",
+          "variableLabel": "元素位置信息",
+          "tips": "输入一个名称来保存元素位置信息",
+          "type": "xbot_visual._core.Rectangle",
+          "name": "bound"
+        }
+      ]
+    },
+    {
+      "name": "web.element.get_element",
+      "title": "获取元素对象(web)",
+      "keywords": "CSS;XPath",
+      "description": "可通过捕获、CSS、XPath三种方式定位网页上的一个元素",
+      "comment": "获取网页%browser%中%selector%的对象，将对象保存到%element%",
+      "icon": "Web_Element_Get_Element",
+      "function": "xbot_visual.web.element.get_element",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetElementControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/获取元素对象（web）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetElementHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "select_type",
+          "label": "定位方式",
+          "required": true,
+          "default": "10:selector",
+          "defaultDisplay": "默认方式",
+          "tips": "指定一种定位元素的方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认方式",
+                "value": "selector"
+              },
+              {
+                "display": "CSS选择器",
+                "value": "css_selector"
+              },
+              {
+                "display": "XPath选择器",
+                "value": "xpath_selector"
+              }
+            ]
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "css_selector",
+          "label": "CSS选择器",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "xpath_selector",
+          "label": "XPath选择器",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_related_parent",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否关联父元素",
+          "type": "bool",
+          "editor": {
+            "label": "关联父元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "parent",
+          "label": "父元素",
+          "required": false,
+          "tips": "在指定的父元素内查找目标元素",
+          "autoFill": false,
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "element",
+          "label": "保存元素对象至",
+          "variableLabel": "元素对象",
+          "tips": "指定一个变量名称,该变量用于保存获取到的元素对象",
+          "name": "web_element",
+          "type": "xbot._web.element.WebElement"
+        }
+      ]
+    },
+    {
+      "name": "web.element.get_all_elements",
+      "title": "获取相似元素列表(web)",
+      "statement": "workflow.getall",
+      "keywords": "css;xpath",
+      "description": "可通过捕获元素、CSS、XPath三种方式定位到网页上的一组相似元素，获取他们的对象或文本等信息",
+      "comment": "在网页%browser%中获取一组与元素%selector%相似的元素，将结果保存到%element_list%",
+      "icon": "Web_Element_Get_All_Elements",
+      "function": "xbot_visual.web.element.get_all_elements",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetAllElementsControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/获取相似元素列表（web）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetAllElementsHandler",
+          "settings": {
+            "inputName": "output_with_element_count",
+            "outputName": "element_count"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "select_type",
+          "label": "定位方式",
+          "required": true,
+          "default": "10:selector",
+          "defaultDisplay": "默认方式",
+          "category": "advanced",
+          "tips": "指定一种定位元素的方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认方式",
+                "value": "selector"
+              },
+              {
+                "display": "CSS选择器",
+                "value": "css_selector"
+              },
+              {
+                "display": "XPath选择器",
+                "value": "xpath_selector"
+              }
+            ]
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "css_selector",
+          "label": "CSS选择器",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "xpath_selector",
+          "label": "XPath选择器",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_related_parent",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否关联父元素",
+          "type": "bool",
+          "editor": {
+            "label": "关联父元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "parent",
+          "label": "父元素",
+          "autoFill": false,
+          "tips": "在指定的父元素内查找目标元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "元素操作",
+          "required": true,
+          "default": "10:element",
+          "defaultDisplay": "元素操作",
+          "tips": "获取的元素信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取元素对象",
+                "value": "element"
+              },
+              {
+                "display": "获取元素文本内容",
+                "value": "text"
+              },
+              {
+                "display": "获取元素值",
+                "value": "value"
+              },
+              {
+                "display": "获取元素链接地址",
+                "value": "href"
+              },
+              {
+                "display": "获取元素源代码",
+                "value": "html"
+              },
+              {
+                "display": "获取元素属性",
+                "value": "attr"
+              }
+            ]
+          }
+        },
+        {
+          "name": "absolute_url",
+          "label": "",
+          "default": "13:False",
+          "tips": "智能识别并补充地址前缀（http:// 或 https://）",
+          "type": "bool",
+          "editor": {
+            "label": "智能识别并补充地址前缀（http:// 或 https://）",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "tips": "填写要获取的网页元素的属性名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "output_with_element_count",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否输出相似元素个数",
+          "type": "bool",
+          "editor": {
+            "label": "输出相似元素个数",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "element_list",
+          "label": "保存相似元素列表至",
+          "variableLabel": "相似元素对象列表",
+          "tips": "指定一个变量名称,该变量用于保存获取到的相似元素列表",
+          "name": "web_element_list",
+          "type": "list<xbot._web.element.WebElement>"
+        },
+        {
+          "id": "element_count",
+          "label": "保存相似元素个数至",
+          "variableLabel": "相似元素对象个数",
+          "tips": "指定一个变量名称,该变量用于保存获取到的相似元素个数",
+          "name": "web_element_count",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "web.element.screenshot",
+      "title": "网页截图",
+      "description": "对指定区域内元素进行截图,保存至文件或添加到剪切板中",
+      "comment": "在网页%browser%中对元素%element%进行截图，将结果保存到文件夹%folder_path%中，将存图路径保存到%screenshot_save_file_name%",
+      "icon": "Web_Element_Screenshot",
+      "function": "xbot_visual.web.element.screenshot",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/网页截图.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.ScreenShotControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.ScreenShotHandler"
+        },
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.ScreenShotOutputPathHandler",
+          "settings": {
+            "inputName": "save_to_clipboard",
+            "outputName": "screenshot_save_file_name"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "capture_area",
+          "label": "截图区域",
+          "required": true,
+          "tips": "三种区域，若选择整个网页，会生成整个页面的长图",
+          "default": "10:Element",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "网页元素",
+                "value": "Element"
+              },
+              {
+                "display": "网页可见区域",
+                "value": "ViewPort"
+              },
+              {
+                "display": "整个网页",
+                "value": "Whole"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": false,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "folder_path",
+          "label": "保存文件夹",
+          "tips": "截图保存的文件夹",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "random_filename",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "自动生成不重复的文件名",
+          "type": "bool",
+          "editor": {
+            "label": "使用自动随机文件名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "filename",
+          "label": "自定义文件名",
+          "tips": "自定义文件名 如: screenshot.png, 注意文件名不能包含下列任何字符: \\ / : * ? \" < > |",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "overwrite_file",
+          "label": "",
+          "default": "13:True",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "如果文件存在则覆盖",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "save_to_clipboard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "保存图片至剪切板",
+          "type": "bool",
+          "editor": {
+            "label": "保存图片至剪切板",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "height",
+          "label": "最大截图高度",
+          "required": false,
+          "tips": "设置最大截图的高度(相对于缩放100%)。用于因网页过长，导致截图失败的情况。默认值25000",
+          "default": "10:25000",
+          "type": "int",
+          "editor": {
+            "label": "最大截图高度",
+            "kind": "spin",
+            "minValue": 0,
+            "maxValue": 100000
+          }
+        },
+        {
+          "name": "piece_height",
+          "label": "单次截图高度",
+          "required": false,
+          "tips": "设置单次截图高度(相对于缩放100%)。对于长页面，采用分次截图再拼接来完成。可根据机器性能来调整每次截图高度，以提高截图的效率，建议每次不要超过5000",
+          "default": "10:3000",
+          "type": "int",
+          "editor": {
+            "label": "单次截图高度",
+            "kind": "spin",
+            "minValue": 0,
+            "maxValue": 10000
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "设置网页截图的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "screenshot_save_file_name",
+          "label": "截图保存位置",
+          "variableLabel": "元素截图位置",
+          "tips": "截图文件所在的位置：文件路径+名称",
+          "name": "screenshot_save_file_name",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web.element.data_scraping",
+      "title": "批量数据抓取",
+      "description": "在网页中抓取批量数据，常用于抓取列表页、详情页，同时可通过设置分页按钮抓取多页数据",
+      "comment": "在网页%browser%中抓取%table_element%，将结果保存到%data_table%，同时保存到数据表格",
+      "icon": "Web_Element_Data_Scraping",
+      "function": "xbot_visual.web.element.data_scraping",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/批量数据抓取.html",
+      "video": {
+        "time": "12:30"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.DataScrapingControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.DataScrapingHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "table_element",
+          "label": "抓取目标",
+          "required": true,
+          "tips": "要抓取的表格元素",
+          "autoFill": false,
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "table"
+          }
+        },
+        {
+          "name": "handle_pager",
+          "label": "抓取页数",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否要处理分页,勾选后可抓取多页数据",
+          "type": "bool",
+          "editor": {
+            "label": "抓取多页",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "page_element",
+          "label": "下一页按钮",
+          "required": false,
+          "tips": "分页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "scrape_multi_page",
+          "label": "",
+          "required": "false",
+          "default": "13:False",
+          "type": "bool",
+          "editor": {
+            "label": "",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "max_page",
+          "label": "页数",
+          "required": false,
+          "default": "10:",
+          "tips": "要抓取的最大页数（必填）",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请填写要抓取的页数"
+          }
+        },
+        {
+          "name": "page_interval",
+          "label": "翻页间隔(秒)",
+          "required": false,
+          "default": "10:1",
+          "category": "advanced",
+          "tips": "为了获取某些动态加载的数据,需要在抓取数据前等待其加载,\"翻页间隔\"即是在抓取数据前的等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "simulate_click_page",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "如果使用模拟人工点击则通过模拟人工的方式触发点击事件,否则将根据目标元素的自动化接口触发点击",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工点击翻页按钮",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "scroll_to_bottom",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "抓取前会自动滚动以加载页面。可在不需要自动滚动时取消勾选",
+          "type": "bool",
+          "editor": {
+            "label": "自动滚到页面底部",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "simulate_delay",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "模拟真人在翻页操作之间随机停顿",
+          "category": "advanced",
+          "type": "bool",
+          "editor": {
+            "label": "模拟翻页停顿",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "min_time",
+          "label": "最小停顿时长(秒)",
+          "required": false,
+          "tips": "指令执行完成后的最短等待时间",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "max_time",
+          "label": "最大停顿时长(秒)",
+          "required": false,
+          "tips": "指令执行完成后的最长等待时间",
+          "type": "int",
+          "default": "10:3",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 1
+          }
+        },
+        {
+          "name": "save_to_datasheet",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "是否将结果保存至数据表格",
+          "type": "bool",
+          "editor": {
+            "label": "保存至数据表格",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "data_table",
+          "label": "保存批量数据至",
+          "variableLabel": "批量数据",
+          "tips": "指定一个变量名称,该变量用于保存获取到的网页批量数据",
+          "name": "web_data_table",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "web.element.foreach_element",
+      "statement": "workflow.forin",
+      "function": "xbot_visual.web.element.iter_all_elements",
+      "title": "循环相似元素(web)",
+      "description": "依次循环网页中相似元素列表的每一项进行自动化操作",
+      "comment": "从网页%browser%中获取相似元素%selector%，将结果依次循环保存到%loop_item%",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "icon": "Web_Element_Foreach_Element",
+      "helpUrl": "language/zh-cn/指令文档/相似元素操作/循环相似元素（web）.html",
+      "video": {
+        "time": "03:18"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.ForInControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Element.ForeachElementHandler",
+          "settings": {
+            "inputName": "output_with_index",
+            "outputName": "loop_index"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择相似元素的控件",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "元素操作",
+          "required": true,
+          "default": "10:element",
+          "defaultDisplay": "元素操作",
+          "tips": "设置循环的相似元素内容：元素对象or元素的信息，比如文本内容等",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取元素对象",
+                "value": "element"
+              },
+              {
+                "display": "获取元素文本内容",
+                "value": "text"
+              },
+              {
+                "display": "获取元素值",
+                "value": "value"
+              },
+              {
+                "display": "获取元素链接地址",
+                "value": "href"
+              },
+              {
+                "display": "获取元素源代码",
+                "value": "html"
+              },
+              {
+                "display": "获取元素属性",
+                "value": "attr"
+              }
+            ]
+          }
+        },
+        {
+          "name": "absolute_url",
+          "label": "",
+          "default": "13:False",
+          "tips": "智能识别并补充地址前缀（http:// 或 https://）",
+          "type": "bool",
+          "editor": {
+            "label": "智能识别并补充地址前缀（http:// 或 https://）",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "tips": "填写要获取的网页元素的属性名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "loop_start_index",
+          "label": "循环开始位置",
+          "required": false,
+          "category": "advanced",
+          "default": "10:0",
+          "tips": "循环开始位置，0表示第一项",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "loop_end_index",
+          "label": "循环结束位置",
+          "required": false,
+          "category": "advanced",
+          "default": "10:-1",
+          "tips": "循环结束位置，-1表示倒数第一项，结果包含结束位置的项",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "output_with_index",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否输出循环项的位置",
+          "type": "bool",
+          "editor": {
+            "label": "输出循环项的位置",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_item",
+          "label": "保存当前循环项至",
+          "variableLabel": "当前循环项的元素对象",
+          "tips": "指定一个变量名称,用于存储一组相似元素中的当前循环项",
+          "name": "web_loop_element",
+          "type": "xbot._web.element.WebElement"
+        },
+        {
+          "id": "loop_index",
+          "label": "保存当前循环位置至",
+          "variableLabel": "当前循环项的位置",
+          "tips": "指定一个变量名称,用于存储一组相似元素中的当前循环项的位置",
+          "name": "web_loop_element_index",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "web.element.drag_to",
+      "title": "拖拽元素(web)",
+      "keywords": "拖动;滑动",
+      "description": "在指定的网页中将元素拖拽到指定位置",
+      "comment": "将元素拖拽到指定位置",
+      "icon": "Web_Element_Drag_To",
+      "function": "xbot_visual.web.element.drag_to",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.DragElementControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/元素拖拽（web）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.DragElementToHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "drag_way",
+          "label": "拖拽方式",
+          "required": true,
+          "default": "10:default",
+          "defaultDisplay": "拖拽至目标点",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "拖拽至目标点",
+                "value": "default"
+              },
+              {
+                "display": "拖拽至目标元素上",
+                "value": "targetElement"
+              }
+            ]
+          }
+        },
+        {
+          "name": "target_element",
+          "label": "操作目标",
+          "tips": "要操作的元素，可以从元素列表中选择一个录制好的网页元素，也可以使用动态元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "left",
+          "label": "X",
+          "default": "10:0",
+          "tips": "鼠标移动到的目标位置的横坐标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "top",
+          "label": "Y",
+          "default": "10:0",
+          "tips": "鼠标移动到的目标位置的纵坐标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "延迟时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "鼠标按下位置锚点",
+          "required": true,
+          "tips": "支持鼠标在拖拽元素中心位置、随机位置(在元素矩形范围内)、自定义位置处按下",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "default": "10:middleCenter",
+          "label": "鼠标按下元素部位",
+          "tips": "默认鼠标在拖拽元素的中心位置按下，根据实际情况调整",
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "move_speed",
+          "label": "移动速度",
+          "required": false,
+          "category": "advanced",
+          "default": "10:middle",
+          "defaultDisplay": "中速",
+          "tips": "选择移动鼠标的速度",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "瞬间",
+                "value": "instant"
+              },
+              {
+                "display": "快速",
+                "value": "fast"
+              },
+              {
+                "display": "中速",
+                "value": "middle"
+              },
+              {
+                "display": "慢速",
+                "value": "slow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "release_anchor_type",
+          "label": "鼠标释放位置锚点",
+          "required": true,
+          "tips": "支持鼠标在拖拽至元素的中心位置、随机位置(在元素矩形范围内)、自定义位置释放",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "release_sudoku_part",
+          "default": "10:middleCenter",
+          "label": "鼠标释放元素部位",
+          "tips": "默认鼠标在拖拽至元素的中心位置释放，请根据实际情况调整",
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "release_offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "release_offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.get_select_item",
+      "title": "获取下拉框选项(web)",
+      "description": "获取网页中下拉框的选项",
+      "comment": "获取网页%browser%中%element%的%get_way%，将结果保存到%select_items%",
+      "icon": "Web_Element_Get_Select_Item",
+      "function": "xbot_visual.web.element.get_select_item",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Element.GetSelectItemHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取下拉框选项（web）.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "get_way",
+          "label": "获取内容",
+          "required": true,
+          "default": "10:selected",
+          "defaultDisplay": "当前选中项",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "当前选中项",
+                "value": "selected"
+              },
+              {
+                "display": "全部下拉项",
+                "value": "select_all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标下拉框存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "select_items",
+          "label": "保存获取到的内容至",
+          "tips": "指定一个变量名称,用于存储获取到的下拉选项内容",
+          "name": "select_items",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "web.element.get_associated_elements",
+      "title": "获取关联元素(web)",
+      "keywords": "父元素;子元素;相邻元素",
+      "description": "在指定的网页中获取元素的关联元素（父元素、子元素、相邻元素）",
+      "comment": "获取网页%browser%中%element%的%associated_kind%对象，将对象保存到%web_element_result%",
+      "icon": "Web_Element_Get_Associated_Elements",
+      "function": "xbot_visual.web.element.get_associated_elements",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.GetAssociatedElementsControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/元素操作/获取关联元素（web）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetAssociatedElementsHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "associated_kind",
+          "label": "关联方式",
+          "required": true,
+          "default": "10:parent",
+          "defaultDisplay": "父元素",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "父元素",
+                "value": "parent"
+              },
+              {
+                "display": "子元素",
+                "value": "child"
+              },
+              {
+                "display": "相邻元素",
+                "value": "sibling"
+              }
+            ]
+          }
+        },
+        {
+          "name": "child_access_kind",
+          "label": "子元素获取方式",
+          "default": "10:all",
+          "defaultDisplay": "所有子元素",
+          "tips": "指定子元素的获取方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "所有子元素",
+                "value": "all"
+              },
+              {
+                "display": "指定位置的子元素",
+                "value": "index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "child_index",
+          "label": "子元素位置",
+          "default": "10:0",
+          "tips": "在父元素中的索引位置，从0开始计数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "sibling_direction",
+          "label": "相邻方向",
+          "default": "10:next",
+          "defaultDisplay": "下一个相邻元素",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "上一个相邻元素",
+                "value": "previous"
+              },
+              {
+                "display": "下一个相邻元素",
+                "value": "next"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标关联元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "web_element_result",
+          "label": "保存网页元素至",
+          "variableLabel": "网页元素",
+          "tips": "指定一个变量名称,该变量用于保存获取到的网页元素",
+          "name": "web_element_result",
+          "type": "xbot._web.element.WebElement"
+        }
+      ]
+    },
+    {
+      "name": "web.element.upload",
+      "title": "上传文件",
+      "description": "自动完成点击上传按钮、在文件选择对话框中输入待上传文件等系列操作",
+      "comment": "在网页%browser%中点击%element%，在弹出的文件选择对话框中输入文件%file_name%",
+      "icon": "Web_Element_Upload",
+      "function": "xbot_visual.web.element.upload",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.UploadControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/对话框处理/上传文件.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "上传按钮",
+          "required": true,
+          "tips": "选择要点击的上传按钮对应的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "file_name",
+          "label": "上传文件路径",
+          "required": true,
+          "tips": "待上传文件完整路径。若要选择多个文件，切换到Python模式下，输入文件列表，比如: [\"文件1路径\",\"文件2路径\"]",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "All Files (*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "如果使用模拟人工输入则通过模拟人工的方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "clipboard_input",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中,避免输入法问题",
+          "type": "bool",
+          "editor": {
+            "label": "剪切板输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_type",
+          "label": "输入方式",
+          "required": true,
+          "tips": "自动化接口输入: 调用文件名输入框自身实现的自动化接口输入\r\n剪切板输入: 将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中,避免输入法问题\r\n模拟人工输入: 如果使用模拟人工输入则通过模拟人工的方式触发输入事件(会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题),否则将根据目标元素的自动化接口触发输入",
+          "type": "str",
+          "default": "10:automatic",
+          "defaultDisplay": "自动化接口输入",
+          "category": "advanced",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动化接口输入",
+                "value": "automatic"
+              },
+              {
+                "display": "剪切板输入",
+                "value": "clipboard"
+              },
+              {
+                "display": "模拟人工输入",
+                "value": "simulate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wait_dialog_appear_timeout",
+          "label": "等待对话框出现(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "点击上传按钮后, 等待上传对话框出现的超时时间, 单位(秒)",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "force_ime_ENG",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "存在不常见的输入法切换英文输入状态不成功的情况\r\n需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘(ENG)",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔(ms)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间(仅模拟输入有效, 对{{BrowserName}}该参数无效), 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "focus_timeout",
+          "label": "焦点超时时间(ms)",
+          "category": "advanced",
+          "default": "10:1000",
+          "tips": "设置焦点超时时间,单位(毫秒)",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.element.download",
+      "title": "下载文件",
+      "description": "自动完成点击下载按钮、在文件保存对话框中输入保存文件信息等系列操作",
+      "comment": "在网页%browser%中点击%download_button%下载，保存到路径%filename%下，最多等待%wait_complete_timeout%秒直到下载完成，将文件路径保存到%download_file_name%",
+      "icon": "Web_Element_Download",
+      "function": "xbot_visual.web.element.download",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.DownloadControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/对话框处理/下载文件.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.DownloadHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "scene",
+          "label": "下载场景",
+          "required": true,
+          "default": "10:Button",
+          "defaultDisplay": "点击下载按钮",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "点击下载按钮",
+                "value": "Button"
+              },
+              {
+                "display": "指定下载地址",
+                "value": "Url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "download_button",
+          "label": "下载按钮",
+          "required": false,
+          "tips": "选择要点击的下载按钮对应的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "download_url",
+          "label": "下载地址",
+          "required": false,
+          "tips": "需要下载的请求地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "file_folder",
+          "label": "保存文件夹",
+          "required": true,
+          "tips": "保存下载文件的文件夹",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder",
+              "filter": "All Files (*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "use_custom_filename",
+          "label": "是否自定文件名",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否自定义保存文件名，不勾选则使用默文件名",
+          "type": "bool",
+          "editor": {
+            "label": "是否自定义保存文件名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "file_name",
+          "label": "保存文件名",
+          "required": false,
+          "tips": "自定义保存的文件名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_behavior",
+          "label": "文件已存在时",
+          "required": false,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "tips": "当目标文件夹中已有同名文件时，选择系统的处理方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "自动重命名",
+                "value": "auto_rename"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wait_complete",
+          "label": "是否等待下载完成",
+          "required": true,
+          "default": "13:True",
+          "tips": "若是，会在最大超时时间内一直等待，直到文件下载完成",
+          "type": "bool",
+          "editor": {
+            "label": "是否等待下载完成",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "wait_complete_timeout",
+          "label": "超时时间(s)",
+          "required": false,
+          "default": "10:300",
+          "tips": "等待下载超时时间，单位(秒)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "如果使用模拟人工输入则通过模拟人工的方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "clipboard_input",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中，避免输入法问题",
+          "type": "bool",
+          "editor": {
+            "label": "剪切板输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_type",
+          "label": "输入方式",
+          "required": true,
+          "tips": "自动化接口输入: 调用文件名输入框自身实现的自动化接口输入\r\n剪切板输入: 将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中,避免输入法问题\r\n模拟人工输入: 如果使用模拟人工输入则通过模拟人工的方式触发输入事件(会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题),否则将根据目标元素的自动化接口触发输入",
+          "type": "str",
+          "default": "10:automatic",
+          "defaultDisplay": "自动化接口输入",
+          "category": "advanced",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动化接口输入",
+                "value": "automatic"
+              },
+              {
+                "display": "剪切板输入",
+                "value": "clipboard"
+              },
+              {
+                "display": "模拟人工输入",
+                "value": "simulate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wait_dialog_appear_timeout",
+          "label": "等待对话框出现(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "点击下载按钮后, 等待下载对话框出现(或在未开启浏览器\"下载前询问保存位置\"选项时，等待下载任务开始)的超时时间, 单位(秒)",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "force_ime_ENG",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "存在不常见的输入法切换英文输入状态不成功的情况\r\n需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘(ENG)",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔(ms)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间(仅模拟输入有效), 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "focus_timeout",
+          "label": "焦点超时时间(ms)",
+          "category": "advanced",
+          "default": "10:1000",
+          "tips": "设置焦点超时时间，单位(毫秒)",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "download_file_name",
+          "label": "文件保存位置",
+          "tips": "下载文件所在的位置：文件路径+名称",
+          "name": "download_file_name",
+          "type": "str"
+        }
+      ]
+    }
+  ]
+}

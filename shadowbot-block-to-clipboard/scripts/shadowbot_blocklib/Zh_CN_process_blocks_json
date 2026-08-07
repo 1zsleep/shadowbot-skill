@@ -1,0 +1,258 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "process.run",
+      "statement": "process.run",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/调用流程.html",
+      "icon": "Process_Run",
+      "title": "调用流程",
+      "keywords": "调用子流程",
+      "description": "执行指定名称的内部流程",
+      "comment": "执行流程%process%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.RunProcessControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.RunProcessHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "process",
+          "label": "模块名称",
+          "required": true,
+          "tips": "选择要执行的模块名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "package",
+          "label": "当前Python包对象",
+          "required": true,
+          "tips": "根据当前Python包对象动态导入指定流程",
+          "default": "11:__name__",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "inputs",
+          "label": "输入参数列表",
+          "required": false,
+          "tips": "输入参数列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "outputs",
+          "label": "输出参数列表",
+          "required": false,
+          "tips": "输出参数列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "process_result",
+          "label": "保存流程输出结果至",
+          "tips": "指定一个变量名称,该变量用于保存流程的执行结果",
+          "name": "process_result",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "process.invoke_module",
+      "statement": "process.invoke_module",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/调用模块.html",
+      "icon": "Process_Invoke_Module",
+      "title": "调用模块",
+      "keywords": "调用python",
+      "description": "调用应用内的其他模块",
+      "comment": "调用模块%module%中的%function%方法",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.InvokeModule, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.InvokeModuleHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "module",
+          "label": "模块名称",
+          "required": true,
+          "tips": "选择要执行的模块名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "function",
+          "label": "方法名称",
+          "required": true,
+          "tips": "选择要执行的方法名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "params",
+          "label": "方法参数列表",
+          "required": false,
+          "tips": "方法参数列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "returnType",
+          "label": "返回值类型",
+          "required": false,
+          "tips": "返回值类型",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "invoke_result",
+          "label": "模块调用结果",
+          "variableLabel": "模块调用结果",
+          "type": "any",
+          "name": "invoke_result"
+        }
+      ]
+    },
+    {
+      "name": "process.return",
+      "statement": "process.return",
+      "canDebug": false,
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/退出流程.html",
+      "icon": "Process_Return",
+      "description": "退出当前流程并继续执行其他流程",
+      "comment": "退出当前流程并继续执行其他流程",
+      "title": "退出当前流程"
+    },
+    {
+      "name": "process.exit",
+      "statement": "process.exit",
+      "canDebug": false,
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/应用/终止应用.html",
+      "icon": "Process_Exit",
+      "description": "停止整个应用的运行",
+      "comment": "停止整个应用的运行",
+      "keywords": "退出应用;结束应用",
+      "title": "终止应用"
+    },
+    {
+      "name": "process.get_app_params",
+      "function": "xbot_visual.process.get_app_params",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Process.GetAppParamsHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/应用/获取应用参数.html",
+      "icon": "Process_Get_App_Params",
+      "title": "获取应用参数",
+      "description": "获取应用参数",
+      "comment": "获取应用参数，将结果保存到%param_value%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.GetAppParams, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "param_name",
+          "label": "参数类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "param_value",
+          "label": "保存参数值至",
+          "variableLabel": "应用参数值",
+          "type": "str",
+          "name": "param_value"
+        }
+      ]
+    },
+    {
+      "name": "process.write_to_storage",
+      "function": "xbot_visual.process.write_to_storage",
+      "title": "保存自定义数据",
+      "description": "可持久保存流程中的用户数据",
+      "comment": "保存自定义数据%content%到%key%",
+      "icon": "Process_Write_To_Storage",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/应用/保存自定义数据.html",
+      "inputs": [
+        {
+          "name": "key",
+          "label": "读取Key",
+          "required": true,
+          "tips": "数据读取时需要， 读取只限同一用户、同一应用 \r\n相同Key多次保存，内容会被覆盖",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "content",
+          "label": "数据内容",
+          "required": true,
+          "tips": "需要保存的数据内容，长度不超过20000个字符",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "process.read_from_storage",
+      "function": "xbot_visual.process.read_from_storage",
+      "title": "读取自定义数据",
+      "description": "读取流程中已保存的自定义数据",
+      "comment": "读取自定义数据%key%，将结果保存到%content%",
+      "icon": "Process_Read_From_Storage",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/应用/读取自定义数据.html",
+      "inputs": [
+        {
+          "name": "key",
+          "label": "Key",
+          "required": true,
+          "tips": "“保存自定义数据”指令中指定的读取Key",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "content",
+          "label": "数据内容",
+          "variableLabel": "自定义数据内容",
+          "tips": "若根据key未找到，返回None",
+          "type": "str",
+          "name": "content"
+        }
+      ]
+    }
+  ]
+}

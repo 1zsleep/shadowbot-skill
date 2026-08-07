@@ -1,0 +1,176 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "csv.read",
+      "function": "xbot_visual.csv.read",
+      "title": "读取CSV数据",
+      "description": "读取CSV数据",
+      "comment": "读取%csv_path%文件，并将读取结果保存到%row_values%",
+      "icon": "Csv_Read",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/csv读写/读取csv数据.html",
+      "inputs": [
+        {
+          "name": "csv_path",
+          "label": "CSV文件路径",
+          "required": true,
+          "tips": "输入CSV文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "CSV文件 (.csv)|*.csv"
+            }
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "文件编码",
+          "required": true,
+          "default": "10:UTF-8",
+          "defaultDisplay": "UTF-8",
+          "tips": "选择文本编码格式，UTF-8-SIG为带有 BOM 的 UTF-8",
+          "type": "str",
+          "editor": {
+            "kind": "editselect",
+            "options": [
+              "ANSI",
+              "UTF-8",
+              "UTF-8-SIG"
+            ]
+          }
+        },
+        {
+          "name": "delimiter",
+          "label": "内容分隔符",
+          "required": false,
+          "tips": "选择内容分隔符，默认为逗号",
+          "type": "str",
+          "defaultDisplay": "逗号",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "逗号",
+                "value": ","
+              },
+              {
+                "display": "分号",
+                "value": ";"
+              },
+              {
+                "display": "冒号",
+                "value": ":"
+              },
+              {
+                "display": "空格",
+                "value": " "
+              },
+              {
+                "display": "Tab键",
+                "value": "\t"
+              }
+            ]
+          }
+        },
+        {
+          "name": "first_row_is_header",
+          "label": "",
+          "required": true,
+          "tips": "CSV文件首行是否是列头",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "首行是列头",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "row_values",
+          "label": "保存行数据至",
+          "variableLabel": "CSV数据",
+          "tips": "输入一个名字，用来保存读取的行数据",
+          "type": "list<list<str>>",
+          "name": "row_values"
+        }
+      ]
+    },
+    {
+      "name": "csv.write",
+      "function": "xbot_visual.csv.write",
+      "title": "数据写入CSV",
+      "description": "数据写入CSV",
+      "comment": "将%values%通过%write_way%方式写入到%csv_path%",
+      "icon": "Csv_Write",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/csv读写/数据写入csv.html",
+      "inputs": [
+        {
+          "name": "csv_path",
+          "label": "CSV文件路径",
+          "required": true,
+          "tips": "输入CSV文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "CSV文件 (.csv)|*.csv"
+            }
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "文件编码",
+          "required": true,
+          "default": "10:UTF-8",
+          "defaultDisplay": "UTF-8",
+          "tips": "选择文本编码格式",
+          "type": "str",
+          "editor": {
+            "kind": "editselect",
+            "options": [
+              "ANSI",
+              "UTF-8",
+              "UTF-8-SIG"
+            ]
+          }
+        },
+        {
+          "name": "write_way",
+          "label": "写入方式",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖写入",
+          "tips": "选择写入方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "追加写入",
+                "value": "append"
+              },
+              {
+                "display": "覆盖写入",
+                "value": "overwrite"
+              }
+            ]
+          }
+        },
+        {
+          "name": "values",
+          "label": "行数据",
+          "required": true,
+          "tips": "输入待写入CSV文件的行数据",
+          "type": "list<list<any>>",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,605 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "list.create",
+      "function": "xbot_visual.list.create",
+      "title": "新建列表",
+      "description": "新建空的列表，列表为多个数据的数组，例如列表:[\"中国\",\"美国\",\"法国\"]",
+      "comment": "新建列表，将列表对象保存到%list_instance%",
+      "icon": "List_Create",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/新建列表.html",
+      "outputs": [
+        {
+          "id": "list_instance",
+          "label": "保存列表对象至",
+          "variableLabel": "新建的列表对象",
+          "tips": "输入一个名字,用来保存新建的列表",
+          "type": "list",
+          "name": "list_instance"
+        }
+      ]
+    },
+    {
+      "name": "list.clear",
+      "function": "xbot_visual.list.clear",
+      "title": "清空列表",
+      "description": "这个指令用于清空列表",
+      "comment": "清空列表对象%lst%",
+      "icon": "List_Clear",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/清空列表.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.append_or_insert",
+      "function": "xbot_visual.list.append_or_insert",
+      "title": "列表插入一项",
+      "description": "在列表指定位置插入一项",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.List.ListInsertControl, ShadowBot.Shell.Development",
+      "comment": "在列表对象%lst%中增加新的一项%elem%",
+      "icon": "List_Append_Or_Insert",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/列表添加一项.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.ListInsertHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "insert_way",
+          "label": "插入方式",
+          "required": true,
+          "default": "10:append",
+          "defaultDisplay": "末尾追加",
+          "tips": "在列表的末尾或指定位置插入新的一项",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "末尾追加",
+                "value": "append"
+              },
+              {
+                "display": "指定位置",
+                "value": "insert"
+              }
+            ]
+          }
+        },
+        {
+          "name": "index",
+          "label": "插入到",
+          "required": false,
+          "default": "10:0",
+          "tips": "输入待插入的位置。正着数：第一项填写0，第二项填写1，以此类推；倒着数：倒数第一项填写-1，倒数第二项填写-2，以此类推。插入后原项将后移。",
+          "type": "int",
+          "editor": {
+            "placeholder": "0表示第1项，1表示第2项...支持负数，-n表示倒数第n项",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "elem",
+          "label": "插入项内容",
+          "required": true,
+          "tips": "输入待插入的项内容",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.set_elem",
+      "function": "xbot_visual.list.set_elem",
+      "title": "修改列表指定位置项的值",
+      "description": "这个指令用于修改列表指定位置的值",
+      "comment": "修改列表对象%lst%中第%index%项的值为%elem%",
+      "icon": "List_Set_Elem",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/修改列表指定位置的值.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "index",
+          "label": "项位置",
+          "required": true,
+          "tips": "输入项位置。正着数:第一项填写0,第二项填写1,依次类推;倒着数:倒数第一项填写-1;倒数第二项填写-2,依次类推。",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "elem",
+          "label": "修改项",
+          "required": true,
+          "tips": "修改列表指定位置项内容",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.get_elem",
+      "function": "xbot_visual.list.get_elem",
+      "title": "获取列表指定位置项",
+      "description": "这个指令用于获取列表中指定位置的一项",
+      "comment": "获取列表对象%lst%中第%index%项的内容，将结果保存到%list_instance%",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.UseOutputTypeByInputListItemTypeHandler",
+          "settings": {
+            "inputName": "lst",
+            "outputName": "list_instance"
+          }
+        }
+      ],
+      "icon": "List_Get_Elem",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/获取列表指定位置项.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "index",
+          "label": "项位置",
+          "required": true,
+          "tips": "输入项位置。正着数:第一项填写0,第二项填写1,依次类推;倒着数:倒数第一项填写-1;倒数第二项填写-2,依次类推。",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "list_instance",
+          "label": "保存列表项至",
+          "variableLabel": "列表项",
+          "tips": "输入一个名字,用来保存查找到的列表项",
+          "type": "any",
+          "name": "element_instance"
+        }
+      ]
+    },
+    {
+      "name": "list.get_index",
+      "function": "xbot_visual.list.get_index",
+      "title": "获取列表指定项的位置",
+      "description": "获取指定项在列表中的位置，列表位置从0开始排序，0为第1项，1为第2项，依次类推",
+      "comment": "获取列表%lst%中内容为%elem%项的位置，将结果保存到%element_index%",
+      "icon": "List_Get_Index",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/获取列表指定项的位置.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "elem",
+          "label": "指定项的值",
+          "required": true,
+          "tips": "输入列表指定项的值",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "element_index",
+          "label": "保存位置至",
+          "variableLabel": "列表位置",
+          "tips": "输入一个名字,用来保存查找到的指定项在列表中的位置",
+          "type": "int",
+          "name": "element_index"
+        }
+      ]
+    },
+    {
+      "name": "list.remove",
+      "function": "xbot_visual.list.remove",
+      "title": "删除列表一项",
+      "description": "这个指令用于删除列表中指定的一项",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.List.ListRemove, ShadowBot.Shell.Development",
+      "comment": "删除列表对象%lst%中第%index%项",
+      "icon": "List_Remove",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/删除列表一项.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.ListRemoveHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "remove_way",
+          "label": "删除方式",
+          "required": true,
+          "default": "10:index",
+          "defaultDisplay": "按位置删除",
+          "tips": "在'hellow world'中如果要删除第一个字母'o'选择下表删除需要输入下标4(下标从0开始计数),如果要删除全部的‘o’选择按内容删除则输入字母‘o'",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "按位置删除",
+                "value": "index"
+              },
+              {
+                "display": "按内容删除",
+                "value": "elem"
+              }
+            ]
+          }
+        },
+        {
+          "name": "elem",
+          "label": "待删除的内容",
+          "required": false,
+          "tips": "输入待删除的内容",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "index",
+          "label": "待删除的位置",
+          "required": false,
+          "tips": "输入删除的位置。正着数:第一项填写0,第二项填写1,依次类推;倒着数:倒数第一项填写-1;倒数第二项填写-2,依次类推。",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.sort",
+      "function": "xbot_visual.list.sort",
+      "title": "列表排序",
+      "description": "这个指令用于列表排序",
+      "comment": "按%sort_way%排序列表对象%lst%",
+      "icon": "List_Sort",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/列表排序.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sort_way",
+          "label": "排序方式",
+          "required": true,
+          "default": "10:descend",
+          "defaultDisplay": "降序",
+          "tips": "选择升序或者降序排序列表",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "降序",
+                "value": "descend"
+              },
+              {
+                "display": "升序",
+                "value": "ascend"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.shuffle",
+      "function": "xbot_visual.list.shuffle",
+      "title": "列表随机排序",
+      "description": "这个指令用于列表随机排序",
+      "comment": "随机排序列表对象%lst%",
+      "icon": "List_Shuffle",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/列表随机排序.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.extend",
+      "function": "xbot_visual.list.extend",
+      "title": "合并列表",
+      "description": "这个指令用于合并列表",
+      "comment": "合并列表%lst1%和%lst2%到新的列表，将结果保存到%list_instance%",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.ExtendBlockHandler",
+          "settings": {
+            "inputList1": "lst1",
+            "inputList2": "lst2",
+            "outputList": "list_instance"
+          }
+        }
+      ],
+      "icon": "List_Extend",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/合并列表.html",
+      "inputs": [
+        {
+          "name": "lst1",
+          "label": "列表1",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "lst2",
+          "label": "列表2",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "list_instance",
+          "label": "保存列表对象至",
+          "variableLabel": "合并后的列表对象",
+          "tips": "输入一个名字,用来保存新建的列表",
+          "type": "list",
+          "name": "list_instance"
+        }
+      ]
+    },
+    {
+      "name": "list.reverse",
+      "function": "xbot_visual.list.reverse",
+      "title": "反转列表",
+      "description": "这个指令用于反转列表",
+      "comment": "反转列表对象%lst%",
+      "icon": "List_Reverse",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/反转列表.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.remove_duplicate",
+      "function": "xbot_visual.list.remove_duplicate",
+      "title": "列表去重",
+      "description": "这个指令用于删除列表中重复的项",
+      "comment": "删除列表对象%lst%中的重复项",
+      "icon": "List_Remove_Duplicate",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/列表去重.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "list.get_duplicate",
+      "function": "xbot_visual.list.get_duplicate",
+      "title": "获取两个列表的相同项",
+      "description": "这个指令用于获取两个列表的相同项",
+      "comment": "获取列表%lst1%和%lst2%相同的项，将结果保存到%list_instance%",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.UseOutputTypeByInputListTypeHandler",
+          "settings": {
+            "inputName": "lst1",
+            "outputName": "list_instance"
+          }
+        }
+      ],
+      "icon": "List_Get_Duplicate",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/获取两个列表的相同项.html",
+      "inputs": [
+        {
+          "name": "lst1",
+          "label": "列表1",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "lst2",
+          "label": "列表2",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "list_instance",
+          "label": "保存列表对象至",
+          "variableLabel": "两列表的相同项",
+          "tips": "输入一个名字,用来保存新建的列表",
+          "type": "list",
+          "name": "list_instance"
+        }
+      ]
+    },
+    {
+      "name": "list.remove_list",
+      "function": "xbot_visual.list.remove_list",
+      "title": "过滤列表中的多项",
+      "description": "这个指令用于过滤列表中的多项",
+      "comment": "在列表对象%lst1%中过滤列表对象%lst2%所包含的项，将结果保存到新的列表对象%list_instance%",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.List.UseOutputTypeByInputListTypeHandler",
+          "settings": {
+            "inputName": "lst1",
+            "outputName": "list_instance"
+          }
+        }
+      ],
+      "icon": "List_Remove_List",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/过滤列表中的多项.html",
+      "inputs": [
+        {
+          "name": "lst1",
+          "label": "列表1",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "lst2",
+          "label": "列表2",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "list_instance",
+          "label": "保存列表对象至",
+          "variableLabel": "过滤后的列表对象",
+          "tips": "输入一个名字,用来保存新建的列表",
+          "type": "list",
+          "name": "list_instance"
+        }
+      ]
+    },
+    {
+      "name": "list.get_len",
+      "function": "xbot_visual.list.get_len",
+      "title": "获取列表长度",
+      "description": "这个指令用于获取列表长度",
+      "comment": "获取列表对象%lst%的长度，将结果保存到%list_len%",
+      "icon": "List_Get_Len",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/列表操作/获取列表长度.html",
+      "inputs": [
+        {
+          "name": "lst",
+          "label": "列表",
+          "required": true,
+          "tips": "输入列表变量",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "list_len",
+          "label": "保存列表长度至",
+          "variableLabel": "列表长度",
+          "tips": "输入一个名字，用来保存列表长度",
+          "type": "int",
+          "name": "list_len"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,664 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual.file.FileParts",
+      "localName": "文件路径信息",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "drive_name",
+          "type": "str",
+          "label": "根目录"
+        },
+        {
+          "name": "directory",
+          "type": "str",
+          "label": "父目录"
+        },
+        {
+          "name": "file_name",
+          "type": "str",
+          "label": "文件名称"
+        },
+        {
+          "name": "file_name_without_extension",
+          "type": "str",
+          "label": "文件名称（不带扩展名）"
+        },
+        {
+          "name": "file_extension",
+          "type": "str",
+          "label": "文件扩展名"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "file.if_exist",
+      "statement": "workflow.if",
+      "function": "xbot_visual.file.if_exist",
+      "title": "IF 文件存在",
+      "description": "判断文件是否存在",
+      "comment": "如果文件%path%%expect_exist%，则执行以下操作",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "File_If_Exist",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if文件存在.html",
+      "video": {
+        "time": "00:47"
+      },
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "输入或选择文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "expect_exist",
+          "label": "文件是否",
+          "required": true,
+          "default": "10:exist",
+          "defaultDisplay": "存在",
+          "tips": "选择预期的文件是否存在",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "exist"
+              },
+              {
+                "display": "不存在",
+                "value": "no_exist"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "file.remove",
+      "function": "xbot_visual.file.remove",
+      "title": "删除文件",
+      "description": "删除文件，Python模式支持多文件删除，文本模式只支持单文件删除",
+      "comment": "删除文件%paths%",
+      "icon": "File_Remove",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/删除文件.html",
+      "inputs": [
+        {
+          "name": "paths",
+          "label": "要删除的文件",
+          "required": true,
+          "tips": "输入要删除的文件的路径，若想删除多个文件，切换到Python模式，比如['文件1路径','文件2路径']",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "not_move_to_trash",
+          "label": "",
+          "required": true,
+          "tips": "是否彻底删除，不放入回收站",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "彻底删除(不放入回收站)",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "file.read",
+      "function": "xbot_visual.file.read",
+      "title": "读取文件",
+      "description": "读取指定路径文件的内容",
+      "comment": "读取文件%path%的内容，将内容保存到%file_content%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.File.ReadFile, ShadowBot.Shell.Development",
+      "icon": "File_Read",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/读取文件.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.File.ReadHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "要读取的文件",
+          "required": true,
+          "tips": "输入要读取文件的路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "read_way",
+          "label": "文件内容保存为",
+          "required": false,
+          "default": "10:all_text",
+          "defaultDisplay": "文本",
+          "tips": "指定输出的文件内容，可以选择“文本”可以将整个文件保存到一个文本中，选择“列表”按行获取文本内容并存储到列表中，选择“二进制文本”将读取的文本再转为二进制",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本",
+                "value": "all_text"
+              },
+              {
+                "display": "列表(每行保存为列表一项)",
+                "value": "lines"
+              },
+              {
+                "display": "二进制文本",
+                "value": "bin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "文件编码",
+          "required": false,
+          "default": "10:UTF-8",
+          "defaultDisplay": "UTF-8",
+          "tips": "选择文本编码",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认",
+                "value": "default"
+              },
+              {
+                "display": "ANSI",
+                "value": "ANSI"
+              },
+              {
+                "display": "UTF-8",
+                "value": "UTF-8"
+              },
+              {
+                "display": "UTF-16",
+                "value": "UTF-16"
+              },
+              {
+                "display": "UTF-16 BE",
+                "value": "utf-16-be"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_content",
+          "label": "保存文件内容至",
+          "variableLabel": "读取的文件内容",
+          "tips": "输入一个名字，用来保存文件内容",
+          "type": "any",
+          "name": "file_content"
+        }
+      ]
+    },
+    {
+      "name": "file.write",
+      "function": "xbot_visual.file.write",
+      "title": "写入文件",
+      "description": "将文本内容写入到已有文件，若文件不存在，自动创建文件",
+      "comment": "将内容%content%覆盖写入到文件%path%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.File.WriteFile, ShadowBot.Shell.Development",
+      "icon": "File_Write",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/写入文件.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.File.WriteHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "要写入的文件",
+          "required": true,
+          "tips": "输入文件路径，文件若不存在，会自动创建文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "label": "要写入的内容",
+          "required": true,
+          "tips": "待写入文件的内容",
+          "type": "any",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "write_way",
+          "label": "如果文件存在",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖写入",
+          "tips": "指定当要写入的文件存在时要执行的操作",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖写入",
+                "value": "overwrite"
+              },
+              {
+                "display": "追加写入",
+                "value": "append"
+              }
+            ]
+          }
+        },
+        {
+          "name": "is_text",
+          "label": "",
+          "required": true,
+          "tips": "文件是文本文件",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "文件是文本文件",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "new_line",
+          "label": "",
+          "required": false,
+          "tips": "是否要换新行追加，若否，直接在原内容后面追加",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "新行追加",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "文件编码",
+          "required": false,
+          "default": "10:UTF-8",
+          "defaultDisplay": "UTF-8",
+          "tips": "选择文本编码",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认",
+                "value": "default"
+              },
+              {
+                "display": "ANSI",
+                "value": "ANSI"
+              },
+              {
+                "display": "UTF-8",
+                "value": "UTF-8"
+              },
+              {
+                "display": "UTF-16",
+                "value": "UTF-16"
+              },
+              {
+                "display": "UTF-16 BE",
+                "value": "utf-16-be"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "file.copy",
+      "function": "xbot_visual.file.copy",
+      "title": "拷贝文件",
+      "keywords": "复制文件",
+      "description": "拷贝文件，Python模式支持多文件拷贝，文本模式只支持单文件拷贝",
+      "comment": "将文件%source_file_paths%拷贝到文件夹%copyto_dir_path%，将拷贝后的文件路径列表保存到%file_list%",
+      "icon": "File_Copy",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/拷贝文件.html",
+      "inputs": [
+        {
+          "name": "source_file_paths",
+          "label": "要拷贝的文件",
+          "required": true,
+          "tips": "输入要拷贝文件的路径，若想拷贝多个文件，切换到Python模式，比如['D:\\测试\\11.txt','D:\\测试\\22.txt']",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "copyto_dir_path",
+          "label": "目标文件夹",
+          "required": true,
+          "tips": "输入目标文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "copy_way",
+          "label": "如果文件存在",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "tips": "指定当目标文件夹下已存在同名文件时要执行的操作",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "不要拷贝",
+                "value": "not_copy"
+              },
+              {
+                "display": "自动添加后缀",
+                "value": "save_as"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_list",
+          "label": "拷贝后的文件路径列表",
+          "variableLabel": "拷贝后的文件路径列表",
+          "tips": "输入一个名字，用来保存拷贝后的文件路径列表",
+          "type": "list<str>",
+          "name": "file_list"
+        }
+      ]
+    },
+    {
+      "name": "file.move",
+      "function": "xbot_visual.file.move",
+      "title": "移动文件",
+      "description": "移动文件，Python模式支持多文件移动，文本模式只支持单文件移动",
+      "comment": "将文件%source_file_paths%移动到文件夹%moveto_dir_path%，将移动后的文件路径列表保存到%file_list%",
+      "icon": "File_Move",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/移动文件.html",
+      "inputs": [
+        {
+          "name": "source_file_paths",
+          "label": "要移动的文件",
+          "required": true,
+          "tips": "输入要移动文件的路径，若想移动多个文件，切换到Python模式，比如['D:\\测试\\11.txt','D:\\测试\\22.txt']",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "moveto_dir_path",
+          "label": "目标文件夹",
+          "required": true,
+          "tips": "输入目标文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "move_way",
+          "label": "如果文件存在",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "tips": "指定当目标文件夹下已存在同名文件时要执行的操作",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "不要移动",
+                "value": "not_copy"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_list",
+          "label": "移动后的文件路径列表",
+          "variableLabel": "移动后的文件路径列表",
+          "tips": "输入一个名字，移动后的文件路径列表",
+          "type": "list<str>",
+          "name": "file_list"
+        }
+      ]
+    },
+    {
+      "name": "file.get_file_parts",
+      "function": "xbot_visual.file.get_file_parts",
+      "title": "获取文件路径信息",
+      "description": "获取文件路径的根目录、父目录、文件名、基本文件名和文件扩展名",
+      "comment": "解析文件%path%信息，将结果保存到%file_parts%",
+      "icon": "File_Get_File_Parts",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/获取文件路径信息.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "输入文件路径",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_parts",
+          "label": "文件路径信息",
+          "variableLabel": "文件路径信息",
+          "tips": "输入一个名字，用来保存文件路径信息",
+          "type": "xbot_visual.file.FileParts",
+          "name": "file_parts"
+        }
+      ]
+    },
+    {
+      "name": "file.wait",
+      "function": "xbot_visual.file.wait",
+      "title": "等待文件",
+      "description": "等待文件被创建或者删除",
+      "comment": "等待文件%path%被%desired_state%，最多等待%timeout%秒",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.File.WaitFileControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.File.WaitFileHandler"
+        }
+      ],
+      "icon": "File_Wait",
+      "helpUrl": "language/zh-cn/指令文档/等待/等待文件.html",
+      "video": {
+        "time": "04:46"
+      },
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "输入文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "desired_state",
+          "label": "等待文件被",
+          "required": true,
+          "default": "10:created",
+          "defaultDisplay": "创建",
+          "tips": "选择期望的文件状态",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "创建",
+                "value": "created"
+              },
+              {
+                "display": "删除",
+                "value": "deleted"
+              }
+            ]
+          }
+        },
+        {
+          "name": "is_wait",
+          "label": "",
+          "required": true,
+          "tips": "设置超时时间",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout_seconds",
+          "label": "超时时间（秒）",
+          "required": false,
+          "default": "10:20",
+          "tips": "请输入超时时间（秒）,",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_wait_result",
+          "label": "等待结果",
+          "tips": "如果为True则等待成功,否则等待超时",
+          "name": "file_wait_result",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "file.rename",
+      "function": "xbot_visual.file.rename",
+      "title": "文件重命名",
+      "description": "文件重命名",
+      "comment": "将文件%path%重命名为%new_name%，将新的文件路径保存到%new_file_path%",
+      "icon": "File_Rename",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/文件重命名.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "要重命名的文件",
+          "required": true,
+          "tips": "输入或选择要重命名的文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "new_name",
+          "label": "新的文件名称",
+          "required": true,
+          "tips": "新的文件名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "new_file_path",
+          "label": "新的文件路径",
+          "variableLabel": "重命名后的文件路径",
+          "tips": "输入一个名字，用来保存新的文件路径",
+          "type": "str",
+          "name": "new_file_path"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2039 @@
+{
+  "types": [
+    {
+      "name": "xbot._web.browser.WebBrowser",
+      "localName": "网页对象",
+      "pythonName": "xbot.web.chrome.ChromeBrowser,xbot.web.ie.IEBrowser,xbot.web.cef.CEFBrowser",
+      "methods": [
+        {
+          "display": "该网页的地址",
+          "function": "$0.get_url()",
+          "type": "str"
+        },
+        {
+          "display": "该网页的标题",
+          "function": "$0.get_title()",
+          "type": "str"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "web.create",
+      "title": "打开网页",
+      "keywords": "打开网站;打开网址",
+      "icon": "Web_Create",
+      "comment": "在%web_type%中新建标签页%value%，将网页对象保存到%browser%，网页加载超时后执行%stop_load_if_load_timeout%操作",
+      "description": "使用指定浏览器打开网页,以实现网页自动化",
+      "function": "xbot_visual.web.create",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/打开网页.html",
+      "video": {
+        "time": "04:47"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.CreateBrowserControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.CreateHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "选择浏览器类型, Google Chrome 浏览器、Microsoft Edge 浏览器需要安装影刀插件才能实现自动化, 另外, 如 Chrome、Edge 或 IE 安装路径非默认系统盘,需要在\"高级\"选项中设置安装路径",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "value",
+          "label": "网址",
+          "required": true,
+          "tips": "输入需要打开的网页地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "silent_running",
+          "label": "运行时不抢占鼠标键盘",
+          "required": true,
+          "category": "advanced",
+          "tips": "对该网页的后续操作采用API方式执行，将提升稳定性并避免占用鼠标和键盘",
+          "default": "13:False",
+          "type": "bool",
+          "editor": {
+            "label": "运行时不抢占鼠标键盘",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "wait_load_completed",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:True",
+          "tips": "是否等待网页加载完成",
+          "type": "bool",
+          "editor": {
+            "label": "等待网页加载完成",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "load_timeout",
+          "label": "加载超时时间",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待网页加载完成的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "stop_load_if_load_timeout",
+          "label": "加载超时后执行",
+          "required": true,
+          "category": "advanced",
+          "tips": "等待网页加载完成超时后希望执行的操作",
+          "type": "str",
+          "default": "10:handleExcept",
+          "defaultDisplay": "执行\"错误处理\"",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "执行\"错误处理\"",
+                "value": "handleExcept"
+              },
+              {
+                "display": "停止网页加载",
+                "value": "stopLoad"
+              }
+            ]
+          }
+        },
+        {
+          "name": "chrome_file_name",
+          "label": "chrome执行文件路径",
+          "required": false,
+          "category": "advanced",
+          "tips": "我们会默认在目录C:\\Program Files (x86)\\Google\\Chrome\\Application\\.下启动chrome.exe,也可以在这里手动配置chrome.exe文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "exe files (*.exe)|*.exe"
+            }
+          }
+        },
+        {
+          "name": "edge_file_name",
+          "label": "edge执行文件路径",
+          "required": false,
+          "category": "advanced",
+          "tips": "我们会默认在目录C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\.下启动msedge.exe,也可以在这里手动配置msedge.exe文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "exe files (*.exe)|*.exe"
+            }
+          }
+        },
+        {
+          "name": "ie_file_name",
+          "label": "ie执行文件路径",
+          "required": false,
+          "category": "advanced",
+          "tips": "我们会默认在目录C:\\Program Files\\Internet Explorer\\.下启动iexplore.exe,也可以在这里手动配置iexplore.exe文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "exe files (*.exe)|*.exe"
+            }
+          }
+        },
+        {
+          "name": "bro360_file_name",
+          "label": "360执行文件路径",
+          "required": false,
+          "category": "advanced",
+          "tips": "我们会在默认目录下启动360se.exe, 也可以在这里手动配置360se.exe文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "exe files (*.exe)|*.exe"
+            }
+          }
+        },
+        {
+          "name": "firefox_file_name",
+          "label": "firefox执行文件路径",
+          "required": false,
+          "category": "advanced",
+          "tips": "我们会在默认目录下启动firefox.exe, 也可以在这里手动配置firefox.exe文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "exe files (*.exe)|*.exe"
+            }
+          }
+        },
+        {
+          "name": "arguments",
+          "label": "命令行参数",
+          "tips": "命令行参数, 必须是目标浏览器支持的命令行, 可为空",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "placeholder": "目标浏览器支持的命令行可空",
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "browser",
+          "label": "保存网页对象至",
+          "variableLabel": "新打开网页的对象",
+          "tips": "该变量保存的是网页对象,使用此网页对象可以对网页进行自动化操作",
+          "name": "web_page",
+          "type": "xbot._web.browser.WebBrowser"
+        }
+      ]
+    },
+    {
+      "name": "web.get",
+      "title": "获取已打开的网页对象",
+      "icon": "Web_Get",
+      "comment": "在%web_type%中获取已打开的网页对象%value%, 并将网页对象保存至变量%browser%, 网页加载超时后执行 %stop_load_if_load_timeout% 操作",
+      "description": "获取网址或标题匹配已打开的网页，或者获取当前浏览器选中的网页",
+      "function": "xbot_visual.web.get",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/获取已打开的网页对象.html",
+      "video": {
+        "time": "07:16"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetBrowserControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetBrowserHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "选择浏览器类型, Google Chrome 浏览器、Microsoft Edge 浏览器需要安装影刀插件才能实现自动化",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mode",
+          "label": "匹配方式",
+          "required": true,
+          "default": "10:activated",
+          "defaultDisplay": "匹配当前选中的网页",
+          "tips": "选择获取已打开网页的匹配方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据标题匹配",
+                "value": "title"
+              },
+              {
+                "display": "根据网址匹配",
+                "value": "url"
+              },
+              {
+                "display": "匹配当前选中的网页",
+                "value": "activated"
+              }
+            ]
+          }
+        },
+        {
+          "name": "value",
+          "label": "标题",
+          "required": false,
+          "tips": "填写要匹配的网页标题或地址,支持模糊匹配",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "silent_running",
+          "label": "运行时不抢占鼠标键盘",
+          "required": true,
+          "category": "advanced",
+          "tips": "对该网页的后续操作采用API方式执行，将提升稳定性并避免占用鼠标和键盘",
+          "default": "13:False",
+          "type": "bool",
+          "editor": {
+            "label": "运行时不抢占鼠标键盘",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "wait_load_completed",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:True",
+          "tips": "是否等待网页加载完成",
+          "type": "bool",
+          "editor": {
+            "label": "等待网页加载完成",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "load_timeout",
+          "label": "超时时间(秒)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待网页加载完成的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "stop_load_if_load_timeout",
+          "label": "超时后执行 ",
+          "required": true,
+          "category": "advanced",
+          "tips": "等待网页加载完成超时后希望执行的操作",
+          "type": "str",
+          "default": "10:handleExcept",
+          "defaultDisplay": "执行\"错误处理\"",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "执行\"错误处理\"",
+                "value": "handleExcept"
+              },
+              {
+                "display": "停止网页加载",
+                "value": "stopLoad"
+              }
+            ]
+          }
+        },
+        {
+          "name": "open_page",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "根据网页标题或网址匹配失败时，打开新网页",
+          "type": "bool",
+          "editor": {
+            "label": "匹配失败时打开新网页",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "url",
+          "label": "新网址",
+          "required": false,
+          "category": "advanced",
+          "tips": "打开新网页的网址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "browser",
+          "label": "保存网页对象至",
+          "variableLabel": "网页对象",
+          "tips": "该变量保存的是网页对象,使用此网页对象可以对网页进行自动化操作",
+          "name": "web_page",
+          "type": "xbot._web.browser.WebBrowser"
+        }
+      ],
+      "exception_handling": {
+        "logging": true,
+        "mode": "retry",
+        "retryTime": 3,
+        "retryInterval": 3
+      }
+    },
+    {
+      "name": "web.get_all",
+      "title": "获取网页对象列表",
+      "icon": "Web_Get_All",
+      "comment": "在%web_type%中获取已打开且满足筛选条件的网页对象列表%value%，将该列表保存到%browser_list%，列表中每一个网页加载超时后执行%stop_load_if_load_timeout%操作",
+      "description": "获取已打开的网页对象列表，以实现批量对每个网页相关自动化操作",
+      "function": "xbot_visual.web.get_all",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/获取网页对象列表.html",
+      "video": {
+        "time": "02:37"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetAllBrowsersControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetALLBrowsersHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "选择浏览器类型, Google Chrome 浏览器、Microsoft Edge 浏览器需要安装影刀插件才能实现自动化",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mode",
+          "label": "匹配方式",
+          "required": true,
+          "default": "10:title",
+          "defaultDisplay": "匹配所有网页",
+          "tips": "选择获取已打开网页的匹配方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "匹配所有网页",
+                "value": "all"
+              },
+              {
+                "display": "根据标题匹配",
+                "value": "title"
+              },
+              {
+                "display": "根据网址匹配",
+                "value": "url"
+              }
+            ]
+          }
+        },
+        {
+          "name": "value",
+          "label": "标题",
+          "required": false,
+          "tips": "填写要匹配的网页标题或地址,支持模糊匹配,不填则匹配所有网页",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符匹配",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "silent_running",
+          "label": "运行时不抢占鼠标键盘",
+          "required": true,
+          "category": "advanced",
+          "tips": "对该网页的后续操作采用API方式执行，将提升稳定性并避免占用鼠标和键盘",
+          "default": "13:False",
+          "type": "bool",
+          "editor": {
+            "label": "运行时不抢占鼠标键盘",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "browser_list",
+          "label": "保存网页对象列表至",
+          "variableLabel": "网页对象列表",
+          "tips": "该变量保存的是网页对象列表,使用此网页对象列表可以对每个网页进行自动化操作",
+          "name": "web_page_list",
+          "type": "list<xbot._web.browser.WebBrowser>"
+        }
+      ]
+    },
+    {
+      "name": "web.get_cookies",
+      "title": "获取筛选所有Cookie",
+      "icon": "Web_Get_Cookies",
+      "comment": "从单个 cookie store 中获取与给定信息匹配的所有 cookie 集合",
+      "description": "从单个 cookie store 中获取与给定信息匹配的所有 cookie 集合",
+      "function": "xbot_visual.web.get_cookies",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取筛选所有cookie.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetCookiesControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetCookiesHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url_type",
+          "label": "url 指定方式",
+          "required": true,
+          "default": "10:auto",
+          "defaultDisplay": "网页对象",
+          "tips": "用来筛选 cookies 的 url 来源, 可选择手动输入, 如果选择网页对象，则自动使用网页 url 进行筛选",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据网页对象",
+                "value": "auto"
+              },
+              {
+                "display": "根据输入的url",
+                "value": "manual"
+              }
+            ]
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": false,
+          "tips": "获取指定类型浏览器 cookie",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "url",
+          "label": "筛选cookie url",
+          "required": false,
+          "tips": "根据是否与给定的 URL 比如 'https://www.winrobot360.com'匹配, 筛选浏览器 cookie (url为必填项)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "name",
+          "label": "筛选cookie name",
+          "required": false,
+          "category": "advanced",
+          "tips": "根据是否与给定的 name 匹配, 筛选 cookie (值为空则忽略 name筛选条件)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "domain",
+          "label": "筛选cookie domain",
+          "required": false,
+          "category": "advanced",
+          "tips": "根据是否完全与给定的 domain 比如 '.winrobot360.com'匹配, 或是否是其子域名, 筛选 cookie (浏览器类型为IE或值为空则忽略 domain筛选条件)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "path",
+          "label": "筛选cookie path",
+          "required": false,
+          "category": "advanced",
+          "tips": "根据是否与给定的 path 比如 '/', 筛选 cookie (浏览器类型为IE或值为空则忽略 path筛选条件)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "filter_secure",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "筛选 secure=true cookie 或 secure=fasle cookie(浏览器类型为IE则忽略该设置)",
+          "type": "bool",
+          "editor": {
+            "label": "根据 Cookie secure 属性筛选",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "secure",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "勾选则筛选 secure cookie 集合, 取消勾选则获取非 secure cookie 集合(浏览器类型为IE则忽略该设置)",
+          "type": "bool",
+          "editor": {
+            "label": "仅 secure Cookie",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "filter_session",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "筛选会话 cookie 或永久性 cookie(浏览器类型为IE则忽略该设置)",
+          "type": "bool",
+          "editor": {
+            "label": "根据 Cookie 生命周期筛选",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "session",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "勾选则筛选会话 cookie 集合, 取消勾选则筛选永久性 cookie 集合(浏览器类型为IE则忽略该设置)",
+          "type": "bool",
+          "editor": {
+            "label": "仅会话 Cookie",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "cookie_list",
+          "label": "保存cookie列表至",
+          "tips": "指定一个变量名称，该变量用于保存获取到的 cookie 列表，列表项键包括'domain'、'expirationDate'、'name'、'value'、'httpOnly'...(ie只包括name, value), 集合中的值可以通过比如 item['value'] 的方式获取",
+          "name": "cookie_list",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "web.get_cookies_v2",
+      "title": "获取筛选所有Cookie",
+      "icon": "Web_Get_Cookies_V2",
+      "comment": "从单个 cookie store 中获取与给定信息匹配的所有 cookie 集合",
+      "description": "从单个 cookie store 中获取与给定信息匹配的所有 cookie 集合",
+      "function": "xbot_visual.web.get_cookies_v2",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取筛选所有cookie.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetCookiesV2Control, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetCookiesV2Handler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "获取指定类型浏览器 cookie",
+          "type": "str",
+          "default": "10:chrome",
+          "defaultDisplay": "Google Chrome浏览器",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "url",
+          "label": "筛选 cookie url",
+          "required": false,
+          "tips": "根据给定的 URL 比如 'https://www.winrobot360.com' 筛选cookie, 值为空则忽略 url筛选条件 (IE 不能为空)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "name",
+          "label": "筛选 cookie name",
+          "required": false,
+          "tips": "根据给定的 name 筛选 cookie, 值为空则忽略 name筛选条件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "domain",
+          "label": "筛选 cookie domain",
+          "required": false,
+          "tips": "根据给定的 domain 比如'.winrobot360.com'筛选 cookie, 值为空则忽略 domain 筛选条件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "path",
+          "label": "筛选 cookie path",
+          "required": false,
+          "tips": "根据给定的 path 筛选 cookie, 值为空则忽略 path筛选条件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "partition_key",
+          "label": "筛选 partition key",
+          "required": false,
+          "tips": "根据给定的 paritition_key 筛选 cookie, 值为空则忽略 partition key 筛选条件(仅支持 Chrome/Edge 119、firefox 94 及之后版本)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "filter_secure",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "筛选 secure=true cookie 或 secure=fasle cookie",
+          "type": "bool",
+          "editor": {
+            "label": "根据 Cookie secure 属性筛选",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "secure",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "勾选则筛选 secure cookie, 取消勾选则获取非 secure cookie",
+          "type": "bool",
+          "editor": {
+            "label": "仅 secure Cookie",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "filter_session",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "筛选会话 cookie 或永久性 cookie",
+          "type": "bool",
+          "editor": {
+            "label": "根据 Cookie 生命周期筛选",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "session",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "勾选则筛选会话 cookie 集合, 取消勾选则筛选永久性 cookie 集合",
+          "type": "bool",
+          "editor": {
+            "label": "仅会话 Cookie",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "cookie_list",
+          "label": "保存cookie列表至",
+          "tips": "指定一个变量名称，该变量用于保存获取到的 cookie 列表，列表项键包括'domain'、'expirationDate'、'name'、'value'、'httpOnly'...(ie只包括name, value), 集合中的值可以通过比如 item['value'] 的方式获取",
+          "name": "cookie_list",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "web.get_cookie",
+      "title": "获取指定Cookie信息",
+      "icon": "Web_Get_Cookie",
+      "comment": "获取指定 cookie 信息",
+      "description": "如果指定的 URL 存在多个相同 name 的 cookie，则返回 path 最长的 cookie。若 path 长度相同，返会创建时间较早的 cookie",
+      "function": "xbot_visual.web.get_cookie",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取指定cookie信息.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetCookieControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetCookieHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url_type",
+          "label": "url 指定方式",
+          "required": true,
+          "default": "10:auto",
+          "defaultDisplay": "网页对象",
+          "tips": "用来指定 cookie 的 url 来源, 可选择手动输入, 如果选择网页对象，则自动使用网页 url 指定",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据网页对象",
+                "value": "auto"
+              },
+              {
+                "display": "根据输入的url",
+                "value": "manual"
+              }
+            ]
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": false,
+          "tips": "获取指定类型浏览器 cookie",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "url",
+          "label": "筛选cookie url",
+          "required": false,
+          "tips": "根据是否与给定的 URL 比如 'https://www.winrobot360.com'匹配, 筛选浏览器 cookie (url 为必填项)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "name",
+          "label": "筛选 cookie name",
+          "required": true,
+          "category": "advanced",
+          "tips": "根据是否与给定的 name 匹配, 筛选 cookie (值为空则忽略 name 筛选条件)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "cookie",
+          "label": "保存 cookie 至",
+          "tips": "指定一个变量名称，该变量用于保存获取到的cookie，cookie 键包括'domain'、'expirationDate'、'name'、'value'、'httpOnly'...(ie只包括name, value), cookie 的值可以通过比如 cookie['value'] 的方式获取",
+          "name": "cookie",
+          "type": "dict"
+        }
+      ]
+    },
+    {
+      "name": "web.set_cookie",
+      "title": "设置Cookie",
+      "icon": "Web_Set_Cookie",
+      "comment": "根据指定的 cookie 数据设置 cookie，若存在等效 cookie 则覆盖",
+      "description": "根据指定的 cookie 数据设置 cookie，若存在等效 cookie 则覆盖",
+      "function": "xbot_visual.web.set_cookie",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/设置cookie.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.SetCookieControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.SetCookieHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url_type",
+          "label": "url 设置方式",
+          "required": true,
+          "default": "10:auto",
+          "defaultDisplay": "网页对象",
+          "tips": "cookie url 设置值来源, 可选择手动输入, 如果选择网页对象，则自动使用网页 url 设置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据网页对象",
+                "value": "auto"
+              },
+              {
+                "display": "根据输入的url",
+                "value": "manual"
+              }
+            ]
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": false,
+          "tips": "设置指定类型浏览器 cookie",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "url",
+          "label": "cookie url",
+          "required": false,
+          "tips": "cookie url，与 cookie 设置相关联的 url，该值影响创建 cookie 的默认 domain 和 path 值",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "name",
+          "label": "cookie name",
+          "required": true,
+          "tips": "cookie name, 忽略则为空",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "value",
+          "label": "cookie value",
+          "required": false,
+          "tips": "cookie value，忽略则为空",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sessionCookie",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "默认设置为会话 cookie，取消勾选则设置为持久化 cookie",
+          "type": "bool",
+          "editor": {
+            "label": "设置为会话 Cookie",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "expires",
+          "label": "cookie 有效期（秒）",
+          "required": false,
+          "default": "10:100",
+          "tips": "持久化 cookie 需要设置有效期（cookie 生效到失效的时间间隔，单位为秒），默认 100s",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 1
+          }
+        },
+        {
+          "name": "domain",
+          "label": "cookie domain",
+          "required": false,
+          "tips": "cookie domain，默认为 url 的 domain 部分。忽略这该 cookie 为 host-only cookie",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "path",
+          "label": "cookie path",
+          "required": false,
+          "tips": "cookie path，默认为 url 的 path 部分，忽略则为空",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "httpOnly",
+          "label": "标记为 HttpOnly",
+          "required": false,
+          "default": "13:False",
+          "tips": "设置该 cookie 是否被标记为 HttpOnly，默认为 false",
+          "type": "bool",
+          "editor": {
+            "label": "标记为 HttpOnly",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "secure",
+          "label": "标记为 Secure",
+          "required": false,
+          "default": "13:False",
+          "tips": "设置该 cookie 是否被标记为 Secure，默认为 false",
+          "type": "bool",
+          "editor": {
+            "label": "标记为 Secure",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.remove_cookie",
+      "title": "移除Cookie",
+      "icon": "Web_Remove_Cookie",
+      "comment": "移除网页对象%browser%上名为%name%的cookie",
+      "description": "移除通过 cookie url、 cookie name 指定的 cookie",
+      "function": "xbot_visual.web.remove_cookie",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/移除指定cookie.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.RemoveCookieControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.RemoveCookieHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url_type",
+          "label": "url 指定方式",
+          "required": true,
+          "default": "10:auto",
+          "defaultDisplay": "网页对象",
+          "tips": "用来指定 cookie 的 url 来源, 可选择手动输入, 如果选择网页对象，则自动使用网页 url 指定",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据网页对象",
+                "value": "auto"
+              },
+              {
+                "display": "根据输入的url",
+                "value": "manual"
+              }
+            ]
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": false,
+          "tips": "获取指定类型浏览器 cookie",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "url",
+          "label": "cookie url",
+          "required": false,
+          "tips": "cookie url，将被移除的 cookie url",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "remove_type",
+          "label": "移除方式",
+          "required": true,
+          "tips": "设置cookie的移除方式",
+          "type": "str",
+          "default": "10:appoint_cookie",
+          "defaultDisplay": "移除指定Cookie",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "移除指定Cookie",
+                "value": "appoint_cookie"
+              },
+              {
+                "display": "移除所有Cookie",
+                "value": "all_cookies"
+              }
+            ]
+          }
+        },
+        {
+          "name": "name",
+          "label": "cookie name",
+          "required": false,
+          "category": "advanced",
+          "tips": "将被移除的 cookie 名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.handle_save_dialog",
+      "title": "处理下载对话框",
+      "keywords": "弹框",
+      "description": "处理下载对话框",
+      "comment": "点击%web_type%中下载对话框的%dialog_result%按钮下载，保存到路径%file_folder%下，将下载的文件路径保存到%download_file_name%",
+      "icon": "Web_Handle_Save_Dialog",
+      "function": "xbot_visual.web.handle_save_dialog",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.HandleSaveDialogControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/对话框处理/处理下载对话框.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.HandleSaveDialogHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "选择想要操作的浏览器对象",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dialog_result",
+          "label": "点击按钮",
+          "required": true,
+          "default": "10:OK",
+          "defaultDisplay": "确定",
+          "tips": "当下载对话框出现时要点击的按钮",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "确定",
+                "value": "OK"
+              },
+              {
+                "display": "取消",
+                "value": "Cancle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "file_folder",
+          "label": "保存文件夹",
+          "required": true,
+          "tips": "保存下载文件的文件夹",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder",
+              "filter": "All Files (*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "use_custom_filename",
+          "label": "是否自定义文件名",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否自定义保存文件名,不勾选则使用默认文件名,若没有默认文件名，为下载资源自动生成不重复的文件名",
+          "type": "bool",
+          "editor": {
+            "label": "是否自定义保存文件名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "file_name",
+          "label": "保存文件名",
+          "required": false,
+          "tips": "自定义保存的文件名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_behavior",
+          "label": "文件已存在时",
+          "required": false,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "tips": "当目标文件夹中已有同名文件时，选择系统的处理方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "自动重命名",
+                "value": "auto_rename"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wait_complete",
+          "label": "是否等待下载完成",
+          "required": false,
+          "default": "13:False",
+          "tips": "若是，则会在最大超时时间内一直等待，直到文件下载完成",
+          "type": "bool",
+          "editor": {
+            "label": "是否等待下载完成",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "wait_complete_timeout",
+          "label": "超时时间(s)",
+          "required": false,
+          "default": "10:300",
+          "tips": "等待下载超时时间，单位(秒)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "如果使用模拟人工输入则通过模拟人工的方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "clipboard_input",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到下载对话框的文件名输入框中,避免输入法问题",
+          "type": "bool",
+          "editor": {
+            "label": "剪切板输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_type",
+          "label": "输入方式",
+          "required": true,
+          "tips": "自动化接口输入: 调用文件名输入框自身实现的自动化接口输入\r\n剪切板输入: 将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中,避免输入法问题\r\n模拟人工输入: 如果使用模拟人工输入则通过模拟人工的方式触发输入事件(会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题),否则将根据目标元素的自动化接口触发输入",
+          "type": "str",
+          "default": "10:automatic",
+          "defaultDisplay": "自动化接口输入",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动化接口输入",
+                "value": "automatic"
+              },
+              {
+                "display": "剪切板输入",
+                "value": "clipboard"
+              },
+              {
+                "display": "模拟人工输入",
+                "value": "simulate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wait_appear_timeout",
+          "label": "等待对话框出现（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待下载对话框出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "force_ime_ENG",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "存在不常见的输入法切换英文输入状态不成功的情况\r\n需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘(ENG)",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔（毫秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间, 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "focus_timeout",
+          "label": "焦点超时时间（毫秒）",
+          "category": "advanced",
+          "default": "10:1000",
+          "tips": "设置焦点超时时间（毫秒）, 元素获取焦点后暂停指定时间后进行输入操作",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "download_file_name",
+          "label": "文件保存位置",
+          "tips": "下载文件所在的位置：文件路径+名称",
+          "name": "download_file_name",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web.handle_upload_dialog",
+      "title": "处理上传对话框",
+      "keywords": "弹框",
+      "description": "处理上传对话框",
+      "comment": "点击%web_type%中上传对话框的%dialog_result%按钮上传，上传文件%filename%",
+      "icon": "Web_Handle_Upload_Dialog",
+      "function": "xbot_visual.web.handle_upload_dialog",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.HandleUploadDialogControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/对话框处理/处理上传对话框.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.HandleUploadDialogHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "选择想要操作的浏览器对象",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dialog_result",
+          "label": "点击按钮",
+          "required": true,
+          "default": "10:OK",
+          "defaultDisplay": "确定",
+          "tips": "当上传对话框出现时要点击的按钮",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "确定",
+                "value": "OK"
+              },
+              {
+                "display": "取消",
+                "value": "Cancle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filename",
+          "label": "上传文件路径",
+          "required": true,
+          "tips": "要上传文件完整路径; \r\n如果需要多文件上传, 在python模式下, 输入完整路径字符串数组，比如: [r\"C:\\test.txt\",r\"C:\\text1.txt\"]",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "All Files (*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "simulate",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "如果使用模拟人工输入则通过模拟人工的方式触发输入事件,否则将根据目标元素的自动化接口触发输入",
+          "type": "bool",
+          "editor": {
+            "label": "模拟人工输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "clipboard_input",
+          "label": "",
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中,避免输入法问题",
+          "type": "bool",
+          "editor": {
+            "label": "剪切板输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "input_type",
+          "label": "输入方式",
+          "required": true,
+          "tips": "自动化接口输入: 调用文件名输入框自身实现的自动化接口输入\r\n剪切板输入: 将输入路径和文件名添加到剪切板, 通过Ctrl+V的方式将内容填写到上传对话框的文件名输入框中,避免输入法问题\r\n模拟人工输入: 如果使用模拟人工输入则通过模拟人工的方式触发输入事件(会自动切换当前输入法为英文输入状态, 以避免输入法造成的输入错误问题),否则将根据目标元素的自动化接口触发输入",
+          "type": "str",
+          "default": "10:automatic",
+          "defaultDisplay": "自动化接口输入",
+          "category": "advanced",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动化接口输入",
+                "value": "automatic"
+              },
+              {
+                "display": "剪切板输入",
+                "value": "clipboard"
+              },
+              {
+                "display": "模拟人工输入",
+                "value": "simulate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wait_appear_timeout",
+          "label": "等待对话框出现（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待上传对话框出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "force_ime_ENG",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "存在不常见的输入法切换英文输入状态不成功的情况\r\n需要指定强制加载美式键盘(ENG), 确保模拟输入不受中文输入法影响",
+          "type": "bool",
+          "editor": {
+            "label": "强制加载美式键盘(ENG)",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "send_key_delay",
+          "label": "按键输入间隔（毫秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:50",
+          "tips": "两次按键输入的间隔时间(仅模拟输入有效), 单位是毫秒, 为避免输入错误, 请将该值调大,最大值为1000ms",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 5
+          }
+        },
+        {
+          "name": "focus_timeout",
+          "label": "焦点超时时间（毫秒）",
+          "category": "advanced",
+          "default": "10:1000",
+          "tips": "设置焦点超时时间（毫秒）, 元素获取焦点后暂停指定时间后进行输入操作",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.auto_handle_popup",
+      "title": "自动处理弹框(web)",
+      "keywords": "弹框;弹窗;dialog;popup",
+      "description": "开始全程自动侦测并处理弹框（推荐将此指令放置于主流程第一行）",
+      "comment": "全程自动侦测并处理弹框",
+      "icon": "Web_Auto_Handle_Popup",
+      "function": "xbot_visual.web.auto_handle_popup",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.AutoHandlePopupControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/自动处理弹框(web).html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.AutoHandlePopupHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "handle_method",
+          "label": "处理方式",
+          "required": true,
+          "default": "10:close_dialog",
+          "defaultDisplay": "发现指定弹框时-关闭弹框",
+          "tips": "当目标元素出现并可见时，要如何处理",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "发现指定弹框时-关闭弹框",
+                "value": "close_dialog"
+              },
+              {
+                "display": "发现指定弹框时-执行自定义操作",
+                "value": "execute_process"
+              }
+            ]
+          }
+        },
+        {
+          "name": "close_button",
+          "label": "弹框关闭按钮",
+          "required": false,
+          "tips": "当本元素出现时自动点击，推荐设置为弹框的关闭按钮",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "element",
+          "label": "触发元素",
+          "required": false,
+          "tips": "当本元素出现时，执行指定的子流程",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "process",
+          "label": "子流程",
+          "required": false,
+          "tips": "选择要执行的模块或流程",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "package",
+          "label": "当前Python包对象",
+          "required": true,
+          "tips": "根据当前Python包对象动态导入指定流程",
+          "default": "11:__name__",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.set_user_environment",
+      "title": "激活浏览器用户/环境",
+      "keywords": "环境;选择;多用户;user;environment",
+      "canDebug": false,
+      "icon": "Web_Set_User_Environment",
+      "comment": "激活%web_type%的浏览器环境 个人资料标识：%profile_name% 个人数据目录: %user_data_dir%",
+      "description": "激活浏览器的指定用户帐号/环境。请将此指令放在其他浏览器操作之前执行",
+      "function": "xbot_visual.web.set_user_environment",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/选择浏览器用户.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.SetUserEnvironmentControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.SetUserEnvironmentHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "web_type",
+          "label": "浏览器类型",
+          "required": true,
+          "tips": "选择浏览器类型，请确保浏览器已安装影刀插件以支持自动化操作",
+          "type": "str",
+          "default": "10:chrome",
+          "defaultDisplay": "Google Chrome浏览器",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fingerprint_browser",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "指纹浏览器",
+          "type": "bool",
+          "editor": {
+            "label": "指纹浏览器",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "env_name",
+          "label": "环境标识",
+          "tips": "选择或输入环境标识",
+          "type": "str",
+          "default": "10:",
+          "required": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "specified_userdata",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "启用后，将使用指定的用户数据目录",
+          "type": "bool",
+          "editor": {
+            "label": "指定数据目录",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "user_data_dir",
+          "label": "用户数据目录",
+          "tips": "用户数据目录",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "profile_name",
+          "label": "用户标识",
+          "tips": "选择目标用户名或标识, 不支持展示含特殊字符的标识",
+          "type": "str",
+          "default": "10:",
+          "required": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,521 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual_email_mailmessage",
+      "localName": "邮件",
+      "pythonName": "xbot_visual._core.xbot_visual_email_mailmessage",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "sender",
+          "type": "str",
+          "label": "发件人"
+        },
+        {
+          "name": "receiver",
+          "type": "str",
+          "label": "收件人"
+        },
+        {
+          "name": "cc",
+          "type": "str",
+          "label": "抄送人"
+        },
+        {
+          "name": "subject",
+          "type": "str",
+          "label": "主题"
+        },
+        {
+          "name": "text_body",
+          "type": "str",
+          "label": "正文"
+        },
+        {
+          "name": "html_body",
+          "type": "str",
+          "label": "HTML正文"
+        },
+        {
+          "name": "time",
+          "type": "str",
+          "label": "时间"
+        },
+        {
+          "name": "attachment",
+          "type": "str",
+          "label": "附件路径"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "email.send_email",
+      "icon": "Email_Send_Email",
+      "description": "发送邮件",
+      "comment": "发送邮件到%to%",
+      "title": "发送邮件",
+      "helpUrl": "language/zh-cn/指令文档/其他/邮件/发送邮件.html",
+      "function": "xbot_visual.email.send_email",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Email.SendEmailControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Email.SendEmailHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "sender",
+          "label": "发件人",
+          "required": true,
+          "tips": "邮件发件人",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sender_display_name",
+          "label": "发件人名称",
+          "required": false,
+          "tips": "邮件发送人名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "to",
+          "label": "收件人",
+          "required": true,
+          "tips": "邮件收件人,多个收件人用“;”分隔。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "cc",
+          "label": "抄送",
+          "required": false,
+          "tips": "邮件抄送,多个抄送用“;”分隔。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "bcc",
+          "label": "密送",
+          "required": false,
+          "tips": "邮件密送,多个密送用“;”分隔。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "subject",
+          "label": "主题",
+          "required": true,
+          "tips": "邮件主题",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "body",
+          "label": "正文",
+          "required": true,
+          "tips": "邮件正文",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "body_is_html",
+          "label": "",
+          "required": false,
+          "tips": "正文是HTML格式",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "HTML格式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "attachments",
+          "label": "邮件附件",
+          "required": false,
+          "tips": "邮件附件,多个附件用“;”分隔。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "All Files (*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "select_smtp_server",
+          "label": "SMTP服务器",
+          "required": true,
+          "category": "advanced",
+          "default": "10:qq_smtp",
+          "defaultDisplay": "QQ邮箱",
+          "tips": "选择一个SMTP服务器",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "QQ邮箱",
+                "value": "qq_smtp"
+              },
+              {
+                "display": "126邮箱",
+                "value": "126_smtp"
+              },
+              {
+                "display": "163邮箱",
+                "value": "163_smtp"
+              },
+              {
+                "display": "Google邮箱",
+                "value": "gmail_smtp"
+              },
+              {
+                "display": "Outlook邮箱",
+                "value": "outlook_smtp"
+              },
+              {
+                "display": "iCloud邮箱",
+                "value": "iCloud_smtp"
+              },
+              {
+                "display": "其他",
+                "value": "other_smtp"
+              }
+            ]
+          }
+        },
+        {
+          "name": "smtp_server",
+          "label": "指定的SMTP服务器",
+          "category": "advanced",
+          "tips": "输入指定的SMTP服务器地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "smtp_port",
+          "label": "指定的SMTP端口",
+          "default": "10:465",
+          "category": "advanced",
+          "tips": "输入指定的SMTP端口",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_ssl",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "使用SSL连接SMTP服务器",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用SSL",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "smtp_server_authentication",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "tips": "SMTP服务器需要身份验证",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "SMTP服务器需要身份验证",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "user_name",
+          "label": "用户名",
+          "required": false,
+          "category": "advanced",
+          "tips": "SMTP服务器身份验证的用户名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "授权码",
+          "required": false,
+          "category": "advanced",
+          "tips": "SMTP服务器验证身份的授权码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "email.retrieve_email",
+      "icon": "Email_Retrieve_Email",
+      "description": "从指定的邮箱中获取邮件，收取邮件",
+      "comment": "获取%mail_kind%%username%中文件夹%folder_name%的前%top%封邮件，将邮件列表保存到%mailmessage_list%",
+      "title": "获取邮件",
+      "keywords": "收取邮件;收邮件",
+      "helpUrl": "language/zh-cn/指令文档/其他/邮件/获取邮件.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Email.RetrieveEmailControl, ShadowBot.Shell.Development",
+      "function": "xbot_visual.email.retrieve_email",
+      "inputs": [
+        {
+          "name": "mail_kind",
+          "label": "邮箱类型",
+          "required": true,
+          "default": "10:163",
+          "defaultDisplay": "163邮箱",
+          "tips": "选择一个邮箱类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "163邮箱",
+                "value": "163"
+              },
+              {
+                "display": "126邮箱",
+                "value": "126"
+              },
+              {
+                "display": "qq邮箱",
+                "value": "qq"
+              },
+              {
+                "display": "Google邮箱",
+                "value": "gmail"
+              },
+              {
+                "display": "iCloud邮箱",
+                "value": "iCloud"
+              },
+              {
+                "display": "其他",
+                "value": "other_smtp"
+              },
+              {
+                "display": "自定义邮箱",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "address",
+          "label": "IMAP服务器",
+          "tips": "输入指定的IMAP服务器地址",
+          "type": "str",
+          "editor": {
+            "placeholder": "如imap.163.com",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "port",
+          "label": "端口号",
+          "tips": "输入指定的IMAP端口号",
+          "default": "10:993",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_ssl",
+          "label": "",
+          "tips": "使用SSL连接IMAP服务器",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "使用SSL",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "username",
+          "label": "邮箱账号",
+          "tips": "IMAP服务器身份验证的用户名，通常是邮箱账号，以具体邮件服务商的规定为准",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "authcode",
+          "label": "授权码",
+          "tips": "IMAP服务器验证身份的授权码，一般需要短信认证开通，部分邮箱为账号密码，以具体邮件服务商的规定为准",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "only_unread",
+          "label": "",
+          "tips": "仅获取未读邮件或者获取所有邮件",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "仅未读邮件",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "top",
+          "label": "邮件数量",
+          "tips": "获取前N封邮件",
+          "default": "10:5",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_attachments",
+          "label": "",
+          "tips": "是否下载邮件的附件",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "保存附件",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "attachments_savefolder",
+          "label": "保存目录",
+          "tips": "附件的保存目录",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "folder_name_specifc_mode",
+          "label": "文件夹指定方式",
+          "tips": "文件夹指定方式",
+          "type": "str",
+          "default": "10:default",
+          "defaultDisplay": "默认",
+          "category": "advanced",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认",
+                "value": "default"
+              },
+              {
+                "display": "动态指定",
+                "value": "dynamic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "folder_name",
+          "label": "文件夹名称",
+          "tips": "输入指定文件夹的名称",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "mark_as_read",
+          "label": "",
+          "tips": "获取邮件后，将邮件标记为已读状态",
+          "category": "advanced",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "标记为已读",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "keyword_in_from",
+          "label": "发件人中包含的内容",
+          "tips": "发件人中包含的内容",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "keyword_in_to",
+          "label": "收件人中包含的内容",
+          "tips": "收件人中包含的内容",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "keyword_in_subject",
+          "label": "主题中包含的内容",
+          "tips": "主题中包含的内容",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "keyword_in_textBody",
+          "label": "正文中包含的内容",
+          "tips": "正文中包含的内容",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "mailmessage_list",
+          "label": "保存邮件列表至",
+          "variableLabel": "邮件列表",
+          "tips": "指定一个变量名称，该变量用于存储获取到的邮件列表",
+          "type": "list<xbot_visual_email_mailmessage>",
+          "name": "mailmessage_list"
+        }
+      ]
+    }
+  ]
+}

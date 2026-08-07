@@ -1,0 +1,1295 @@
+{
+  "types": [
+    {
+      "name": "xbot._web.element.WebElement",
+      "localName": "网页元素",
+      "pythonName": "xbot.web.chrome.ChromeElement,xbot.web.ie.IEElement,xbot.web.cef.CEFElement",
+      "methods": [
+        {
+          "display": "该元素的链接",
+          "function": "$0.get_attribute('href')",
+          "type": "str"
+        },
+        {
+          "display": "该元素的文本内容",
+          "function": "$0.get_text()",
+          "type": "str"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "web.browser.close",
+      "title": "关闭网页",
+      "description": "关闭已打开的某个或所有网页",
+      "comment": "关闭%web_type%中的网页%browser%",
+      "icon": "Web_Browser_Close",
+      "function": "xbot_visual.web.browser.close",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.CloseBrowserControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/关闭网页.html",
+      "video": {
+        "time": "03:16"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.CloseBrowserBlockHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:close_specified",
+          "defaultDisplay": "关闭指定网页",
+          "tips": "选择要关闭一个指定的网页还是关闭所有网页",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "关闭指定网页",
+                "value": "close_specified"
+              },
+              {
+                "display": "关闭所有网页",
+                "value": "close_all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "web_type",
+          "label": "操作浏览器",
+          "required": false,
+          "tips": "选择想要操作的浏览器对象",
+          "type": "str",
+          "default": "10:cef",
+          "defaultDisplay": "{{BrowserName}}",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{BrowserName}}",
+                "value": "cef"
+              },
+              {
+                "display": "Google Chrome浏览器",
+                "value": "chrome"
+              },
+              {
+                "display": "Microsoft Edge浏览器",
+                "value": "edge"
+              },
+              {
+                "display": "Internet Explorer浏览器",
+                "value": "ie"
+              },
+              {
+                "display": "Mozilla Firefox浏览器",
+                "value": "firefox"
+              },
+              {
+                "display": "360安全浏览器",
+                "value": "360se"
+              }
+            ]
+          }
+        },
+        {
+          "name": "task_kill",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "如果勾选, 将强制结束属于当前用户的指定浏览器进程和由它启动的所有子进程",
+          "type": "bool",
+          "editor": {
+            "label": "终止浏览器进程",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "ignore_beforeunload",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "启用后，将忽略浏览器弹出的\"确认离开页面\"提示，仅适用于 Chrome、Edge、360 安全浏览器和其它自定义浏览器",
+          "type": "bool",
+          "editor": {
+            "label": "忽略\"确认离开页面\"对话框",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.navigate",
+      "title": "跳转至新网址",
+      "keywords": "后退;前进;重新加载;刷新",
+      "description": "将Web浏览器跳转至新页面、后退、前进、或重新加载（刷新）当前页面",
+      "comment": "将网页%browser%%mode%",
+      "icon": "Web_Browser_Navigate",
+      "function": "xbot_visual.web.browser.navigate",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/跳转至新网址.html",
+      "video": {
+        "time": "01:48"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.NavigateBrowserControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.NavigateBrowserHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "mode",
+          "label": "跳转方式",
+          "required": true,
+          "tips": "选择一种跳转方式,可以是跳转至新页面、后退、前进、或重新加载当前页面",
+          "default": "10:url",
+          "defaultDisplay": "跳转至新页面",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "跳转至新页面",
+                "value": "url"
+              },
+              {
+                "display": "后退",
+                "value": "back"
+              },
+              {
+                "display": "前进",
+                "value": "forward"
+              },
+              {
+                "display": "重新加载（刷新)",
+                "value": "reload"
+              }
+            ]
+          }
+        },
+        {
+          "name": "url",
+          "label": "新网址",
+          "tips": "填写要跳转到的目标网址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "ignore_cache",
+          "label": "",
+          "category": "advanced",
+          "tips": "重新加载时是否忽略浏览器缓存",
+          "default": "13:False",
+          "type": "bool",
+          "editor": {
+            "label": "忽略缓存",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "load_timeout",
+          "label": "网页加载超时时间（秒）",
+          "required": true,
+          "default": "10:20",
+          "category": "advanced",
+          "tips": "等待网页加载完成的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.stop_load",
+      "title": "停止网页加载",
+      "description": "如果网页尚未加载完毕则强制停止网页加载",
+      "comment": "停止网页%browser%加载",
+      "icon": "Web_Browser_Stop_Load",
+      "function": "xbot_visual.web.browser.stop_load",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/停止网页加载.html",
+      "video": {
+        "time": "00:18"
+      },
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.execute_javascript",
+      "title": "执行JS脚本",
+      "keywords": "Javascript",
+      "description": "在指定的网页中执行一段Javascript脚本，同时获取脚本的执行结果",
+      "comment": "在网页%browser%中的元素%element%上执行Javascript，将执行结果保存到%js_result%",
+      "icon": "Web_Browser_Execute_Javascript",
+      "function": "xbot_visual.web.browser.execute_javascript",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/执行js脚本.html",
+      "video": {
+        "time": "03:14"
+      },
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "argument",
+          "label": "参数",
+          "tips": "填写要传入到Javascript脚本中的参数",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "code",
+          "label": "javascript",
+          "required": true,
+          "default": "10:function (element, input) {\r\n    // 在此处编写您的Javascript代码\r\n    // element表示选择的操作目标(HTML元素)\r\n    // input表示输入的参数(字符串)\r\n    \r\n    return null;\r\n}",
+          "tips": "编写一段用于执行的Javascript脚本",
+          "type": "str",
+          "editor": {
+            "kind": "code",
+            "language": "javascript"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "execution_world",
+          "label": "执行环境",
+          "required": true,
+          "category": "advanced",
+          "default": "10:ISOLATED",
+          "defaultDisplay": "插件环境",
+          "tips": "JS脚本的目标执行环境",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "插件环境",
+                "value": "ISOLATED"
+              },
+              {
+                "display": "网页环境",
+                "value": "MAIN"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "js_result",
+          "label": "存储脚本执行结果至",
+          "variableLabel": "脚本执行结果",
+          "tips": "指定一个变量名称,该变量用于存储脚本执行的结果",
+          "name": "web_js_result",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "web.browser.scroll_to",
+      "title": "鼠标滚动网页",
+      "description": "在指定的网页中滚动鼠标，可以设置为滚动到顶部、底部或者指定位置",
+      "comment": "在指定的网页中滚动鼠标",
+      "icon": "Web_Browser_Scroll_To",
+      "function": "xbot_visual.web.browser.scroll_to",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.ScrollToElementControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/鼠标滚动网页.html",
+      "video": {
+        "time": "03:50"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.ScrollToElementHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "scroll_on_element",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否在指定元素上滚动",
+          "type": "bool",
+          "editor": {
+            "label": "在指定元素上滚动",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "autoFill": false,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "search_up",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "若当前元素无滚动条，自动向上查找有滚动条元素",
+          "type": "bool",
+          "editor": {
+            "label": "元素无滚动条，自动向上查找",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "location",
+          "label": "滚动位置",
+          "required": true,
+          "tips": "指定网页滚动到的目标位置",
+          "default": "10:bottom",
+          "defaultDisplay": "滚动到底部",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "滚动到底部",
+                "value": "bottom"
+              },
+              {
+                "display": "滚动到顶部",
+                "value": "top"
+              },
+              {
+                "display": "滚动到指定位置",
+                "value": "point"
+              },
+              {
+                "display": "滚动一屏",
+                "value": "screen"
+              },
+              {
+                "display": "滚动一屏",
+                "value": "oneScreen"
+              }
+            ]
+          }
+        },
+        {
+          "name": "behavior",
+          "label": "滚动效果",
+          "required": true,
+          "tips": "指定鼠标的滚动效果可以是平滑滚动或者瞬间滚动",
+          "default": "10:smooth",
+          "defaultDisplay": "平滑滚动",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "平滑滚动",
+                "value": "smooth"
+              },
+              {
+                "display": "瞬间滚动",
+                "value": "instant"
+              }
+            ]
+          }
+        },
+        {
+          "name": "left",
+          "label": "横坐标",
+          "default": "10:0",
+          "tips": "鼠标移动到的目标位置的横坐标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "top",
+          "label": "纵坐标",
+          "default": "10:0",
+          "tips": "鼠标移动到的目标位置的纵坐标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.handle_javascript_dialog",
+      "title": "处理网页对话框",
+      "keywords": "弹框;alert;confirm;prompt;",
+      "description": "处理网页中alert、confirm、prompt三种弹框",
+      "comment": "在网页%browser%的对话框中，点击%dialog_result%按钮",
+      "icon": "Web_Browser_Handle_Javascript_Dialog",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.HandleJavascriptDialogControl, ShadowBot.Shell.Development",
+      "function": "xbot_visual.web.browser.handle_javascript_dialog",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/对话框处理/处理网页对话框.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.HandleJavascriptDialogHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "dialog_result",
+          "label": "对话框按钮",
+          "required": true,
+          "default": "10:OK",
+          "defaultDisplay": "确定",
+          "tips": "当网页对话框出现时要点击的按钮",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "确定",
+                "value": "OK"
+              },
+              {
+                "display": "取消",
+                "value": "Cancle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "输入内容",
+          "tips": "如果是支持输入的对话框出现时,可以在此填写要输入的内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "wait_appear_timeout",
+          "label": "等待对话框出现（秒）",
+          "required": true,
+          "default": "10:20",
+          "category": "advanced",
+          "tips": "等待网页对话框出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.get_details",
+      "title": "获取网页信息",
+      "description": "获取网页标题、网址、源代码、文本等信息",
+      "comment": "%operation%，目标网页为%browser%，将结果保存到%webpage_attribute%",
+      "icon": "Web_Browser_Get_Details",
+      "function": "xbot_visual.web.browser.get_details",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetBrowserDetailHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取网页信息.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:url",
+          "defaultDisplay": "获取网址",
+          "tips": "选择要获取的网页信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取网址",
+                "value": "url"
+              },
+              {
+                "display": "获取网页标题",
+                "value": "title"
+              },
+              {
+                "display": "获取网页源代码",
+                "value": "html"
+              },
+              {
+                "display": "获取网页文本内容",
+                "value": "text"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "webpage_attribute",
+          "label": "存储网页信息至",
+          "variableLabel": "网页信息",
+          "tips": "指定一个变量名称,该变量用于存储获取到的网页信息",
+          "name": "web_page_attribute",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web.browser.get_javascript_dialog_text",
+      "title": "提取网页对话框内容",
+      "description": "提取网页对话框内容",
+      "comment": "提取网页%browser%中的对话框内容，将结果保存到%dialog_text%",
+      "icon": "Web_Browser_Get_Javascript_Dialog_Text",
+      "function": "xbot_visual.web.browser.get_javascript_dialog_text",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/提取网页对话框内容.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "wait_appear_timeout",
+          "label": "等待对话框出现（秒）",
+          "required": true,
+          "default": "10:20",
+          "category": "advanced",
+          "tips": "等待网页对话框出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "dialog_text",
+          "label": "存储对话框内容至",
+          "variableLabel": "对话框内容",
+          "tips": "指定一个变量名称,该变量用于存储获取到的对话框中的文字内容",
+          "name": "web_dialog_text",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web.browser.start_monitor_network",
+      "title": "开始监听网页请求",
+      "description": "开始监听网页请求，根据输入的资源路径Url、资源类型, 筛选网页监听结果，可在开启后获取抓取到的信息",
+      "comment": "开始抓取网页%browser%中的请求信息",
+      "icon": "Web_Browser_Start_Monitor_Network",
+      "keywords": "http",
+      "function": "xbot_visual.web.browser.start_monitor_network",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/开始监听网页请求.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "url",
+          "label": "资源路径Url",
+          "default": "10:",
+          "tips": "根据输入的资源Url,筛选网页监听结果(值为空则忽略url筛选条件)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符筛选Url",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "resource_type",
+          "label": "筛选资源类型",
+          "required": true,
+          "default": "10:All",
+          "defaultDisplay": "All",
+          "tips": "选择要获取的网页监听结果类型,可筛选JS,图片,文档等类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "All"
+              },
+              {
+                "display": "Fetch/XHR",
+                "value": "Fetch|XHR"
+              },
+              {
+                "display": "JS",
+                "value": "Script"
+              },
+              {
+                "display": "CSS",
+                "value": "Stylesheet"
+              },
+              {
+                "display": "图片",
+                "value": "Image"
+              },
+              {
+                "display": "媒体",
+                "value": "Media"
+              },
+              {
+                "display": "字体",
+                "value": "Font"
+              },
+              {
+                "display": "文档",
+                "value": "Document"
+              },
+              {
+                "display": "WebSocket",
+                "value": "WebSocket"
+              },
+              {
+                "display": "其他",
+                "value": "Other"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.get_responses",
+      "title": "获取网页监听结果",
+      "description": "获取网页监听结果,\r\n列表项键包括'url'、'type'、'headers'、'body'、'base64Encoded'、'status'、'requestHeaders'、'requestBody'、'method' ",
+      "comment": "获取网页%browser%监听结果列表，将结果保存到%response_body_list%",
+      "icon": "Web_Browser_Get_Responses",
+      "keywords": "http",
+      "function": "xbot_visual.web.browser.get_responses",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetResponsesControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取网页监听结果.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetResponsesHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "url",
+          "label": "资源路径Url",
+          "default": "10:",
+          "tips": "根据输入的资源Url,筛选网页监听结果(值为空则忽略url筛选条件)",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_wildcard",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "根据通配符筛选Url",
+          "type": "bool",
+          "editor": {
+            "label": "根据通配符匹配",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "resource_type",
+          "label": "筛选资源类型",
+          "required": true,
+          "default": "10:All",
+          "defaultDisplay": "All",
+          "tips": "选择要获取的网页监听结果类型,可筛选JS,图片,文档等类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "All",
+                "value": "All"
+              },
+              {
+                "display": "XHR",
+                "value": "XHR"
+              },
+              {
+                "display": "Script",
+                "value": "Script"
+              },
+              {
+                "display": "Stylesheet",
+                "value": "Stylesheet"
+              },
+              {
+                "display": "Image",
+                "value": "Image"
+              },
+              {
+                "display": "Media",
+                "value": "Media"
+              },
+              {
+                "display": "Font",
+                "value": "Font"
+              },
+              {
+                "display": "Document",
+                "value": "Document"
+              },
+              {
+                "display": "WebSocket",
+                "value": "WebSocket"
+              },
+              {
+                "display": "Manifest",
+                "value": "Manifest"
+              },
+              {
+                "display": "TextTrack",
+                "value": "TextTrack"
+              },
+              {
+                "display": "Fetch",
+                "value": "Fetch"
+              },
+              {
+                "display": "EventSource",
+                "value": "EventSource"
+              },
+              {
+                "display": "Other",
+                "value": "Other"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "response_body_list",
+          "label": "保存网页监听结果列表至",
+          "tips": "指定一个变量名称,该变量用于保存获取到的网页监听结果列表,列表项键包括'url'、'type'、'body'、'base64Encoded',集合中的值可以通过比如 item['body'] 的方式获取",
+          "name": "response_body_list",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "web.browser.stop_monitor_network",
+      "title": "停止监听网页请求",
+      "description": "停止监听网页请求",
+      "comment": "结束抓取网页%browser%中的请求信息",
+      "icon": "Web_Browser_Stop_Monitor_Network",
+      "keywords": "http",
+      "function": "xbot_visual.web.browser.stop_monitor_network",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/停止监听网页请求.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.contains_element_or_text",
+      "statement": "workflow.if",
+      "title": "IF 网页包含",
+      "description": "检测指定的文本或元素是否出现在网页中",
+      "comment": "检测指定的文本或元素是否出现在网页中",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Web_Browser_Contains_Element_Or_Text",
+      "function": "xbot_visual.web.browser.contains_element_or_text",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.ContainsElementOrTextControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if网页包含.html",
+      "video": {
+        "time": "01:18"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.ContainsElementOrTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "content_type",
+          "label": "检测网页是否",
+          "required": true,
+          "default": "10:contains_element",
+          "defaultDisplay": "包含元素",
+          "tips": "指定你想要检测的内容类型,检测文本还是检测元素",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "包含元素",
+                "value": "contains_element"
+              },
+              {
+                "display": "不包含元素",
+                "value": "not_contains_element"
+              },
+              {
+                "display": "包含文本",
+                "value": "contains_text"
+              },
+              {
+                "display": "不包含文本",
+                "value": "not_contains_text"
+              }
+            ]
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "required": false,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "text",
+          "label": "文本内容",
+          "required": false,
+          "tips": "文本内容",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.element_display",
+      "statement": "workflow.if",
+      "title": "IF 元素可见(web)",
+      "description": "检测指定的元素在网页中是否可见",
+      "comment": "检测网页%browser%中元素%selector%在是否%content_type%",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Web_Browser_Element_Display",
+      "function": "xbot_visual.web.browser.element_display",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if元素可见（web）.html",
+      "video": {
+        "time": "01:03"
+      },
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "content_type",
+          "label": "检测网页是否",
+          "required": true,
+          "default": "10:display",
+          "defaultDisplay": "可见",
+          "tips": "指定你想要检测的内容类型,检测元素可见还是不可见",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "可见",
+                "value": "display"
+              },
+              {
+                "display": "不可见",
+                "value": "undisplay"
+              }
+            ]
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "required": false,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web.browser.get_scroll",
+      "title": "获取滚动条位置",
+      "description": "获取网页或元素中滚动条的当前位置或底部位置（即滚动条长度）",
+      "comment": "获取网页%browser%中滚动条的%location%，将滚动条位置保存到%scroll_value%",
+      "icon": "Web_Browser_Get_Scroll",
+      "function": "xbot_visual.web.browser.get_scroll",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Web.GetScrollControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/数据提取/获取滚动条位置.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Web.GetScrollControlHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "scroll_on_element",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "获取指定元素滚动条的位置，否则为整个网页的滚动条",
+          "type": "bool",
+          "editor": {
+            "label": "元素滚动条",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "autoFill": false,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple",
+            "elementType": "xbot._web.browser.WebBrowser"
+          }
+        },
+        {
+          "name": "search_up",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "若当前元素无滚动条，自动向上查找有滚动条元素",
+          "type": "bool",
+          "editor": {
+            "label": "元素无滚动条，自动向上查找",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "direction",
+          "label": " 滚动条",
+          "required": true,
+          "tips": "根据实际需要选择纵向或横向滚动条",
+          "default": "10:vertical",
+          "defaultDisplay": "纵向滚动条",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "纵向滚动条",
+                "value": "vertical"
+              },
+              {
+                "display": "横向滚动条",
+                "value": "horizontal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "location",
+          "label": "位置",
+          "required": true,
+          "tips": "当前位置为当前滚动条所在的位置与顶部的距离，底部位置为滚动条最大可滚动的长度",
+          "default": "10:current",
+          "defaultDisplay": "当前位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "当前位置",
+                "value": "current"
+              },
+              {
+                "display": "底部位置",
+                "value": "bottom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标滚动条存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "scroll_value",
+          "label": "保存滚动条位置至",
+          "variableLabel": "滚动条位置",
+          "tips": "指定一个变量名称,该变量用于保存获取到滚动条位置",
+          "name": "scroll_value",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "web.browser.wait_load_completed",
+      "title": "等待网页加载完成",
+      "description": "等待网页加载完成",
+      "comment": "等待网页%browser%加载完成，等待时间%load_timeout%秒",
+      "icon": "Web_Browser_Wait_Load_Completed",
+      "function": "xbot_visual.web.browser.wait_load_completed",
+      "helpUrl": "language/zh-cn/指令文档/网页自动化/网页操作/等待网页加载完成.html",
+      "inputs": [
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": true,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "load_timeout",
+          "label": "加载超时时间",
+          "required": true,
+          "default": "10:20",
+          "tips": "等待网页加载完成的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "action_after_load_timeout",
+          "label": "加载超时后执行",
+          "required": true,
+          "tips": "等待网页加载完成超时后希望执行的操作",
+          "type": "str",
+          "default": "10:handleExcept",
+          "defaultDisplay": "执行\"错误处理\"",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "执行\"错误处理\"",
+                "value": "handleExcept"
+              },
+              {
+                "display": "停止网页加载",
+                "value": "stopLoad"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

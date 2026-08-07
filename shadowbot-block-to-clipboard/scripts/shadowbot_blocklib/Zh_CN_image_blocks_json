@@ -1,0 +1,628 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "image.wait",
+      "icon": "Image_Wait",
+      "description": "等待目标图像出现或消失，再继续执行流程",
+      "comment": "等待%window_kind%中图像%template_images%出现，最多等待%timeout%秒",
+      "title": "等待图像",
+      "keywords": "等待图片",
+      "function": "xbot_visual.image.wait",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Image.WaitImageControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Image.WaitImageHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/等待/等待图像.html",
+      "video": {
+        "time": "06:01"
+      },
+      "inputs": [
+        {
+          "name": "window_kind",
+          "label": "搜索范围",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "整个屏幕",
+          "tips": "搜索范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "整个屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "currentactivatewindow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "wait_mode",
+          "label": "等待方式",
+          "required": true,
+          "default": "10:appear",
+          "defaultDisplay": "等待目标图像出现",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等待目标图像出现",
+                "value": "appear"
+              },
+              {
+                "display": "等待目标图像消失",
+                "value": "disappear"
+              }
+            ]
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张\"出现/消失\"，则继续执行流程",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "is_wait_all_images",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "等待所有图像或者只等待其中一张",
+          "type": "bool",
+          "editor": {
+            "label": "等待全部图像出现(消失)后再执行",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "iswait",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "设置等待超时时间，超时后流程将自动往下继续执行",
+          "type": "bool",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:20",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "wait_result",
+          "label": "等待结果",
+          "tips": "如果为True则等待成功,否则等待超时",
+          "name": "image_wait_result",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "image.hover",
+      "icon": "Image_Hover",
+      "description": "鼠标悬停在图像上",
+      "comment": "在%window_kind%中搜索图像%template_images%，将鼠标移动到图像%anchor_type%位置",
+      "title": "鼠标悬停在图像上",
+      "keywords": "悬浮;图片;图形",
+      "function": "xbot_visual.image.hover",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/鼠标悬停在图像上.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Image.HoverImageControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Image.HoverImageHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_kind",
+          "label": "搜索范围",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "整个屏幕",
+          "tips": "搜索范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "整个屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "currentactivatewindow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张\"出现/消失\"，则继续执行流程",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": true,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "目标图像的部位",
+          "default": "10:middleCenter",
+          "tips": "选择你要将鼠标移动到图像的哪个部位上",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:5",
+          "tips": "设置最大等待时间",
+          "category": "advanced",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "image.click",
+      "icon": "Image_Click",
+      "description": "点击图像",
+      "keywords": "点击图片",
+      "comment": "在%window_kind%中搜索图像%template_images%，%button%%clicks%点击%anchor_type%位置",
+      "title": "点击图像",
+      "function": "xbot_visual.image.click",
+      "helpUrl": "language/zh-cn/指令文档/鼠标键盘/点击图像.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Image.ClickImageControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Image.ClickImageHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window_kind",
+          "label": "搜索范围",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "整个屏幕",
+          "tips": "搜索范围",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "整个屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "currentactivatewindow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张\"出现/消失\"，则继续执行流程",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "目标图像的部位",
+          "required": true,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点位置",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "目标图像的部位",
+          "default": "10:middleCenter",
+          "tips": "选择你要将鼠标移动到图像的哪个部位上",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "clicks",
+          "label": "点击次数",
+          "required": true,
+          "default": "10:click",
+          "defaultDisplay": "单击",
+          "tips": "选择点击的方式是单击还是双击",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单击",
+                "value": "click"
+              },
+              {
+                "display": "双击",
+                "value": "dbclick"
+              }
+            ]
+          }
+        },
+        {
+          "name": "button",
+          "label": "鼠标",
+          "required": true,
+          "default": "10:left",
+          "defaultDisplay": "鼠标左键",
+          "tips": "选择用于触发点击的鼠标按键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "鼠标左键",
+                "value": "left"
+              },
+              {
+                "display": "鼠标右键",
+                "value": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "keys",
+          "label": "键盘",
+          "required": true,
+          "default": "10:null",
+          "defaultDisplay": "无",
+          "category": "advanced",
+          "tips": "在点击时需要按下的键盘功能键",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无",
+                "value": "null"
+              },
+              {
+                "display": "Alt",
+                "value": "alt"
+              },
+              {
+                "display": "Ctrl",
+                "value": "ctrl"
+              },
+              {
+                "display": "Shift",
+                "value": "shift"
+              },
+              {
+                "display": "Win",
+                "value": "win"
+              }
+            ]
+          }
+        },
+        {
+          "name": "move_mouse",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "category": "advanced",
+          "tips": "是否显示鼠标移动轨迹",
+          "type": "bool",
+          "editor": {
+            "label": "显示鼠标移动轨迹",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:5",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "image.exist",
+      "statement": "workflow.if",
+      "icon": "Image_Exist",
+      "description": "判断目标图像是否存在",
+      "comment": "在%window_kind%中，是否%exist_mode%目标图像%template_images%",
+      "title": "IF 图像存在",
+      "keywords": "图片存在",
+      "function": "xbot_visual.image.exist",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Image.ExistImageControl, ShadowBot.Shell.Development",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if图像存在.html",
+      "video": {
+        "time": "02:11"
+      },
+      "inputs": [
+        {
+          "name": "window_kind",
+          "label": "搜索范围",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "整个屏幕",
+          "tips": "可选择整个屏幕或指定的窗口",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "整个屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "currentactivatewindow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "exist_mode",
+          "label": "查找方式",
+          "required": true,
+          "default": "10:exist",
+          "defaultDisplay": "存在",
+          "tips": "指定查找范围内指定的图像存在or不存在",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "exist"
+              },
+              {
+                "display": "不存在",
+                "value": "notexist"
+              }
+            ]
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图像",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "is_find_all_images",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "检测所有图像或者只检测其中一张",
+          "type": "bool",
+          "editor": {
+            "label": "全部图像存在(不存在)后再执行",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    }
+  ]
+}

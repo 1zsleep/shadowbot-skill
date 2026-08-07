@@ -1,0 +1,976 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "text.get_text_length",
+      "function": "xbot_visual.text.get_text_length",
+      "title": "获取文本长度",
+      "description": "这个指令用于获取文本字符串的长度",
+      "comment": "获取文本%text%的长度，将文本长度保存到%text_length%",
+      "icon": "Text_Get_Text_Length",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/获取文本长度.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本内容",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text_length",
+          "label": "保存文本长度至",
+          "variableLabel": "文本长度",
+          "tips": "输入一个名字,用来保存文本内容的长度,其返回是一个数字类型",
+          "type": "int",
+          "name": "text_length"
+        }
+      ]
+    },
+    {
+      "name": "text.append_text_in_newline",
+      "function": "xbot_visual.text.append_text_in_newline",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Text.AppendTextInNewlineControl, ShadowBot.Shell.Development",
+      "title": "追加新文本",
+      "keywords": "拼接",
+      "description": "在原始文本后追加新文本内容，完成文本拼接功能",
+      "comment": "在原始文本%text%后追加新文本%new_line_text%，将结果保存到%result%",
+      "icon": "Text_Append_Text_In_Newline",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/追加新文本.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "原始文本",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "new_line",
+          "label": "",
+          "required": true,
+          "tips": "是否换行追加",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "换行追加",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "new_line_text",
+          "label": "追加文本",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "保存结果至",
+          "variableLabel": "追加后的文本",
+          "tips": "输入一个名字,用来保存结果。当变量名字与原始文本变量名相同的话,就会发生覆盖。",
+          "type": "str",
+          "name": "result"
+        }
+      ]
+    },
+    {
+      "name": "text.sub_text",
+      "function": "xbot_visual.text.sub_text",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Text.GetSubTextControl, ShadowBot.Shell.Development",
+      "title": "截取一段文本",
+      "description": "这个指令用于截取一段文本",
+      "comment": "截取文本%text%的子内容，将结果保存到%sub_text%",
+      "icon": "Text_Sub_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/截取一段文本.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Text.GetSubTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本内容",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "start_way",
+          "label": "起始位置",
+          "required": true,
+          "default": "10:begin",
+          "defaultDisplay": "第一个字符",
+          "tips": "指定起始字符的位置,如果你想要在文本'Hello中国欢迎你'中提取'中国'两个字',那么起始位置就是5",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "从第一个字符开始截取",
+                "value": "begin"
+              },
+              {
+                "display": "从指定位置开始截取",
+                "value": "positon"
+              },
+              {
+                "display": "从指定文本开始截取",
+                "value": "text"
+              }
+            ]
+          }
+        },
+        {
+          "name": "start_index",
+          "label": "起始字符的位置",
+          "required": false,
+          "default": "10:0",
+          "tips": "如果你想要在文本'Hello中国欢迎你'中提取'中国'两个字',那么起始位置就是5",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "位置从0开始计算"
+          }
+        },
+        {
+          "name": "start_text",
+          "label": "起始文本",
+          "required": false,
+          "tips": "如果你想要在文本“购买订单号：1234567890”中提取订单号,那么起始位置就是“：”",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "输入需要截取的起始文本内容"
+          }
+        },
+        {
+          "name": "contaion_start_text",
+          "label": "",
+          "default": "13:True",
+          "tips": "勾选时，结果中包含起始文本，例如：“购买订单号：1234567890”，起始文本设置为“：”，勾选后结果为“：1234567890”，不勾选结果为“1234567890”",
+          "type": "bool",
+          "editor": {
+            "label": "结果中包含起始文本",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sub_way",
+          "label": "截取方式",
+          "required": true,
+          "default": "10:end",
+          "defaultDisplay": "截取到最后一个字符",
+          "tips": "如果你想要在文本'Hello中国欢迎你'中提取'中国'两个字',那么起始位置就是5,截取长度为2,代表从第6个字符开始要截取两个字符",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "截取到最后一个字符",
+                "value": "end"
+              },
+              {
+                "display": "截取指定长度",
+                "value": "length"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sub_length",
+          "label": "截取长度",
+          "default": "10:0",
+          "required": false,
+          "tips": "输入你要截取的字符数量",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "sub_text",
+          "label": "保存结果至",
+          "variableLabel": "截取到的文本内容",
+          "tips": "输入一个名字,用来保存截取到的文本内容",
+          "type": "str",
+          "name": "sub_text"
+        }
+      ]
+    },
+    {
+      "name": "text.pad_text",
+      "function": "xbot_visual.text.pad_text",
+      "title": "补齐文本至指定长度",
+      "description": "这个指令用于补齐文本至指定长度",
+      "comment": "在原始文本%text%的%pad_way%文本%pad_text%，直至补齐后的总长度为%total_length%，将结果保存到%result_text%",
+      "icon": "Text_Pad_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/补齐文本至指定长度.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "原始文本",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "pad_way",
+          "label": "补齐方式",
+          "required": true,
+          "default": "10:left",
+          "defaultDisplay": "左端补齐",
+          "tips": "在原始文本的左端或者右端添加补齐文本",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "左端补齐",
+                "value": "left"
+              },
+              {
+                "display": "右端补齐",
+                "value": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pad_text",
+          "label": "用于补齐的文本",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "total_length",
+          "label": "总长度",
+          "required": true,
+          "tips": "如果你要在数字1的左端补齐2个0,那么补齐后的内容就是001,总长度就是3",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result_text",
+          "label": "保存结果至",
+          "variableLabel": "补齐后的文本",
+          "tips": "输入一个名字,用来保存补齐后的文本内容",
+          "type": "str",
+          "name": "result_text"
+        }
+      ]
+    },
+    {
+      "name": "text.trim_text",
+      "function": "xbot_visual.text.trim_text",
+      "title": "删除文本两端的空格",
+      "description": "这个指令用于删除文本两端的空格（还包括换行符、回车符、制表符）",
+      "comment": "删除文本%text%中%trim_way%，将结果保存到%trim_text%",
+      "icon": "Text_Trim_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/删除文本两端的空格.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "原始文本",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "trim_way",
+          "label": "删除方式",
+          "required": true,
+          "default": "10:left",
+          "defaultDisplay": "左端的空格",
+          "tips": "选择你要删除文本哪一侧的空格",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "左端的空格",
+                "value": "left"
+              },
+              {
+                "display": "右端的空格",
+                "value": "right"
+              },
+              {
+                "display": "两端的空格",
+                "value": "both"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "trim_text",
+          "label": "保存结果至",
+          "variableLabel": "删除空格后的文本",
+          "tips": "输入一个名字,用来保存删除空格后的文本内容",
+          "type": "str",
+          "name": "trim_text"
+        }
+      ]
+    },
+    {
+      "name": "text.change_text_case",
+      "function": "xbot_visual.text.change_text_case",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Text.ChangeTextCaseHandler"
+        }
+      ],
+      "title": "改变文本的大小写",
+      "description": "这个指令用于改变文本的大小写（全部大写、全部小写、词首字母大写）",
+      "comment": "将文本%text%转换成%case_type%，将结果保存到%text_case%",
+      "icon": "Text_Change_Text_Case",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/改变文本的大小写.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本内容",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "case_type",
+          "label": "转换成",
+          "required": true,
+          "default": "10:upper",
+          "defaultDisplay": "全部大写",
+          "tips": "选择一个转换方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部大写",
+                "value": "upper"
+              },
+              {
+                "display": "全部小写",
+                "value": "lower"
+              },
+              {
+                "display": "词首字母大写",
+                "value": "title"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text_case",
+          "label": "保存结果至",
+          "variableLabel": "转换大小写后的文本",
+          "tips": "输入一个名字,用来保存转换大小写后的文本内容",
+          "type": "str",
+          "name": "text_case"
+        }
+      ]
+    },
+    {
+      "name": "text.text_to_number",
+      "function": "xbot_visual.text.text_to_number",
+      "title": "文本转数字",
+      "description": "这个指令用于将文本形式的数字转换成一个包含数字的变量",
+      "comment": "将文本%text%转换成数字，将结果保存到%text_number%",
+      "icon": "Text_Text_To_Number",
+      "helpUrl": "",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本内容",
+          "required": true,
+          "tips": "输入文本字符串或者一个变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text_number",
+          "label": "保存结果至",
+          "variableLabel": "文本转换成的数字",
+          "tips": "输入一个变量名字,用来保存数字结果",
+          "type": "int",
+          "name": "text_number"
+        }
+      ]
+    },
+    {
+      "name": "text.number_to_text",
+      "function": "xbot_visual.text.number_to_text",
+      "title": "数字转文本",
+      "description": "这个指令用于将数字转换成指定格式的文本",
+      "comment": "将数字%num%转换成文本，将结果保存到%formatted_number%",
+      "icon": "Text_Number_To_Text",
+      "helpUrl": "",
+      "inputs": [
+        {
+          "name": "num",
+          "label": "待转换的数字",
+          "required": true,
+          "tips": "请输入一个数字或者一个变量",
+          "type": "float",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "float_places",
+          "label": "小数位数",
+          "default": "10:2",
+          "required": true,
+          "tips": "请输入一个数字或者一个变量",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "use_1000_separator",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "例如数字 10000 用千分位分割显示的话就是 10,000",
+          "type": "bool",
+          "editor": {
+            "label": "千分位分割",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "formatted_number",
+          "label": "保存结果至",
+          "variableLabel": "数字转换成的文本",
+          "tips": "输入一个变量名字,用来保存格式化后的结果",
+          "type": "str",
+          "name": "formatted_number"
+        }
+      ]
+    },
+    {
+      "name": "text.join_list_to_text",
+      "function": "xbot_visual.text.join_list_to_text",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Text.JoinListToTextControl, ShadowBot.Shell.Development",
+      "title": "列表聚合成文本",
+      "keywords": "列表转文本",
+      "description": "这个指令用于将列表中的每个元素用指定的符号连接起来，最终转换成一个文本字符串",
+      "comment": "用连接符连接列表%list_to_join%中的每个元素，将文本结果保存到%joined_text%",
+      "icon": "Text_Join_List_To_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/列表聚合成文本.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Text.JoinListToTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "list_to_join",
+          "label": "待转换的列表",
+          "required": true,
+          "tips": "请输入一个列表",
+          "type": "list",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delimiter_way",
+          "label": "连接符类型",
+          "required": true,
+          "default": "10:no",
+          "defaultDisplay": "无连接符",
+          "tips": "选择一种连接符类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "无连接符",
+                "value": "no"
+              },
+              {
+                "display": "标准连接符",
+                "value": "standard"
+              },
+              {
+                "display": "自定义连接符",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "standard_delimiter",
+          "label": "标准连接符",
+          "required": false,
+          "default": "10:space",
+          "defaultDisplay": "空格符",
+          "tips": "选择一种连接符",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "空格符",
+                "value": "space"
+              },
+              {
+                "display": "制表符",
+                "value": "tab"
+              },
+              {
+                "display": "换行符",
+                "value": "new_line"
+              }
+            ]
+          }
+        },
+        {
+          "name": "num_standard_delimiter",
+          "label": "连接符的数量",
+          "required": false,
+          "default": "10:1",
+          "tips": "连接符的重复数量",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "custom_delimiter",
+          "label": "自定义的连接符",
+          "required": false,
+          "default": "10:",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "joined_text",
+          "label": "保存结果至",
+          "variableLabel": "列表转换成的文本",
+          "tips": "输入一个变量名字,用来保存列表转换后的文本",
+          "type": "str",
+          "name": "joined_text"
+        }
+      ]
+    },
+    {
+      "name": "text.split_text_to_list",
+      "function": "xbot_visual.text.split_text_to_list",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Text.SplitTextToListControl, ShadowBot.Shell.Development",
+      "title": "文本分割成列表",
+      "keywords": "文本转列表",
+      "description": "这个指令使用指定分隔符号,将目标文本分割成一个列表",
+      "comment": "用%delimiter_way%分割字符串%text_to_split%，将结果列表保存到%splited_list%",
+      "icon": "Text_Split_Text_To_List",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/文本分割成列表.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Text.SplitTextToListHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "text_to_split",
+          "label": "待转换的文本",
+          "required": true,
+          "tips": "请输入文本字符串或者选择一个包含字符串的变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "delimiter_way",
+          "label": "分隔符类型",
+          "required": true,
+          "default": "10:standard",
+          "defaultDisplay": "标准分隔符",
+          "tips": "选择一种列表的分隔方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "标准分隔符",
+                "value": "standard"
+              },
+              {
+                "display": "自定义分隔符",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "standard_delimiter",
+          "label": "标准分隔符",
+          "required": false,
+          "default": "10:space",
+          "defaultDisplay": "空格符",
+          "tips": "选择一种列表的分隔方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "空格符",
+                "value": "space"
+              },
+              {
+                "display": "制表符",
+                "value": "tab"
+              },
+              {
+                "display": "换行符",
+                "value": "new_line"
+              }
+            ]
+          }
+        },
+        {
+          "name": "num_standard_delimiter",
+          "label": "分隔符的数量",
+          "required": false,
+          "default": "10:1",
+          "tips": "分隔符的重复数量",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "custom_delimiter",
+          "label": "自定义的分隔符",
+          "required": false,
+          "default": "10:",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_regular_expression",
+          "label": "",
+          "required": false,
+          "tips": "是否正则表达式",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "正则表达式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "remove_empty",
+          "label": "",
+          "required": true,
+          "tips": "是否过滤空白项",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "过滤空白项",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "splited_list",
+          "label": "保存结果至",
+          "variableLabel": "文本切割后的列表",
+          "tips": "输入一个变量名字,用来保存文本转换后的列表",
+          "type": "list<str>",
+          "name": "splited_list"
+        }
+      ]
+    },
+    {
+      "name": "text.extract_content_from_text",
+      "function": "xbot_visual.text.extract_content_from_text",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Text.ExtractContentFromTextControl, ShadowBot.Shell.Development",
+      "title": "从文本中提取内容",
+      "keywords": "正则;提取文本;文本提取",
+      "description": "根据正则表达式从文本中提取指定内容",
+      "comment": "从文本%text%中%extract_way%，将内容保存到%content%",
+      "icon": "Text_Extract_Content_From_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/从文本中提取内容.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Text.ExtractContentFromTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本内容",
+          "required": true,
+          "tips": "请输入文本字符串或者选择一个包含字符串的变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "extract_way",
+          "label": "提取方式",
+          "required": true,
+          "default": "10:number",
+          "defaultDisplay": "提取数字",
+          "tips": "选择一种内容的提取方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "提取数字",
+                "value": "number"
+              },
+              {
+                "display": "提取手机号码",
+                "value": "mobile_phone"
+              },
+              {
+                "display": "提取Email地址",
+                "value": "email"
+              },
+              {
+                "display": "提取身份证号",
+                "value": "id_card"
+              },
+              {
+                "display": "提取自定义内容",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "regular_pattern",
+          "label": "正则表达式",
+          "required": true,
+          "tips": "请输入一段正则表达式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "just_get_first",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "例如在文本中找到了两个手机号,你可以只取第一个",
+          "type": "bool",
+          "editor": {
+            "label": "只找第一个匹配项",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "ignore_case",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "在字符串匹配时,是否忽略大小写",
+          "type": "bool",
+          "editor": {
+            "label": "忽略大小写",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "content",
+          "label": "保存结果至",
+          "variableLabel": "提取到的内容",
+          "tips": "输入一个变量名字,用来保存提取到的内容",
+          "type": "str",
+          "name": "content"
+        }
+      ]
+    },
+    {
+      "name": "text.replace_content_from_text",
+      "function": "xbot_visual.text.replace_content_from_text",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Text.ReplaceContentFromText, ShadowBot.Shell.Development",
+      "title": "文本替换",
+      "keywords": "正则",
+      "description": "替换文本中的指定内容",
+      "comment": "将文本%text%中的内容%replace_text%用%dest_text%替换，将结果保存到%replace_content%",
+      "icon": "Text_Replace_Content_From_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/文本操作/文本替换.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Text.ReplaceContentFromTextHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "label": "内容源",
+          "required": true,
+          "tips": "请输入文本字符串或者选择一个包含字符串的变量",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "regular_pattern",
+          "label": "正则表达式",
+          "tips": "请输入一段正则表达式",
+          "type": "str",
+          "editor": {
+            "kind": "PlainText"
+          }
+        },
+        {
+          "name": "replace_way",
+          "label": "替换方式",
+          "required": true,
+          "default": "10:content",
+          "defaultDisplay": "替换内容",
+          "tips": "选择一种内容的提取方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "替换内容",
+                "value": "content"
+              },
+              {
+                "display": "替换数字",
+                "value": "number"
+              },
+              {
+                "display": "替换手机号",
+                "value": "mobile_phone"
+              },
+              {
+                "display": "替换email",
+                "value": "email"
+              },
+              {
+                "display": "替换身份证",
+                "value": "id_card"
+              },
+              {
+                "display": "自定义正则替换",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "replace_text",
+          "label": "被替换内容",
+          "tips": "请输入要被替换的内容",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "just_get_first",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "例如在文本中找到了两个手机号,你可以只替换第一个",
+          "type": "bool",
+          "editor": {
+            "label": "只替换第一个匹配项",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "ignore_case",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "在字符串匹配时,是否忽略大小写",
+          "type": "bool",
+          "editor": {
+            "label": "忽略大小写",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "dest_text",
+          "label": "替换为",
+          "required": false,
+          "tips": "请输入替换后的值",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "replace_content",
+          "label": "保存结果至",
+          "variableLabel": "替换后的文本",
+          "tips": "输入一个变量名字,用来保存替换后的内容",
+          "type": "str",
+          "name": "replace_content"
+        }
+      ]
+    }
+  ]
+}

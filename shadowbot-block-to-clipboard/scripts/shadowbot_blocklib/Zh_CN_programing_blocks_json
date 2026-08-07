@@ -1,0 +1,539 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "programing.log",
+      "title": "打印日志",
+      "description": "将变量或者文本打印输出，输出内容可在【运行日志】区查看",
+      "comment": "打印日志（%type%）：%text%",
+      "keywords": "print",
+      "icon": "Programing_Log",
+      "function": "xbot_visual.programing.log",
+      "helpUrl": "language/zh-cn/指令文档/其他/打印日志.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.LogHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "type",
+          "label": "日志类型",
+          "required": true,
+          "tips": null,
+          "type": "str",
+          "default": "10:info",
+          "defaultDisplay": "信息",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "调试",
+                "value": "debug"
+              },
+              {
+                "display": "信息",
+                "value": "info"
+              },
+              {
+                "display": "警告",
+                "value": "warning"
+              },
+              {
+                "display": "错误",
+                "value": "error"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "日志内容",
+          "required": true,
+          "tips": null,
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.undefined",
+      "function": "xbot_visual.programing.undefined",
+      "icon": "Programing_Undefined",
+      "canDebug": false,
+      "description": "指令在应用中未找到，可尝试升级客户端或联系作者解决",
+      "comment": "%message% 指令在指令库中未找到",
+      "title": "未找到指令",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.BlockUndefinedControl, ShadowBot.Shell.Development",
+      "helpUrl": "",
+      "sourceBlock": "",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.UndefinedHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "message",
+          "label": "名称",
+          "required": false,
+          "tips": "未找到的自定义指令的名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "sourceBlock",
+          "label": "元数据",
+          "required": false,
+          "tips": "原指令的元数据，请勿修改",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.exportlog",
+      "title": "导出日志",
+      "description": "将日志导出到文件",
+      "comment": "导出日志至 %custom_folder_path%\\%file_name%",
+      "icon": "Programing_Exportlog",
+      "function": "xbot_visual.programing.exportlog",
+      "helpUrl": "language/zh-cn/指令文档/其他/导出日志.html",
+      "inputs": [
+        {
+          "name": "custom_folder_path",
+          "label": "文件夹路径",
+          "required": true,
+          "tips": "指定文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "file_name",
+          "label": "文件名称",
+          "required": true,
+          "default": "10:日志文件.txt",
+          "tips": "指定文件名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_path",
+          "label": "文件路径",
+          "variableLabel": "导出的文件路径",
+          "tips": "指定一个变量名称, 该变量用于保存导出文件的位置",
+          "type": "str",
+          "name": "file_path"
+        }
+      ]
+    },
+    {
+      "name": "programing.sleep",
+      "title": "等待",
+      "description": "让流程等待一段时间",
+      "comment": "等待%seconds%秒后继续运行",
+      "icon": "Programing_Sleep",
+      "function": "xbot_visual.programing.sleep",
+      "helpUrl": "language/zh-cn/指令文档/等待/等待说明.html",
+      "keywords": "延迟;延时",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.ProgramingSleep",
+      "video": {
+        "time": "05:09"
+      },
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.ProgramingSleepHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "random_number",
+          "label": " ",
+          "required": true,
+          "default": "13:False",
+          "tips": "等待时长是随机数",
+          "type": "bool",
+          "editor": {
+            "label": "等待时长随机",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "seconds",
+          "label": "时长（秒）",
+          "tips": null,
+          "type": "float",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "start_number",
+          "label": "最小时长（秒）",
+          "required": true,
+          "tips": "随机数从开始数字到结束数字这一段区间中产生,包括开始数字和结束数字",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "stop_number",
+          "label": "最大时长（秒）",
+          "required": true,
+          "tips": "随机数从开始数字到结束数字这一段区间中产生,包括开始数字和结束数字",
+          "type": "int",
+          "default": "10:5",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.variable",
+      "title": "设置变量",
+      "statement": "programing.variable",
+      "description": "创建一个新的变量并给它赋值，或对已经存在的变量重新赋值",
+      "comment": "设置%value_type%变量%variable%=%value%",
+      "icon": "Programing_Variable",
+      "function": "xbot_visual.programing.variable",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.SetVariableControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/设置变量.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.SetVariableHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "value_type",
+          "label": "变量类型",
+          "tips": "选择要执行的流程名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "value",
+          "label": "变量值",
+          "required": false,
+          "tips": "指定变量中保存的值",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "variable",
+          "label": "变量名",
+          "variableLabel": "变量",
+          "type": "str",
+          "tips": "输入一个名称作为变量名,将变量值保存至此变量中",
+          "name": "variable"
+        }
+      ]
+    },
+    {
+      "name": "programing.random_int",
+      "icon": "Programing_Random_Int",
+      "description": "产生随机数",
+      "comment": "在最小数%start_number%与最大数%stop_number%之间产生随机数，将随机数保存到%random_number%",
+      "title": "产生随机数",
+      "function": "xbot_visual.programing.random_int",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/产生随机数.html",
+      "inputs": [
+        {
+          "name": "start_number",
+          "label": "最小数",
+          "required": true,
+          "tips": "随机数从开始数字到结束数字这一段区间中产生,包括开始数字和结束数字",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "stop_number",
+          "label": "最大数",
+          "required": true,
+          "tips": "随机数从开始数字到结束数字这一段区间中产生,包括开始数字和结束数字",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "random_number",
+          "label": "随机数保存至",
+          "variableLabel": "随机数",
+          "tips": "输入一个名字,用来保存产生的随机数",
+          "type": "int",
+          "name": "random_number"
+        }
+      ]
+    },
+    {
+      "name": "programing.snippet",
+      "title": "插入代码段(Python)",
+      "statement": "programing.snippet",
+      "description": "插入代码段(Python)",
+      "comment": "执行Python语句：%snippet%",
+      "icon": "Programing_Snippet",
+      "helpUrl": "language/zh-cn/指令文档/其他/插入代码段（python）.html",
+      "inputs": [
+        {
+          "name": "snippet",
+          "label": "代码",
+          "required": true,
+          "tips": null,
+          "type": "str",
+          "editor": {
+            "kind": "code",
+            "language": "python"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.comment",
+      "statement": "programing.comment",
+      "title": "添加备注说明",
+      "keywords": "注释",
+      "description": "在流程中插入一条文字说明",
+      "icon": "Programing_Comment",
+      "comment": "%content%",
+      "isCommentBlock": true,
+      "isPseudo": true,
+      "helpUrl": "language/zh-cn/指令文档/其他/添加备注说明.html",
+      "inputs": [
+        {
+          "name": "content",
+          "label": "备注说明",
+          "required": true,
+          "tips": null,
+          "type": "str",
+          "editor": {
+            "kind": "PlainText"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.region",
+      "statement": "programing.region",
+      "title": "折叠开始",
+      "description": "折叠一组指令，使之更易于阅读，折叠从此处开始",
+      "comment": "说明：%content%",
+      "icon": "Programing_Region",
+      "indent": "1",
+      "scope": "0",
+      "isPseudo": true,
+      "helpUrl": "language/zh-cn/指令文档/其他/折叠.html",
+      "inputs": [
+        {
+          "name": "content",
+          "label": "折叠区域名称",
+          "required": true,
+          "tips": null,
+          "type": "str",
+          "editor": {
+            "kind": "PlainText"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.endregion",
+      "statement": "programing.endregion",
+      "title": "折叠结束",
+      "description": "结束一段指令折叠",
+      "icon": "Programing_Endregion",
+      "indent": "2",
+      "scope": "0",
+      "isPseudo": true
+    },
+    {
+      "name": "programing.try",
+      "statement": "programing.try",
+      "canDebug": false,
+      "icon": "Programing_Try",
+      "indent": "1",
+      "scope": "1",
+      "comment": "尝试执行",
+      "keywords": "异常",
+      "description": "尝试执行开始标记",
+      "title": "Try",
+      "helpUrl": "language/zh-cn/指令文档/其他/异常处理/try.html"
+    },
+    {
+      "name": "programing.catch",
+      "statement": "programing.catch",
+      "icon": "Programing_Catch",
+      "indent": "3",
+      "scope": "3",
+      "canDebug": false,
+      "description": "尝试失败时执行",
+      "comment": "尝试失败时执行, 将错误信息保存到%exception%",
+      "title": "Catch",
+      "keywords": "异常",
+      "helpUrl": "language/zh-cn/指令文档/其他/异常处理/catch.html",
+      "outputs": [
+        {
+          "id": "exception",
+          "label": "错误信息",
+          "variableLabel": "错误信息",
+          "type": "str",
+          "tips": "输入一个名称作为保存错误信息的变量,当指令执行出错的时候错误信息将会保存至此变量中",
+          "name": "exception"
+        }
+      ]
+    },
+    {
+      "name": "programing.finally",
+      "statement": "programing.finally",
+      "icon": "Programing_Finally",
+      "indent": "3",
+      "scope": "3",
+      "canDebug": false,
+      "description": "无论尝试是否成功始终执行",
+      "comment": "无论尝试是否成功始终执行以下操作",
+      "title": "Finally",
+      "keywords": "异常",
+      "helpUrl": "language/zh-cn/指令文档/其他/异常处理/finally.html"
+    },
+    {
+      "name": "programing.endtry",
+      "statement": "programing.endtry",
+      "icon": "Programing_Endtry",
+      "indent": "2",
+      "scope": "2",
+      "isPseudo": true,
+      "description": "尝试执行结束标记",
+      "comment": "结束尝试执行",
+      "title": "End Try",
+      "keywords": "异常",
+      "helpUrl": "language/zh-cn/指令文档/其他/异常处理/endtry.html"
+    },
+    {
+      "name": "programing.raise",
+      "statement": "programing.raise",
+      "icon": "Programing_Raise",
+      "description": "抛出异常",
+      "comment": "抛出异常：%reason%",
+      "title": "Raise",
+      "keywords": "异常",
+      "helpUrl": "language/zh-cn/指令文档/其他/异常处理/raise.html",
+      "inputs": [
+        {
+          "name": "reason",
+          "label": "异常原因",
+          "required": true,
+          "tips": "异常产生的原因",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.onDelayRunSwitch",
+      "title": "开始批量等待",
+      "description": "一次为多个鼠标操作指令添加等待时间",
+      "comment": "从此处开始，每条鼠标操作指令运行后等待%seconds%秒",
+      "icon": "Programing_OnDelayRunSwitch",
+      "indent": "1",
+      "scope": "1",
+      "function": "xbot_visual.programing.on_delay_run_switch",
+      "helpUrl": "doc/指令文档/03等待/开始批量等待.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.OnDelayRunSwitchControl",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.OnDelayRunSwitchHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "random_number",
+          "label": " ",
+          "required": true,
+          "default": "13:True",
+          "tips": "每条指令结束后，根据最小、最大等待时长生成随机等待时长",
+          "type": "bool",
+          "editor": {
+            "label": "等待时长随机",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "seconds",
+          "label": "时长（秒）",
+          "required": false,
+          "tips": "每条指令结束后，等待的固定时长",
+          "type": "float",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "min_number",
+          "label": "最小时长（秒）",
+          "required": false,
+          "tips": "指定最小等待时间",
+          "type": "int",
+          "default": "10:1",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "max_number",
+          "label": "最大时长（秒）",
+          "required": false,
+          "tips": "指定最大等待时间",
+          "type": "int",
+          "default": "10:3",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "keywords": "延迟;延时"
+    },
+    {
+      "name": "programing.offDelayRunSwitch",
+      "function": "xbot_visual.programing.off_delay_run_switch",
+      "icon": "Programing_OffDelayRunSwitch",
+      "indent": "2",
+      "scope": "2",
+      "description": "结束批量等待",
+      "comment": "结束批量等待",
+      "title": "结束批量等待",
+      "helpUrl": "doc/指令文档/03等待/结束批量等待.html"
+    }
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "types": [
+    {
+      "name": "xbot._mobile.session.DeviceSession",
+      "localName": "手机连接对象",
+      "methods": [
+        {
+          "display": "udid",
+          "function": "$0.get_udid()",
+          "type": "str"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "mobile.connect_device",
+      "title": "连接手机",
+      "icon": "Mobile_Connect_Device",
+      "comment": "连接指定的手机，将连接对象保存到%session%",
+      "description": "与指定或者所有手机建立连接",
+      "function": "xbot_visual.mobile.connect_device",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ConnectDeviceControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.ConnectDeviceHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/连接手机.html",
+      "inputs": [
+        {
+          "name": "connect_source",
+          "label": "连接对象",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "default": "10:specific",
+          "defaultDisplay": "指定手机",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "指定手机",
+                "value": "specific"
+              },
+              {
+                "display": "运行时手动选择",
+                "value": "runtime_dynamic"
+              },
+              {
+                "display": "运行时连接的一台手机",
+                "value": "runtime_auto"
+              },
+              {
+                "display": "运行时连接的所有手机",
+                "value": "all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "connect_mode",
+          "label": "连接模式",
+          "required": true,
+          "tips": "Appium：某些应用的输入框会无法输入（如“闲鱼”），需借助 AdbKeyBoard 输入法实现\r\nUiautomator2：稳定性高，但不支持安卓9及以上版本读写剪贴板，需借助 Clipper 剪贴板 APP 实现",
+          "type": "str",
+          "default": "10:appium",
+          "defaultDisplay": "Appium",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "Appium",
+                "value": "appium"
+              },
+              {
+                "display": "Uiautomator2",
+                "value": "u2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ingore_failed_device",
+          "label": "",
+          "tips": "若勾选，连接失败的手机将添加到连接失败列表中，反之则抛出异常",
+          "type": "str",
+          "default": "13:True",
+          "editor": {
+            "kind": "checkbox",
+            "label": "忽略连接失败的手机"
+          }
+        },
+        {
+          "name": "command_timeout_secs",
+          "label": "指令超时设置(s)",
+          "category": "advanced",
+          "type": "int",
+          "default": "10:60",
+          "tips": "设置手机连接及指令执行的最大等待时间，超时将中断操作",
+          "editor": {
+            "kind": "spin"
+          }
+        },
+        {
+          "name": "auto_unlock",
+          "label": "",
+          "category": "advanced",
+          "type": "bool",
+          "tips": "若勾选，连接时会自动解锁",
+          "default": "13:False",
+          "editor": {
+            "label": "连接时自动解锁",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "unlockType",
+          "label": "锁屏方式",
+          "category": "advanced",
+          "type": "str",
+          "tips": "锁屏方式",
+          "default": "10:pin",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数字密码",
+                "value": "pin"
+              },
+              {
+                "display": "图案密码",
+                "value": "pattern"
+              },
+              {
+                "display": "复杂密码",
+                "value": "password"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mobile_password",
+          "label": "",
+          "category": "advanced",
+          "type": "str",
+          "tips": "手机锁屏密码",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "custom_name",
+          "label": "自定义手机名称",
+          "tips": "请先到设备管理器页面配置手机连接信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "session",
+          "label": "保存连接对象至",
+          "variableLabel": "手机连接对象",
+          "tips": "该变量保存的是手机连接对象,使用此对象可以对移动手机进行自动化操作",
+          "name": "device_session",
+          "type": "xbot._mobile.session.DeviceSession"
+        },
+        {
+          "id": "session_list",
+          "label": "保存连接对象列表至",
+          "variableLabel": "手机连接对象列表",
+          "tips": "该变量保存的是手机连接对象,使用此对象可以对移动手机进行自动化操作",
+          "name": "device_session_list",
+          "type": "list<xbot._mobile.session.DeviceSession>"
+        },
+        {
+          "id": "failed_sessions",
+          "label": "保存连接失败列表至",
+          "variableLabel": "手机udid",
+          "tips": "该变量保存的是连接失败手机编号",
+          "name": "failed_udid_list",
+          "type": "list<str>"
+        }
+      ]
+    },
+    {
+      "name": "mobile.connect",
+      "title": "连接手机",
+      "icon": "Mobile_Connect",
+      "comment": "连接指定的手机，将连接对象保存到%session%",
+      "description": "与指定手机建立连接",
+      "function": "xbot_visual.mobile.connect",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ConnectControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.ConnectHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/连接手机.html",
+      "inputs": [
+        {
+          "name": "connect_source",
+          "label": "连接来源",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "default": "10:current",
+          "defaultDisplay": "当前连接的手机",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "当前连接的手机",
+                "value": "current"
+              },
+              {
+                "display": "指定的手机",
+                "value": "assign"
+              }
+            ]
+          }
+        },
+        {
+          "name": "connect_kind",
+          "label": "连接类型",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "default": "10:local",
+          "defaultDisplay": "本地连接",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "本地连接",
+                "value": "local"
+              },
+              {
+                "display": "动态连接",
+                "value": "dynamic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "connect_mode",
+          "label": "连接模式",
+          "required": true,
+          "tips": "Appium：某些应用的输入框会无法输入（如“闲鱼”），需借助 AdbKeyBoard 输入法实现\r\nUiautomator2：稳定性高，但不支持安卓9及以上版本读写剪贴板，需借助 Clipper 剪贴板 APP 实现",
+          "type": "str",
+          "default": "10:appium",
+          "defaultDisplay": "Appium",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "Appium",
+                "value": "appium"
+              },
+              {
+                "display": "Uiautomator2",
+                "value": "u2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "command_timeout_secs",
+          "label": "指令超时设置(s)",
+          "category": "advanced",
+          "type": "int",
+          "default": "10:60",
+          "tips": "设置手机连接及指令执行的最大等待时间，超时将中断操作",
+          "editor": {
+            "kind": "spin"
+          }
+        },
+        {
+          "name": "auto_unlock",
+          "label": "",
+          "category": "advanced",
+          "type": "bool",
+          "tips": "若勾选，连接时会自动解锁",
+          "default": "13:False",
+          "editor": {
+            "label": "连接时自动解锁",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "unlockType",
+          "label": "锁屏方式",
+          "category": "advanced",
+          "type": "str",
+          "tips": "锁屏方式",
+          "default": "10:pin",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数字密码",
+                "value": "pin"
+              },
+              {
+                "display": "图案密码",
+                "value": "pattern"
+              },
+              {
+                "display": "复杂密码",
+                "value": "password"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mobile_password",
+          "label": "",
+          "category": "advanced",
+          "type": "str",
+          "tips": "手机锁屏密码",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "custom_name",
+          "label": "自定义手机名称",
+          "tips": "请先到设备管理器页面配置手机连接信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "session",
+          "label": "保存连接对象至",
+          "variableLabel": "手机连接对象",
+          "tips": "该变量保存的是手机连接对象,使用此对象可以对移动手机进行自动化操作",
+          "name": "device_session",
+          "type": "xbot._mobile.session.DeviceSession"
+        }
+      ]
+    },
+    {
+      "name": "mobile.all_connect",
+      "title": "连接多台手机",
+      "icon": "Mobile_All_Connect",
+      "comment": "与PC机连接的所有手机建立自动化连接，将连接对象保存到%sessions%",
+      "description": "与PC机连接的所有手机建立自动化连接，用于群控场景",
+      "function": "xbot_visual.mobile.all_connect",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.MultiConnectHandler"
+        }
+      ],
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.MultiConnectControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/连接多台手机.html?",
+      "inputs": [
+        {
+          "name": "connect_mode",
+          "label": "连接模式",
+          "required": true,
+          "tips": "Appium：某些应用的输入框会无法输入（如“闲鱼”），需借助 AdbKeyBoard 输入法实现\r\nUiautomator2：稳定性高，但不支持安卓9及以上版本读写剪贴板，需借助 Clipper 剪贴板 APP 实现",
+          "type": "str",
+          "default": "10:appium",
+          "defaultDisplay": "Appium",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "Appium",
+                "value": "appium"
+              },
+              {
+                "display": "Uiautomator2",
+                "value": "u2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ingore_failed_device",
+          "label": "",
+          "tips": "若勾选，连接失败的手机将添加到连接失败列表中，反之则抛出异常",
+          "type": "str",
+          "default": "13:True",
+          "editor": {
+            "kind": "checkbox",
+            "label": "忽略连接失败的手机"
+          }
+        },
+        {
+          "name": "unlockType",
+          "label": "锁屏方式",
+          "category": "advanced",
+          "type": "str",
+          "tips": "锁屏方式",
+          "default": "10:pin",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数字密码",
+                "value": "pin"
+              },
+              {
+                "display": "图案密码",
+                "value": "pattern"
+              },
+              {
+                "display": "复杂密码",
+                "value": "password"
+              }
+            ]
+          }
+        },
+        {
+          "name": "auto_unlock",
+          "label": "",
+          "category": "advanced",
+          "type": "bool",
+          "tips": "若勾选， 连接时会自动解锁",
+          "default": "13:False",
+          "editor": {
+            "label": "连接时自动解锁",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "mobile_password",
+          "label": "",
+          "category": "advanced",
+          "type": "str",
+          "tips": "手机锁屏密码",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "sessions",
+          "label": "保存连接对象列表至",
+          "variableLabel": "手机连接对象列表",
+          "tips": "该变量保存的是手机连接对象,使用此对象可以对移动手机进行自动化操作",
+          "name": "device_session_list",
+          "type": "list<xbot._mobile.session.DeviceSession>"
+        },
+        {
+          "id": "failed_sessions",
+          "label": "保存连接失败列表至",
+          "variableLabel": "手机udid",
+          "tips": "该变量保存的是连接失败手机编号",
+          "name": "failed_udid_list",
+          "type": "list<str>"
+        }
+      ]
+    }
+  ]
+}

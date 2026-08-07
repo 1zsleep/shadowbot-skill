@@ -1,0 +1,2311 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual.web_service.HttpResponse",
+      "localName": "HTTP请求结果",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "status_code",
+          "type": "int",
+          "label": "HTTP状态码"
+        },
+        {
+          "name": "headers",
+          "type": "dict",
+          "label": "HTTP响应头"
+        },
+        {
+          "name": "body",
+          "type": "str",
+          "label": "HTTP响应体"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_web_service_rest_response",
+      "localName": "HTTP请求结果",
+      "pythonName": "xbot_visual._core.xbot_visual_web_service_rest_response",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "status_code",
+          "type": "int",
+          "label": "状态码"
+        },
+        {
+          "name": "content_type",
+          "type": "str",
+          "label": "内容类型"
+        },
+        {
+          "name": "content_encoding",
+          "type": "str",
+          "label": "内容编码"
+        },
+        {
+          "name": "content",
+          "type": "str",
+          "label": "响应内容"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "web_service.http_request",
+      "icon": "Web_Service_Http_Request",
+      "description": "Http 请求",
+      "comment": "使用%method%方法请求%url%网页，将请求结果保存到%http_response%",
+      "title": "Http 请求",
+      "function": "xbot_visual.web_service.http_request",
+      "helpUrl": "language/zh-cn/指令文档/其他/http/http请求.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.HttpRequest, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.HttpRequestHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url",
+          "label": "网址",
+          "required": true,
+          "tips": "输入目标网址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "method",
+          "label": "方法",
+          "required": true,
+          "default": "10:GET",
+          "defaultDisplay": "GET",
+          "tips": "选择目标网页的操作方法",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "GET",
+                "value": "GET"
+              },
+              {
+                "display": "POST",
+                "value": "POST"
+              },
+              {
+                "display": "CONNECT",
+                "value": "CONNECT"
+              },
+              {
+                "display": "HEAD",
+                "value": "HEAD"
+              },
+              {
+                "display": "PUT",
+                "value": "PUT"
+              },
+              {
+                "display": "DELETE",
+                "value": "DELETE"
+              },
+              {
+                "display": "OPTIONS",
+                "value": "OPTIONS"
+              },
+              {
+                "display": "TRACE",
+                "value": "TRACE"
+              },
+              {
+                "display": "PATCH",
+                "value": "PATCH"
+              }
+            ]
+          }
+        },
+        {
+          "name": "accept",
+          "label": "Accept",
+          "required": true,
+          "default": "10:text/html",
+          "defaultDisplay": "text/html",
+          "tips": "设置HTTP协议头的Accept字段值",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "content_type",
+          "label": "Content Type",
+          "required": true,
+          "default": "10:text/html",
+          "defaultDisplay": "text/html",
+          "tips": "设置HTTP协议头的Content-Type字段值",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "custom_headers",
+          "label": "自定义协议头",
+          "required": false,
+          "tips": "自定义协议头，多行，每行格式为“协议头名称:协议头内容”",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "request_body",
+          "label": "自定义协议体",
+          "required": false,
+          "tips": "自定义协议体，填写待发送到服务器的内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "return_data_save_way",
+          "label": "返回数据保存方式",
+          "required": true,
+          "default": "10:save_to_variable",
+          "defaultDisplay": "保存到变量（网页）",
+          "tips": "选择返回数据保存方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "保存到变量（网页）",
+                "value": "save_to_variable"
+              },
+              {
+                "display": "保存到硬盘（文件）",
+                "value": "save_to_disk"
+              }
+            ]
+          }
+        },
+        {
+          "name": "file_save_way",
+          "label": "文件保存方式",
+          "required": false,
+          "default": "10:specify_folder",
+          "defaultDisplay": "指定保存目录（保留原始文件名）",
+          "tips": "选择返回数据保存方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "指定保存目录（保留原始文件名）",
+                "value": "specify_folder"
+              },
+              {
+                "display": "指定全路径（保存目录+文件名）",
+                "value": "specify_full_path"
+              }
+            ]
+          }
+        },
+        {
+          "name": "folder_save_path",
+          "label": "保存到目录",
+          "required": false,
+          "tips": "输入保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "file_save_path",
+          "label": "保存到文件",
+          "required": false,
+          "tips": "输入保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile"
+            }
+          }
+        },
+        {
+          "name": "connect_timeout_seconds",
+          "label": "连接超时秒数",
+          "required": true,
+          "default": "10:30",
+          "category": "advanced",
+          "tips": "输入连接超时秒数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "follow_redirection",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "是否支持网页重定向",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "重定向",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "fail_on_error_status",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "是否失败时抛出异常",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "失败时抛出异常",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "encode_request_body",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "是否编码协议体",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "编码协议体",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "user_agent",
+          "label": "User Agent",
+          "required": true,
+          "category": "advanced",
+          "default": "10:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3",
+          "defaultDisplay": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3",
+          "tips": "设置HTTP协议头的User Agent字段值",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.21) Gecko/20100312 Firefox/3.6",
+                "value": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.21) Gecko/20100312 Firefox/3.6"
+              },
+              {
+                "display": "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)",
+                "value": "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)"
+              },
+              {
+                "display": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3",
+                "value": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3"
+              },
+              {
+                "display": "Mozilla/5.0 (Windows; U; Windows NT 5.1; cs-CZ) AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7",
+                "value": "Mozilla/5.0 (Windows; U; Windows NT 5.1; cs-CZ) AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7"
+              }
+            ]
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "返回数据编码格式",
+          "required": true,
+          "category": "advanced",
+          "default": "10:utf-8",
+          "defaultDisplay": "utf-8",
+          "tips": "设置HTTP协议头的User Agent字段值",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动检测",
+                "value": "Auto-detect"
+              },
+              {
+                "display": "utf-8",
+                "value": "utf-8"
+              },
+              {
+                "display": "gb2312",
+                "value": "gb2312"
+              },
+              {
+                "display": "big5",
+                "value": "big5"
+              }
+            ]
+          }
+        },
+        {
+          "name": "http_authentication",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "tips": "HTTP 验证",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "HTTP 验证",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "user_name",
+          "label": "用户名",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入用户名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "http_response",
+          "label": "保存响应文件头到",
+          "tips": "指定一个变量名称，该变量用于存储响应协议头",
+          "name": "http_response",
+          "type": "xbot_visual.web_service.HttpResponse"
+        }
+      ]
+    },
+    {
+      "name": "web_service.http_download",
+      "icon": "Web_Service_Http_Download",
+      "description": "Http 下载",
+      "comment": "使用%method%方法向%url%网址发起下载请求，将结果保存到%file_instance%",
+      "title": "Http 下载",
+      "function": "xbot_visual.web_service.http_download",
+      "helpUrl": "language/zh-cn/指令文档/其他/http/http下载.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.HttpDownload, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.HttpDownloadHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url",
+          "label": "网址",
+          "required": true,
+          "tips": "输入目标网址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "method",
+          "label": "方法",
+          "required": true,
+          "default": "10:GET",
+          "defaultDisplay": "GET",
+          "tips": "选择目标网页的操作方法",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "GET",
+                "value": "GET"
+              },
+              {
+                "display": "POST",
+                "value": "POST"
+              }
+            ]
+          }
+        },
+        {
+          "name": "post_parameters",
+          "label": "Post 参数",
+          "required": false,
+          "tips": "Post 参数",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "return_data_save_way",
+          "label": "返回数据保存方式",
+          "required": true,
+          "default": "10:save_to_variable",
+          "defaultDisplay": "保存到变量（网页）",
+          "tips": "选择返回数据保存方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "保存到变量（网页）",
+                "value": "save_to_variable"
+              },
+              {
+                "display": "保存到硬盘（文件）",
+                "value": "save_to_disk"
+              }
+            ]
+          }
+        },
+        {
+          "name": "file_save_way",
+          "label": "文件保存方式",
+          "required": false,
+          "default": "10:specify_folder",
+          "defaultDisplay": "指定保存目录（保留原始文件名）",
+          "tips": "选择返回数据保存方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "指定保存目录（保留原始文件名）",
+                "value": "specify_folder"
+              },
+              {
+                "display": "指定全路径（保存目录+文件名）",
+                "value": "specify_full_path"
+              }
+            ]
+          }
+        },
+        {
+          "name": "folder_save_path",
+          "label": "保存到目录",
+          "required": false,
+          "tips": "输入保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "file_save_path",
+          "label": "文件保存路径",
+          "required": false,
+          "tips": "输入保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile"
+            }
+          }
+        },
+        {
+          "name": "connect_timeout_seconds",
+          "label": "连接超时秒数",
+          "required": true,
+          "default": "10:30",
+          "category": "advanced",
+          "tips": "输入连接超时秒数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "follow_redirection",
+          "label": "",
+          "required": true,
+          "category": "advanced",
+          "tips": "是否支持网页重定向",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "重定向",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "user_agent",
+          "label": "User Agent",
+          "required": true,
+          "category": "advanced",
+          "default": "10:Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3",
+          "defaultDisplay": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3",
+          "tips": "设置HTTP协议头的User Agent字段值",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.21) Gecko/20100312 Firefox/3.6",
+                "value": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.21) Gecko/20100312 Firefox/3.6"
+              },
+              {
+                "display": "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)",
+                "value": "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)"
+              },
+              {
+                "display": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3",
+                "value": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.355.0 Safari/533.3"
+              },
+              {
+                "display": "Mozilla/5.0 (Windows; U; Windows NT 5.1; cs-CZ) AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7",
+                "value": "Mozilla/5.0 (Windows; U; Windows NT 5.1; cs-CZ) AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7"
+              }
+            ]
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "返回数据编码格式",
+          "required": true,
+          "category": "advanced",
+          "default": "10:utf-8",
+          "defaultDisplay": "utf-8",
+          "tips": "设置HTTP协议头的User Agent字段值",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "自动检测",
+                "value": "Auto-detect"
+              },
+              {
+                "display": "utf-8",
+                "value": "utf-8"
+              },
+              {
+                "display": "gb2312",
+                "value": "gb2312"
+              },
+              {
+                "display": "big5",
+                "value": "big5"
+              }
+            ]
+          }
+        },
+        {
+          "name": "http_authentication",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "tips": "HTTP 验证",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "HTTP 验证",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "user_name",
+          "label": "用户名",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入用户名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_instance",
+          "label": "保存下载的文件到",
+          "tips": "指定一个变量名称，该变量用于存储下载的文件内容",
+          "name": "file_instance",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web_service.send_dingtalk_msg",
+      "icon": "Web_Service_Send_Dingtalk_Msg",
+      "description": "发送内容至钉钉群",
+      "comment": "发送内容至钉钉群",
+      "title": "钉钉群通知",
+      "function": "xbot_visual.web_service.send_dingtalk_msg",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.SendDingTalkMsgControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/其他/企业群通知/钉钉群通知.html",
+      "inputs": [
+        {
+          "name": "webhook",
+          "label": "机器人地址",
+          "required": true,
+          "tips": "机器人的网络地址, 即webhook, 需要自行申请",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "secret",
+          "label": "密钥",
+          "required": true,
+          "tips": "机器人安全设置页面，加签一栏下面显示的SEC开头的字符串",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "msgtype",
+          "label": "消息格式类型",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "文本类型",
+          "tips": "消息类型及数据格式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本类型",
+                "value": "text"
+              },
+              {
+                "display": "markdown类型",
+                "value": "markdown"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text_content",
+          "label": "文本内容",
+          "tips": "文本内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "markdown_text",
+          "label": "markdown内容",
+          "tips": "markdown格式的消息",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "markdown_text_title",
+          "label": "消息内容标题",
+          "tips": "markdown格式的消息标题",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "at_mobiles",
+          "label": "@某人",
+          "tips": "填写需@成员所绑定的手机号码。多个成员时需切换为 Python 模式后输入号码列表，如['手机号1','手机号2']",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "135xxxxxxxx"
+          }
+        },
+        {
+          "name": "is_at_all",
+          "tips": "@所有人",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "kind": "checkbox",
+            "label": "@所有人"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web_service.send_wxwork_msg",
+      "icon": "Web_Service_Send_Wxwork_Msg",
+      "description": "发送内容至企业微信群",
+      "keywords": "企微",
+      "comment": "发送内容至企业微信群",
+      "title": "企业微信群通知",
+      "function": "xbot_visual.web_service.send_wxwork_msg",
+      "helpUrl": "language/zh-cn/指令文档/其他/企业群通知/企业微信群通知.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.SendWXWorkMsgControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "webhook",
+          "label": "机器人地址",
+          "required": true,
+          "tips": "机器人的网络地址, 即webhook, 需要自行申请",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "msgtype",
+          "label": "消息格式类型",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "文本类型",
+          "tips": "消息类型及数据格式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本类型",
+                "value": "text"
+              },
+              {
+                "display": "markdown类型",
+                "value": "markdown"
+              },
+              {
+                "display": "文件类型",
+                "value": "file"
+              },
+              {
+                "display": "图片类型",
+                "value": "image"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text_content",
+          "label": "文本内容",
+          "tips": "文本内容，最长不超过2048个字节",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "markdown_content",
+          "label": "markdown内容",
+          "tips": "markdown内容，最长不超过4096个字节",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "file_path",
+          "label": "文件路径",
+          "tips": "要求文件大小在5B~20M之间",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件(*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "image_file_path",
+          "label": "图片路径",
+          "tips": "最大不能超过2M，支持JPG,PNG格式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.png)|*.jpg;*.png"
+            }
+          }
+        },
+        {
+          "name": "at_mobiles",
+          "label": "@某人",
+          "tips": "填写需@成员所绑定的手机号码。多个成员时需切换为 Python 模式后输入号码列表，如['手机号1','手机号2']",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "135xxxxxxxx"
+          }
+        },
+        {
+          "name": "is_at_all",
+          "tips": "@所有人",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "kind": "checkbox",
+            "label": "@所有人"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web_service.send_feishu_msg",
+      "icon": "Web_Service_Send_Feishu_Msg",
+      "description": "发送内容至飞书群",
+      "comment": "发送内容至飞书群",
+      "title": "飞书群通知",
+      "function": "xbot_visual.web_service.send_feishu_msg",
+      "helpUrl": "language/zh-cn/指令文档/其他/企业群通知/飞书群通知.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.SendFeiShuMsgControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.SendFeiShuMsgHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "webhook",
+          "label": "机器人地址",
+          "required": true,
+          "tips": "机器人的网络地址, 即webhook, 需要自行申请",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "secret",
+          "label": "签名校验",
+          "tips": "机器人安全设置中的签名校验，如果没设置签名校验，则不需要输入",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "msgtype",
+          "label": "消息格式类型",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "文本类型",
+          "tips": "消息类型及数据格式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本类型",
+                "value": "text"
+              },
+              {
+                "display": "图片类型",
+                "value": "image"
+              },
+              {
+                "display": "富文本类型",
+                "value": "post"
+              },
+              {
+                "display": "消息卡片类型",
+                "value": "interactive"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text_content",
+          "label": "文本内容",
+          "tips": "文本内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "app_id",
+          "label": "app_id",
+          "tips": "用于获取tenant_access_token，请在使用文档中查看如何获取，在富文本消息和消息卡片中，如果不包含图片或者不需要通过电话或邮箱@用户，则不需要输入",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "app_secret",
+          "label": "app_secret",
+          "tips": "用于获取tenant_access_token，请在使用说明中查看如何获取，在发送富文本消息和消息卡片中，如果不包含图片或者不需要通过电话或邮箱@用户，则不需要输入",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_file_path",
+          "label": "图片路径",
+          "tips": "最大不能超过10M，支持JPG,PNG格式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "图片(*.jpg;*.png)|*.jpg;*.png"
+            }
+          }
+        },
+        {
+          "name": "post_content",
+          "label": "富文本内容",
+          "tips": "富文本内容，格式内容请查看使用说明文档",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "interactive_content",
+          "label": "消息卡片内容",
+          "tips": "消息卡片内容，格式内容请查看使用说明文档",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "web_service.rest_request",
+      "icon": "Web_Service_Rest_Request",
+      "description": "Http 请求",
+      "comment": "使用%method%方法请求%url%，将结果保存到%http_response%",
+      "title": "Http 请求",
+      "function": "xbot_visual.web_service.rest_request",
+      "helpUrl": "language/zh-cn/指令文档/其他/http/http请求.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.RestRequest, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.RestRequestHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url",
+          "label": "URL",
+          "required": true,
+          "tips": "请输入请求地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "method",
+          "label": "方法",
+          "required": true,
+          "default": "10:GET",
+          "defaultDisplay": "GET",
+          "tips": "选择操作方法",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "GET",
+                "value": "GET"
+              },
+              {
+                "display": "POST",
+                "value": "POST"
+              },
+              {
+                "display": "CONNECT",
+                "value": "CONNECT"
+              },
+              {
+                "display": "HEAD",
+                "value": "HEAD"
+              },
+              {
+                "display": "PUT",
+                "value": "PUT"
+              },
+              {
+                "display": "DELETE",
+                "value": "DELETE"
+              },
+              {
+                "display": "OPTIONS",
+                "value": "OPTIONS"
+              },
+              {
+                "display": "TRACE",
+                "value": "TRACE"
+              },
+              {
+                "display": "PATCH",
+                "value": "PATCH"
+              }
+            ]
+          }
+        },
+        {
+          "name": "headers",
+          "label": "协议头",
+          "required": false,
+          "tips": "协议头，多行，每行格式为“协议头名称:协议头内容”",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "body",
+          "label": "协议体",
+          "required": false,
+          "tips": "协议体，填写待发送到服务器的内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "save_to_file",
+          "label": "响应结果保存到文件",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "将响应结果保存到文本中",
+          "type": "bool",
+          "editor": {
+            "label": "响应结果保存到文件",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "save_folder",
+          "label": "文件保存目录",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入要保存到文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "save_filename",
+          "label": "文件名称",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入要保存到的文件名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "connect_timeout_seconds",
+          "label": "连接超时秒数",
+          "required": true,
+          "default": "10:30",
+          "category": "advanced",
+          "tips": "输入连接超时秒数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "send_by_web",
+          "label": "通过网页发送Http请求",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "适用场景：请求需要认证信息才可以发送成功。请选择已完成认证的相应网页",
+          "type": "bool",
+          "editor": {
+            "label": "通过网页发送Http请求",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入一个通过\"获取已打开网页对象\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "http_response",
+          "label": "保存响应结果到",
+          "tips": "指定一个变量名称，该变量用于存储响应信息",
+          "name": "http_response",
+          "type": "xbot_visual_web_service_rest_response"
+        }
+      ]
+    },
+    {
+      "name": "web_service.download",
+      "icon": "Web_Service_Download",
+      "description": "Http 下载",
+      "comment": "向%url%发起下载请求，将下载文件保存到文件夹%save_folder%中，使用默认文件名，将下载文件名保存到%http_dowload_filename%",
+      "title": "Http 下载",
+      "function": "xbot_visual.web_service.download",
+      "helpUrl": "language/zh-cn/指令文档/其他/http/http下载.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.Download, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.DownloadHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "url",
+          "label": "下载地址",
+          "required": true,
+          "tips": "请输入下载地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_folder",
+          "label": "文件保存目录",
+          "required": false,
+          "tips": "输入要保存到文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "custom_filename",
+          "label": "指定文件名",
+          "required": false,
+          "default": "13:False",
+          "tips": "若不指定，用默认文件名。若没有默认文件名会抛异常",
+          "type": "bool",
+          "editor": {
+            "label": "指定文件名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "save_filename",
+          "label": "文件名称",
+          "required": false,
+          "tips": "输入要保存到的文件名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "wait_complete_timeout",
+          "label": "超时时间（秒）",
+          "required": true,
+          "default": "10:300",
+          "tips": "等待下载超时时间，单位（秒）",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "connect_timeout_seconds",
+          "label": "连接超时秒数",
+          "required": true,
+          "default": "10:30",
+          "category": "advanced",
+          "tips": "输入连接超时秒数",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "send_by_web",
+          "label": "通过网页发送Http请求",
+          "required": false,
+          "default": "13:False",
+          "category": "advanced",
+          "tips": "适用场景：请求需要认证信息才可以发送成功。请选择已完成认证的相应网页",
+          "type": "bool",
+          "editor": {
+            "label": "通过网页发送Http请求",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "browser",
+          "label": "网页对象",
+          "required": false,
+          "category": "advanced",
+          "tips": "输入一个通过\"获取已打开网页对象\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "http_dowload_filename",
+          "label": "保存下载文件名称到",
+          "tips": "指定一个变量名称，该变量用于存储保存下载文件名称（包括路径）",
+          "name": "http_download_filename",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web_service.captcha",
+      "icon": "Web_Service_Captcha",
+      "description": "基于图鉴网络科技提供的验证码识别服务",
+      "comment": "提取%image_source%中类型为%captcha_type%的验证码信息",
+      "title": "验证码识别",
+      "function": "xbot_visual.web_service.captcha",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.CaptchaControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/ocr/验证码识别.html",
+      "inputs": [
+        {
+          "name": "username",
+          "label": "用户名",
+          "required": true,
+          "tips": "需要在图鉴网络科技官网注册申请, 具体操作详见使用说明",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": true,
+          "tips": "需要在图鉴网络科技官网注册申请, 具体操作详见使用说明",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "captcha_type",
+          "label": "验证码类型",
+          "required": true,
+          "default": "10:3",
+          "defaultDisplay": "数英混合",
+          "tips": "请选择要识别的验证码类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数英混合",
+                "value": "3"
+              },
+              {
+                "display": "问答题",
+                "value": "66"
+              },
+              {
+                "display": "计算题",
+                "value": "11"
+              },
+              {
+                "display": "快速计算题",
+                "value": "1005"
+              },
+              {
+                "display": "单缺口滑块(返回X轴坐标)",
+                "value": "33"
+              },
+              {
+                "display": "缺口识别",
+                "value": "18"
+              },
+              {
+                "display": "点选1个坐标",
+                "value": "19"
+              },
+              {
+                "display": "点选3个坐标",
+                "value": "20"
+              },
+              {
+                "display": "点选3~5个坐标",
+                "value": "21"
+              },
+              {
+                "display": "点选5~8个坐标",
+                "value": "22"
+              },
+              {
+                "display": "点选1~4个坐标",
+                "value": "27"
+              },
+              {
+                "display": "图片旋转",
+                "value": "29"
+              },
+              {
+                "display": "图片拼图",
+                "value": "53"
+              },
+              {
+                "display": "纯数字",
+                "value": "1"
+              },
+              {
+                "display": "纯英文",
+                "value": "2"
+              },
+              {
+                "display": "纯数字2",
+                "value": "1001"
+              },
+              {
+                "display": "纯英文2",
+                "value": "1002"
+              },
+              {
+                "display": "数英混合2",
+                "value": "1003"
+              },
+              {
+                "display": "汉字",
+                "value": "16"
+              },
+              {
+                "display": "无感学习",
+                "value": "7"
+              },
+              {
+                "display": "通用文字识别(证件、单据)",
+                "value": "32"
+              },
+              {
+                "display": "描绘轨迹",
+                "value": "48"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图片来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕指定位置",
+          "tips": "选择一个验证码来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕指定位置",
+                "value": "screen"
+              },
+              {
+                "display": "网页元素",
+                "value": "web_element"
+              },
+              {
+                "display": "win元素",
+                "value": "win_element"
+              },
+              {
+                "display": "剪贴板",
+                "value": "clipboard"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_browser",
+          "label": "网页对象",
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_web_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "image_window",
+          "label": "窗口对象",
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_win_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "image_region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_source",
+          "label": "背景图来源",
+          "default": "10:screen",
+          "defaultDisplay": "屏幕指定位置",
+          "tips": "选择一个背景图来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕指定位置",
+                "value": "screen"
+              },
+              {
+                "display": "网页元素",
+                "value": "web_element"
+              },
+              {
+                "display": "win元素",
+                "value": "win_element"
+              },
+              {
+                "display": "剪贴板",
+                "value": "clipboard"
+              }
+            ]
+          }
+        },
+        {
+          "name": "imageback_browser",
+          "label": "网页对象",
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "imageback_web_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "imageback_window",
+          "label": "窗口对象",
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "imageback_win_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "imageback_region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "typename",
+          "label": "子类型名称",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "remark",
+          "label": "备注字段",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "captcha_result",
+          "label": "保存验证码识别结果至",
+          "variableLabel": "验证码识别结果",
+          "tips": "指定一个变量名称,该变量用于保存验证码识别结果",
+          "name": "captcha_result",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web_service.cloud_captcha",
+      "icon": "Web_Service_Cloud_Captcha",
+      "description": "识别验证码图片中的文本信息，返回对应文本",
+      "comment": "提取%image_source%中类型为%captcha_type%的验证码信息,保存到%captcha%",
+      "title": "字符/计算验证码",
+      "function": "xbot_visual.web_service.cloud_captch",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.CloudCaptchaControl, ShadowBot.Shell.Development",
+      "helpUrl": "rpa/773104708078870528",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.CloudCaptchaHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "captcha_engine",
+          "label": "识别引擎",
+          "required": true,
+          "tips": "请选择识别引擎",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "{{ProductName}}AI(云码)",
+                "value": "jfbym"
+              }
+            ]
+          }
+        },
+        {
+          "name": "captcha_type",
+          "label": "验证码类型",
+          "required": true,
+          "tips": "请选择验证码类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数英混合(1-4位)",
+                "value": "10110"
+              },
+              {
+                "display": "数英混合(5-8位)",
+                "value": "10111"
+              },
+              {
+                "display": "数字计算题",
+                "value": "50100"
+              },
+              {
+                "display": "中文计算题",
+                "value": "50101"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图像来源",
+          "required": true,
+          "tips": "请选择图像来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "网页元素",
+                "value": "web"
+              },
+              {
+                "display": "桌面元素",
+                "value": "win"
+              },
+              {
+                "display": "本地图片",
+                "value": "local"
+              },
+              {
+                "display": "网络图片",
+                "value": "internet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "web_page",
+          "label": "网页对象",
+          "required": false,
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "web_element",
+          "label": "目标元素",
+          "required": false,
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "win_element",
+          "label": "目标元素",
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "image_url",
+          "label": "图像URL",
+          "tips": "输入网路图片的地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_path",
+          "label": "图像路径",
+          "tips": "选择本地需要识别的图片文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.PNG)|*.png|(.JPEG)|*.jpeg|(.JPG)|*.jpg|(*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": false,
+          "default": "10:20",
+          "category": "advanced",
+          "tips": "等待元素",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "captcha",
+          "label": "结果保存至",
+          "variableLabel": "验证码识别结果",
+          "tips": "指定一个变量名称,该变量用于保存验证码识别结果",
+          "name": "验证码",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "web_service.captcha_paid",
+      "icon": "Web_Service_Captcha_Paid",
+      "description": "基于AI引擎提供的验证码识别服务",
+      "comment": "使用%engine_type%AI引擎，识别%image_source%中类型为%captcha_type%的验证码信息，将结果保存到%captcha_result%",
+      "title": "验证码识别",
+      "function": "xbot_visual.web_service.captcha",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.WebService.CaptchaPaidControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/ocr/验证码识别.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.WebService.CaptchaHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "engine_type",
+          "label": "识别引擎",
+          "tips": "选择一个识别引擎",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "value": "shadowbot",
+                "display": "{{ProductName}}"
+              },
+              {
+                "value": "ttshitu",
+                "display": "图鉴"
+              }
+            ]
+          }
+        },
+        {
+          "name": "username",
+          "label": "用户名",
+          "tips": "需要在图鉴网络科技官网注册申请, 具体操作详见使用说明",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "tips": "需要在图鉴网络科技官网注册申请, 具体操作详见使用说明",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "captcha_type",
+          "label": "验证码类型",
+          "required": true,
+          "default": "10:3",
+          "defaultDisplay": "数英混合",
+          "tips": "请选择要识别的验证码类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "纯数字",
+                "value": "1"
+              },
+              {
+                "display": "纯数字2",
+                "value": "1001"
+              },
+              {
+                "display": "纯英文",
+                "value": "2"
+              },
+              {
+                "display": "纯英文2",
+                "value": "1002"
+              },
+              {
+                "display": "数英混合",
+                "value": "3"
+              },
+              {
+                "display": "数英混合2",
+                "value": "1003"
+              },
+              {
+                "display": "闪动GIF",
+                "value": "4"
+              },
+              {
+                "display": "计算题",
+                "value": "11"
+              },
+              {
+                "display": "快速计算题",
+                "value": "1005"
+              },
+              {
+                "display": "通用文字识别(证件、单据)",
+                "value": "32"
+              },
+              {
+                "display": "问答题",
+                "value": "66"
+              },
+              {
+                "display": "图片旋转",
+                "value": "29"
+              },
+              {
+                "display": "点选1个坐标",
+                "value": "19"
+              },
+              {
+                "display": "点选3个坐标",
+                "value": "20"
+              },
+              {
+                "display": "点选1~4个坐标",
+                "value": "27"
+              },
+              {
+                "display": "点选3~5个坐标",
+                "value": "21"
+              },
+              {
+                "display": "点选5~8个坐标",
+                "value": "22"
+              },
+              {
+                "display": "缺口识别",
+                "value": "18"
+              },
+              {
+                "display": "单缺口滑块(返回X轴坐标)",
+                "value": "33"
+              },
+              {
+                "display": "图片拼图",
+                "value": "53"
+              }
+            ]
+          }
+        },
+        {
+          "name": "third_party_code",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_source",
+          "label": "图片来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕指定位置",
+          "tips": "选择一个验证码来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕指定位置",
+                "value": "screen"
+              },
+              {
+                "display": "网页元素",
+                "value": "web_element"
+              },
+              {
+                "display": "win元素",
+                "value": "win_element"
+              },
+              {
+                "display": "剪贴板",
+                "value": "clipboard"
+              },
+              {
+                "display": "本地文件",
+                "value": "image_file"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_file",
+          "label": "文件路径",
+          "tips": "选择本地需要识别的图片文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.PNG)|*.png|(.JPEG)|*.jpeg|(.JPG)|*.jpg|(*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "image_browser",
+          "label": "网页对象",
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_web_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "image_window",
+          "label": "窗口对象",
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_win_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "image_region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "image_region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_source",
+          "label": "背景图来源",
+          "default": "10:screen",
+          "defaultDisplay": "屏幕指定位置",
+          "tips": "选择一个背景图来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕指定位置",
+                "value": "screen"
+              },
+              {
+                "display": "网页元素",
+                "value": "web_element"
+              },
+              {
+                "display": "win元素",
+                "value": "win_element"
+              },
+              {
+                "display": "剪贴板",
+                "value": "clipboard"
+              },
+              {
+                "display": "本地文件",
+                "value": "image_file"
+              }
+            ]
+          }
+        },
+        {
+          "name": "back_image_file",
+          "label": "文件路径",
+          "tips": "选择本地需要识别的图片文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.PNG)|*.png|(.JPEG)|*.jpeg|(.JPG)|*.jpg|(*.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "imageback_browser",
+          "label": "网页对象",
+          "tips": "输入一个获取到的或者通过\"打开网页\"创建的网页对象",
+          "type": "xbot._web.browser.WebBrowser",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "imageback_web_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的网页元素",
+          "type": "xbot._web.element.WebElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "imageback_window",
+          "label": "窗口对象",
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "imageback_win_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "imageback_region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "imageback_region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "typename",
+          "label": "子类型名称",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_to96dpi",
+          "label": "",
+          "required": false,
+          "category": "advanced",
+          "default": "13:False",
+          "tips": "是否需要将位置信息值转换成与设备无关的单位 (每个单位1/96英寸)",
+          "type": "bool",
+          "editor": {
+            "label": "转为dpi为96对应值",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "remark",
+          "label": "备注字段",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "captcha_result",
+          "label": "保存验证码识别结果至",
+          "variableLabel": "验证码识别结果",
+          "tips": "指定一个变量名称,该变量用于保存验证码识别结果",
+          "name": "captcha_result",
+          "type": "str"
+        }
+      ]
+    }
+  ]
+}

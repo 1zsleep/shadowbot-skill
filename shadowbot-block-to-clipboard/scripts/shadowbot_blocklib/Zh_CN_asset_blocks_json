@@ -1,0 +1,87 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "asset.get_asset",
+      "title": "获取资产",
+      "icon": "Asset_Get_Asset",
+      "comment": "获取%asset_name%的资产值",
+      "description": "获取资产信息",
+      "function": "xbot_visual.asset.get_asset",
+      "settingsControl": "ShadowBot.Shell.Console.BlockSettings.Controls.Asset.GetAssetControl, ShadowBot.Shell.Console",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/获取资产.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Asset.GetAssetHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "asset_name",
+          "label": "资产名称",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "asset_type",
+          "label": "资产类型",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "encrypt_flag",
+          "label": "资产值加密标志",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "asset_info",
+          "label": "资产详情",
+          "required": false,
+          "tips": "资产详情",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "value",
+          "label": "保存文本资产值至",
+          "variableLabel": "资产值",
+          "tips": "输入一个变量用来保存普通资产的资产值",
+          "name": "value",
+          "type": "str"
+        },
+        {
+          "id": "user_name",
+          "label": "保存凭证资产用户名至",
+          "variableLabel": "凭证用户名",
+          "tips": "输入一个变量用来保存凭证资产的用户名",
+          "name": "user_name",
+          "type": "str"
+        },
+        {
+          "id": "password",
+          "label": "保存凭证资产密码至",
+          "variableLabel": "凭证密码",
+          "tips": "输入一个变量用来保存凭证资产的密码，获取的凭证资产密码为加密文本,会在使用填写密码框指令时被自动解密",
+          "name": "password",
+          "type": "str"
+        }
+      ]
+    }
+  ]
+}

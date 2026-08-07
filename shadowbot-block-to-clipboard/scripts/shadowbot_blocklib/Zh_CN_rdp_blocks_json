@@ -1,0 +1,78 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "win32.lock_screen",
+      "function": "xbot_visual.win32.lock_screen",
+      "title": "屏幕锁屏",
+      "description": "这个指令用于屏幕锁屏",
+      "comment": "屏幕锁屏",
+      "icon": "Win32_Lock_Screen",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/锁屏、解锁/屏幕解锁.html"
+    },
+    {
+      "name": "win32.rdp_lock_screen",
+      "function": "xbot_visual.win32.rdp_lock_screen",
+      "title": "屏幕锁屏",
+      "description": "锁住系统屏幕，确保后续指令能在锁屏状态下正常运行",
+      "comment": "使用%user_name%账户锁屏",
+      "icon": "Win32_Rdp_Lock_Screen",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Rdp.RDPLockScreenControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/锁屏、解锁/屏幕锁屏.html",
+      "inputs": [
+        {
+          "name": "user_name",
+          "label": "用户名",
+          "required": true,
+          "tips": "请输入用户名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "登录密码",
+          "required": false,
+          "tips": "输入登录密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.unlock_screen",
+      "function": "xbot_visual.win32.unlock_screen",
+      "title": "屏幕解锁",
+      "description": "解锁系统屏幕，进入系统屏幕",
+      "comment": "使用%user_name%账户解锁",
+      "icon": "Win32_Unlock_Screen",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Rdp.UnlockScreenControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/锁屏、解锁/屏幕解锁.html",
+      "inputs": [
+        {
+          "name": "user_name",
+          "label": "用户名",
+          "required": true,
+          "tips": "请输入用户名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "登录密码",
+          "required": false,
+          "tips": "输入登录密码",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        }
+      ]
+    }
+  ]
+}

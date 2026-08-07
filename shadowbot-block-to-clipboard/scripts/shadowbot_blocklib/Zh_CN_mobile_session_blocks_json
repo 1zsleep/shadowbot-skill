@@ -1,0 +1,974 @@
+{
+  "types": [
+    {
+      "name": "xbot._mobile.element.DeviceElement",
+      "localName": "手机元素对象"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "mobile.session.close",
+      "title": "断开手机连接",
+      "icon": "Mobile_Session_Close",
+      "comment": "关闭与指定手机%session%的连接",
+      "description": "断开与指定手机的连接",
+      "function": "xbot_visual.mobile.session.close",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/关闭手机连接.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.swipe",
+      "title": "滑动手机屏幕",
+      "description": "模拟人工滑动手机屏幕",
+      "comment": "在手机%session%的屏幕上模拟手势滑动",
+      "keywords": "手势滑动;上滑;下滑;左滑;右滑",
+      "icon": "Mobile_Session_Swipe",
+      "function": "xbot_visual.mobile.session.swipe",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.SwipeControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/触摸滑动（手机）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.SwipeHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "swipe_range",
+          "label": "滑动区域",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "在整个屏幕中",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "在整个屏幕中",
+                "value": "screen"
+              },
+              {
+                "display": "在指定元素中",
+                "value": "element"
+              }
+            ]
+          }
+        },
+        {
+          "name": "swipe_kind",
+          "label": "滑动方式",
+          "default": "10:direction",
+          "defaultDisplay": "默认方式",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "方向",
+                "value": "direction"
+              },
+              {
+                "display": "坐标",
+                "value": "location"
+              }
+            ]
+          }
+        },
+        {
+          "name": "swipe_direction",
+          "label": "滑动方向",
+          "default": "10:up",
+          "defaultDisplay": "向上滑动",
+          "tips": "模拟手势向某个方向滑动",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "向上滑动",
+                "value": "up"
+              },
+              {
+                "display": "向下滑动",
+                "value": "down"
+              },
+              {
+                "display": "向左滑动",
+                "value": "left"
+              },
+              {
+                "display": "向右滑动",
+                "value": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "start_point_x",
+          "label": "起始点 X",
+          "default": "10:0",
+          "tips": "可在设备管理器中查看",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "start_point_y",
+          "label": "起始点 Y",
+          "default": "10:0",
+          "tips": "可在设备管理器中查看",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "end_point_x",
+          "label": "结束点 X",
+          "default": "10:0",
+          "tips": "可在设备管理器中查看",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "end_point_y",
+          "label": "结束点 Y",
+          "default": "10:0",
+          "tips": "可在设备管理器中查看",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "swipe_time",
+          "label": "滑动时间（毫秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:800",
+          "tips": "调整滑动速度",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.press_key",
+      "title": "点击按键",
+      "icon": "Mobile_Session_Press_Key",
+      "comment": "在手机%session%上点击按键%key%",
+      "description": "点击按键",
+      "function": "xbot_visual.mobile.session.press_key",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/点击按键（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "key",
+          "label": "按键",
+          "required": true,
+          "default": "10:home",
+          "defaultDisplay": "主页",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "主页",
+                "value": "home"
+              },
+              {
+                "display": "后退",
+                "value": "back"
+              },
+              {
+                "display": "切换应用",
+                "value": "switch"
+              },
+              {
+                "display": "回车确认",
+                "value": "enter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.getoriention",
+      "title": "获取手机屏幕方向",
+      "icon": "Mobile_Session_Getoriention",
+      "comment": "获取手机%session%的屏幕方向，将结果保存到%device_oriention%",
+      "description": "获取手机当前的屏幕方向",
+      "function": "xbot_visual.mobile.session.getoriention",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/获取屏幕方向（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "device_oriention",
+          "label": "保存方向信息至",
+          "variableLabel": "方向信息",
+          "tips": "指定一个变量名称,该变量用于保存获取到的方向信息",
+          "name": "device_oriention",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.setoriention",
+      "title": "旋转手机屏幕",
+      "icon": "Mobile_Session_Setoriention",
+      "comment": "设置手机%session%的屏幕方向为%oriention%",
+      "description": "设置手机的屏幕方向",
+      "function": "xbot_visual.mobile.session.setoriention",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/设置屏幕方向（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "oriention",
+          "label": "屏幕方向",
+          "required": true,
+          "default": "10:horizontal",
+          "defaultDisplay": "横屏",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "横屏",
+                "value": "horizontal"
+              },
+              {
+                "display": "竖屏",
+                "value": "vertical"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.screenshot",
+      "title": "屏幕截图(手机)",
+      "description": "获取手机的屏幕截图",
+      "keywords": "截屏",
+      "comment": "获取手机%session%的当前屏幕截图，将截图保存到文件夹%folder_path%中",
+      "icon": "Mobile_Session_Screenshot",
+      "function": "xbot_visual.mobile.session.screenshot",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/屏幕截图（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "folder_path",
+          "label": "保存文件夹",
+          "required": true,
+          "tips": "截图保存的文件夹",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "filename",
+          "label": "自定义文件名",
+          "tips": "自定义文件名 如: screenshot.png，可为空, 为空时会更具当前时间自动生成文件名",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.contains_element",
+      "statement": "workflow.if",
+      "title": "IF 手机包含",
+      "description": "检测指定的元素是否出现在手机中",
+      "comment": "检查手机%session%中是否%content_type%%element%",
+      "indent": "1",
+      "scope": "1",
+      "icon": "Mobile_Session_Contains_Element",
+      "function": "xbot_visual.mobile.session.contains_element",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if手机包含.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "content_type",
+          "label": "检测手机是否",
+          "required": true,
+          "default": "10:contains_element",
+          "defaultDisplay": "包含元素",
+          "tips": "检测类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "包含元素",
+                "value": "contains_element"
+              },
+              {
+                "display": "不包含元素",
+                "value": "not_contains_element"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.click",
+      "title": "点击屏幕(手机)",
+      "description": "点击屏幕上的指定位置",
+      "comment": "%clicks%手机%session%屏幕上的目标点（%point_x%，%point_y%）",
+      "icon": "Mobile_Session_Click",
+      "function": "xbot_visual.mobile.session.click",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ClickScreenControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/点击屏幕（手机）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.ClickScreenHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "click_postion",
+          "label": "点击位置",
+          "required": true,
+          "default": "10:by_axios",
+          "defaultDisplay": "包含元素",
+          "tips": "以何种方式确定点击的位置",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "通过坐标指定",
+                "value": "by_axios"
+              },
+              {
+                "display": "通过图像匹配",
+                "value": "by_image"
+              }
+            ]
+          }
+        },
+        {
+          "name": "point_x",
+          "label": "横坐标",
+          "default": "10:0",
+          "tips": "可在设备管理器中查看",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "point_y",
+          "label": "纵坐标",
+          "default": "10:0",
+          "tips": "可在设备管理器中查看",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张存在，则点击该图像",
+          "required": false,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "图像点击部位",
+          "required": true,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点位置",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "目标图像的部位",
+          "default": "10:middleCenter",
+          "tips": "选择你要将鼠标移动到图像的哪个部位上",
+          "required": false,
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": false,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": false,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "clicks",
+          "label": "点击方式",
+          "required": true,
+          "default": "10:click",
+          "defaultDisplay": "单击",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单击",
+                "value": "click"
+              },
+              {
+                "display": "双击",
+                "value": "dbclick"
+              },
+              {
+                "display": "长按",
+                "value": "longpress"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.get_page_source",
+      "title": "获取手机UI树",
+      "description": "获取手机当前页面的树结构信息，返回XML结构的字符串",
+      "comment": "获取手机%session%的UIA树结构，以XML形式存储到%page_source%中",
+      "icon": "Mobile_Session_Get_Page_Source",
+      "function": "xbot_visual.mobile.session.get_page_source",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/获取ui树（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "page_source",
+          "label": "保存UI树至",
+          "variableLabel": "手机UI树",
+          "tips": "指定一个变量名称,该变量用于保存获取到的UI树结构信息",
+          "name": "page_source",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.lock_screen",
+      "title": "锁定屏幕(手机）",
+      "description": "对指定的手机执行锁屏操作",
+      "comment": "对手机%session%执行锁屏操作",
+      "keywords": "锁屏",
+      "icon": "Mobile_Session_Lock_Screen",
+      "function": "xbot_visual.mobile.session.lock_screen",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/手机锁屏解锁.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "mobile.session.unlock_screen",
+      "title": "解锁屏幕(手机)",
+      "description": "解锁已锁屏手机。密码解锁须以 Appium 模式连接，密码在连接时设置",
+      "comment": "对手机%session%执行解锁操作",
+      "keywords": "解屏;解锁",
+      "icon": "Mobile_Session_Unlock_Screen",
+      "function": "xbot_visual.mobile.session.unlock_screen",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.UnlockControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/手机锁屏解锁.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "mobile.session.get_clipboard_text",
+      "function": "xbot_visual.mobile.session.get_clipboard_text",
+      "title": "获取手机剪切板文本",
+      "keywords": "剪贴",
+      "description": "这个指令用来获取剪切板文本内容",
+      "comment": "获取剪切板中的文本内容并保存到%clipboard_text%中",
+      "icon": "Mobile_Session_Get_Clipboard_Text",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/获取剪贴板内容（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "clipboard_text",
+          "label": "保存剪切板文本内容至",
+          "variableLabel": "剪切板文本内容",
+          "tips": "获取剪切板中文本内容",
+          "type": "str",
+          "name": "clipboard_text"
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.set_clipboard_text",
+      "function": "xbot_visual.mobile.session.set_clipboard_text",
+      "title": "发送文本到剪切板(手机)",
+      "keywords": "剪贴",
+      "description": "这个指令用来设置剪切板文本内容",
+      "comment": "将内容源%text%设置到剪切板中",
+      "icon": "Mobile_Session_Set_Clipboard_Text",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/设置剪贴板内容（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "text",
+          "label": "内容源",
+          "required": true,
+          "tips": "请输入要设置到剪切板中的文本内容",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.get_session_detail",
+      "title": "获取手机连接详情",
+      "description": "获取手机连接详情信息，如自定义手机名称等",
+      "comment": "获取手机%session%的连接详情信息到%session_detail%中",
+      "icon": "Mobile_Session_Get_Session_Detail",
+      "function": "xbot_visual.mobile.session.get_session_detail",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/获取手机连接详情.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "session_detail",
+          "label": "保存连接详情至",
+          "variableLabel": "手机连接详情",
+          "tips": "指定一个变量名称,该变量用于保存手机连接详情",
+          "name": "session_detail",
+          "type": "dict"
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.open_app",
+      "title": "打开手机APP",
+      "keywords": "打开App",
+      "description": "打开某个App应用， 并激活到屏幕",
+      "comment": "打开手机%session%应用%package_name%， 并激活到屏幕",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.OpenAppControl, ShadowBot.Shell.Development",
+      "icon": "Mobile_Session_Open_App",
+      "function": "xbot_visual.mobile.session.open_app",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/打开或关闭app（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "package_name",
+          "label": "App包名",
+          "tips": "填写手机应用的包名， 非应用名称。 如微信App 应用包名为com.tecent.mm，应用名为微信",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请在手机中打开APP后点击获取"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.close_app",
+      "title": "关闭手机APP",
+      "description": "根据条件关闭App应用",
+      "keywords": "关闭App",
+      "comment": "关闭手机%session%应用%package_name%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.CloseAppControl, ShadowBot.Shell.Development",
+      "icon": "Mobile_Session_Close_App",
+      "function": "xbot_visual.mobile.session.close_app",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/打开或关闭app（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "package_name",
+          "label": "App包名",
+          "required": true,
+          "tips": "填写手机应用的包名， 非应用名称。 如微信：包名为com.tecent.mm，应用名为微信",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "请在手机中打开APP后点击获取"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.push_file",
+      "function": "xbot_visual.mobile.session.push_file",
+      "title": "发送文件到手机",
+      "keywords": "推送",
+      "description": "将本机PC中的指定文件推送到手机中的指定位置",
+      "comment": "将本地文件%file_path%推送到手机%session%路径%path_on_device%中",
+      "icon": "Mobile_Session_Push_File",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/将文件推送到手机（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "file_path",
+          "label": "本地文件",
+          "required": true,
+          "tips": "本机PC中的文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "path_on_device",
+          "label": "手机中的存储位置",
+          "required": true,
+          "tips": "文件在手机中的保存路径, 如 /sdcard/dcim/camera/img_xxx_xxx.jpg ,将本地图片保存到手机相册, img_xxx_xxx表示图片名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.session.pull_file",
+      "function": "xbot_visual.mobile.session.pull_file",
+      "title": "获取手机文件",
+      "description": "拉取手机中的指定路径的文件",
+      "comment": "从手机%session%中获取文件%path_on_device%，保存到本地%file_path%中",
+      "icon": "Mobile_Session_Pull_File",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/手机操作/从手机中获取文件（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "path_on_device",
+          "label": "文件存储路径",
+          "required": true,
+          "tips": "文件在手机中的保存路径, 如 /sdcard/dcim/camera/img_xxx_xxx.jpg ,将手机相册中的图片保存到PC, img_xxx_xxx表示图片名称，可在 手机相册 或 手机文件管理 中查看",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "file_path",
+          "label": "本地保存位置",
+          "required": true,
+          "tips": "本机PC中的文件存储路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

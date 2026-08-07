@@ -1,0 +1,271 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual.workqueue.WorkQueueItem",
+      "localName": "工作队列项",
+      "props": [
+        {
+          "name": "uuid",
+          "type": "str",
+          "label": "ID"
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "label": "名称"
+        },
+        {
+          "name": "bizInfo",
+          "type": "str",
+          "label": "业务信息"
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "label": "结果注释"
+        },
+        {
+          "name": "expireTime",
+          "type": "str",
+          "label": "过期时间"
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "label": "状态"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "workqueue.enqueue",
+      "title": "新增队列项",
+      "icon": "Workqueue_Enqueue",
+      "comment": "向%workqueue_id%中新增一个队列项%item_name%",
+      "description": "向选定的工作队列新增一个队列项",
+      "function": "xbot_visual.workqueue.enqueue",
+      "settingsControl": "ShadowBot.Shell.Console.BlockSettings.Controls.WorkQueue.AddQueueItemControl, ShadowBot.Shell.Console",
+      "helpUrl": "command-doc/2fbe8545284581520bd51976a48a05b2.html",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "workqueue_id",
+          "label": "队列名称",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        },
+        {
+          "name": "item_name",
+          "label": "队列项名称",
+          "required": true,
+          "tips": "名称将显示在队列管理列表中，作为不同队列项的区分",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "item_priority",
+          "label": "队列项优先级",
+          "required": true,
+          "tips": "系统将优先执行优先级为“高”的队列项",
+          "default": "10:100",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "低",
+                "value": "200"
+              },
+              {
+                "display": "中",
+                "value": "100"
+              },
+              {
+                "display": "高",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "item_expiration",
+          "label": "过期时间",
+          "required": false,
+          "tips": "队列项在过期时间前都可以被执行，如果过期则不能被执行。若日期是文本，只支持常用格式，如：2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本"
+          }
+        },
+        {
+          "name": "item_userdata",
+          "label": "业务信息",
+          "required": true,
+          "tips": "可以将队列处理过程中的业务信息放到这里",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "workqueue.loop_queue",
+      "statement": "workqueue.loop_queue",
+      "title": "循环获取队列项",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "icon": "Workqueue_Loop_Queue",
+      "comment": "循环%workqueue_id%获取队列项,将当前循环项保存到%workqueue_item%中",
+      "description": "循环获取指定队列的队列项",
+      "function": "xbot_visual.workqueue.loop_queue",
+      "settingsControl": "ShadowBot.Shell.Console.BlockSettings.Controls.WorkQueue.LoopQueueControl, ShadowBot.Shell.Console",
+      "helpUrl": "command-doc/59d825460617877868946ad09e34b35a.html",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "workqueue_id",
+          "label": "队列名称",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": []
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "workqueue_item",
+          "label": "保存结果至",
+          "variableLabel": "当前执行的工作队列项",
+          "tips": "",
+          "type": "xbot_visual.workqueue.WorkQueueItem",
+          "name": "workqueue_item"
+        }
+      ]
+    },
+    {
+      "name": "workqueue.update_item",
+      "title": "更新队列项",
+      "icon": "Workqueue_Update_Item",
+      "comment": "更新队列项%workqueue_item%的处理结果",
+      "description": "更新当前队列项的处理结果",
+      "function": "xbot_visual.workqueue.update_item",
+      "settingsControl": "ShadowBot.Shell.Console.BlockSettings.Controls.WorkQueue.UpdateQueueItemControl, ShadowBot.Shell.Console",
+      "helpUrl": "command-doc/c556682638137bb7a229ecf902a97de7.html",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "workqueue_item",
+          "label": "队列项",
+          "required": true,
+          "tips": "",
+          "type": "xbot_visual.workqueue.WorkQueueItem",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "item_status",
+          "label": "处理结果",
+          "required": true,
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "已处理",
+                "value": "processed"
+              },
+              {
+                "display": "异常",
+                "value": "exception"
+              }
+            ]
+          }
+        },
+        {
+          "name": "item_description",
+          "required": false,
+          "label": "结果注释",
+          "tips": "执行过程中的额外的信息可以存储到这里，支持在队列管理后台查看和下载",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "workqueue.reenqueue",
+      "title": "队列项重新排队",
+      "icon": "Workqueue_Reenqueue",
+      "comment": "将队列项%workqueue_item%重新入队",
+      "description": "将选定得队列项重新入列并设置新的过期时间",
+      "function": "xbot_visual.workqueue.reenqueue",
+      "settingsControl": "ShadowBot.Shell.Console.BlockSettings.Controls.WorkQueue.ReenqueueItemControl, ShadowBot.Shell.Console",
+      "helpUrl": "command-doc/895a01cbbff19aa12773d5531f742436.html",
+      "handlers": [],
+      "inputs": [
+        {
+          "name": "workqueue_item",
+          "label": "队列项",
+          "required": true,
+          "tips": "",
+          "type": "xbot_visual.workqueue.WorkQueueItem",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "item_effective_time",
+          "label": "生效时间",
+          "required": true,
+          "tips": "在设定的时间前，队列项将不会生效和分发。若日期是文本，只支持常用格式，如：2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本"
+          }
+        },
+        {
+          "name": "item_expire_time",
+          "label": "过期时间",
+          "tips": "可以设置一个新的过期时间，这个过期时间必须大于生效时间。若日期是文本，只支持常用格式，如：2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等。",
+          "required": false,
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本"
+          }
+        },
+        {
+          "name": "item_description",
+          "label": "结果注释",
+          "required": false,
+          "tips": "执行过程中的额外的信息可以存储到这里，支持在队列管理后台查看和下载",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": []
+    }
+  ]
+}

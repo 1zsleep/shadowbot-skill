@@ -1,0 +1,771 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "dir.if_exist",
+      "statement": "workflow.if",
+      "function": "xbot_visual.dir.if_exist",
+      "title": "IF 文件夹存在",
+      "description": "判断文件夹是否存在",
+      "comment": "如果文件夹%path%%expect_exist%，则执行以下操作",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "icon": "Dir_If_Exist",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if文件夹存在.html",
+      "video": {
+        "time": "00:36"
+      },
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件夹路径",
+          "required": true,
+          "tips": "输入或选择文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "expect_exist",
+          "label": "文件夹是否",
+          "required": true,
+          "default": "10:exist",
+          "defaultDisplay": "存在",
+          "tips": "选择预期的文件夹是否存在",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "exist"
+              },
+              {
+                "display": "不存在",
+                "value": "no_exist"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "dir.make",
+      "function": "xbot_visual.dir.make",
+      "title": "创建文件夹",
+      "description": "创建指定路径的文件夹",
+      "comment": "创建文件夹%path%",
+      "icon": "Dir_Make",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/创建文件夹.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "路径",
+          "required": true,
+          "tips": "输入或选择文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "dir.makedir",
+      "function": "xbot_visual.dir.makedir",
+      "title": "创建文件夹",
+      "description": "创建文件夹",
+      "comment": "在%parent%下新建文件夹%name%，将新建的文件夹路径保存到%new_folder%",
+      "icon": "Dir_Makedir",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/创建文件夹.html",
+      "inputs": [
+        {
+          "name": "parent",
+          "label": "父文件夹目录",
+          "required": true,
+          "tips": "输入或选择要在其中创建新文件夹的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "name",
+          "label": "新文件夹名称",
+          "required": true,
+          "tips": "要创建的文件夹名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "new_folder",
+          "label": "保存新文件夹路径至",
+          "variableLabel": "创建的新文件夹路径",
+          "tips": "输入一个名字，用于保存新建的文件夹路径",
+          "type": "str",
+          "name": "new_folder"
+        }
+      ]
+    },
+    {
+      "name": "dir.remove",
+      "function": "xbot_visual.dir.remove",
+      "title": "删除文件夹",
+      "description": "删除文件夹，包括该文件夹下所有的子文件和文件",
+      "comment": "删除文件夹%path%",
+      "icon": "Dir_Remove",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/删除文件夹.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "要删除的文件夹",
+          "required": true,
+          "tips": "输入或选择要删除的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "not_move_to_trash",
+          "label": "",
+          "required": true,
+          "tips": "是否彻底删除，不放入回收站",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "彻底删除(不放入回收站)",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dir.find_files",
+      "function": "xbot_visual.dir.find_files",
+      "title": "获取文件列表",
+      "keywords": "检索文件",
+      "description": "在文件夹中检索文件",
+      "comment": "获取文件夹%path%下符合%patterns%命名规则的文件列表，将文件列表保存到%file_paths%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Dir.FindFilesControl, ShadowBot.Shell.Development",
+      "icon": "Dir_Find_Files",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件/获取文件列表.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Dir.FindFilesHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件夹",
+          "required": true,
+          "tips": "输入或选择文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "patterns",
+          "label": "文件名匹配规则",
+          "required": true,
+          "tips": "输入文件名匹配规则，允许使用通配符，比如“图片*”或“图片?”，多个规则用逗号分割，比如:规则1，规则2",
+          "type": "str",
+          "default": "10:*.*",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "find_subdir",
+          "label": "",
+          "required": true,
+          "tips": "是否查找子文件夹下的文件",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "查找子文件夹",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "skip_hidden_file",
+          "label": "",
+          "required": true,
+          "tips": "是否忽略隐藏的文件",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "忽略隐藏的文件",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "is_sort",
+          "label": "",
+          "required": true,
+          "tips": "指定文件列表排序规则",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "指定文件列表排序规则",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "sort_by",
+          "label": "排序因素",
+          "required": false,
+          "default": "10:name",
+          "defaultDisplay": "文件名称",
+          "tips": "选择文件列表排序因素",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文件名称",
+                "value": "name"
+              },
+              {
+                "display": "文件大小",
+                "value": "size"
+              },
+              {
+                "display": "文件创建时间",
+                "value": "create_time"
+              },
+              {
+                "display": "文件最后修改时间",
+                "value": "last_modify_time"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sort_way",
+          "label": "排序方式",
+          "required": false,
+          "default": "10:increase",
+          "defaultDisplay": "递增",
+          "tips": "选择文件列表排序方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "递增",
+                "value": "increase"
+              },
+              {
+                "display": "递减",
+                "value": "decrease"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_paths",
+          "label": "保存文件列表至",
+          "variableLabel": "获取的文件列表",
+          "tips": "输入一个名字，用来保存文件列表",
+          "type": "list<str>",
+          "name": "file_paths"
+        }
+      ]
+    },
+    {
+      "name": "dir.find_subdirs",
+      "function": "xbot_visual.dir.find_subdirs",
+      "title": "获取文件夹列表",
+      "keywords": "子文件夹",
+      "description": "获取指定路径文件夹下的子文件夹",
+      "comment": "获取文件夹%path%下的子文件夹，将文件夹列表保存到%dir_paths%",
+      "icon": "Dir_Find_Subdirs",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/获取文件夹列表.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "文件夹路径",
+          "required": true,
+          "tips": "输入或选择文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "patterns",
+          "label": "子文件夹名称匹配规则",
+          "required": true,
+          "tips": "输入子文件夹名称匹配规则，允许使用通配符，比如“图片*”或“图片?”，多个规则用逗号分割，比如:规则1，规则2",
+          "type": "str",
+          "default": "10:*",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "find_subdir",
+          "label": "",
+          "required": true,
+          "tips": "是否递归查找子文件夹",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "递归查找子文件夹",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "dir_paths",
+          "label": "保存文件夹列表至",
+          "variableLabel": "获取的文件夹列表",
+          "tips": "输入一个名字，用来保存文件夹列表",
+          "type": "list<str>",
+          "name": "dir_paths"
+        }
+      ]
+    },
+    {
+      "name": "dir.selected_dirs_or_files",
+      "function": "xbot_visual.dir.selected_dirs_or_files",
+      "title": "获取选中文件(夹)列表",
+      "description": "获取当前激活文件资源管理器（若激活桌面则目标为桌面）中选中的文件、文件夹列表",
+      "comment": "获取当前激活的文件夹中选中的文件和文件夹列表，将结果保存到%dir_or_file_paths%",
+      "icon": "Dir_Selected_Dirs_Or_Files",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/获取选中文件（夹）列表.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Dir.SelectedDirsOrFilesHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "file_type",
+          "label": "获取类型",
+          "required": true,
+          "tips": "选择要获取的选中类型，支持获取选中的文件、文件夹或所有选中项",
+          "type": "str",
+          "default": "10:all",
+          "defaultDisplay": "文件和文件夹",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文件和文件夹",
+                "value": "all"
+              },
+              {
+                "display": "文件",
+                "value": "file"
+              },
+              {
+                "display": "文件夹",
+                "value": "folder"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "dir_or_file_paths",
+          "label": "保存文件、文件夹列表至",
+          "variableLabel": "选中的文件(夹)列表",
+          "tips": "输入一个名字，用来保存文件、文件夹列表",
+          "type": "list<str>",
+          "name": "dir_or_file_paths"
+        }
+      ]
+    },
+    {
+      "name": "dir.open",
+      "function": "xbot_visual.dir.open",
+      "title": "打开文件夹",
+      "description": "打开文件夹，如果为文件路径，会在打开文件夹后选中文件",
+      "comment": "打开文件夹并选中文件%folder_file_path%",
+      "icon": "Dir_Open",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/打开文件夹.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Dir.OpenDirHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "folder_file_path",
+          "label": "文件(夹)路径",
+          "required": true,
+          "tips": "输入要打开的文件夹路径，如果为文件路径，会打开文件夹并选中文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "dir.empty",
+      "function": "xbot_visual.dir.empty",
+      "title": "清空文件夹",
+      "description": "删除文件夹下的所有文件和子文件夹，但保留文件夹本身",
+      "comment": "清空文件夹%path%",
+      "icon": "Dir_Empty",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/清空文件夹.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "要清空的文件夹",
+          "required": true,
+          "tips": "输入或选择要清空的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "not_move_to_trash",
+          "label": "",
+          "required": true,
+          "tips": "是否彻底删除，不放入回收站",
+          "type": "bool",
+          "default": "13:True",
+          "editor": {
+            "label": "彻底删除(不放入回收站)",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dir.copy",
+      "function": "xbot_visual.dir.copy",
+      "title": "拷贝文件夹",
+      "keywords": "复制文件夹",
+      "description": "将源文件夹拷贝到目标文件夹",
+      "comment": "将源文件夹%source_dir_path%拷贝到目标文件夹%copyto_dir_path%，将拷贝后的文件夹路径保存到%dir_path%",
+      "icon": "Dir_Copy",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/拷贝文件夹.html",
+      "inputs": [
+        {
+          "name": "source_dir_path",
+          "label": "要拷贝的文件夹",
+          "required": true,
+          "tips": "输入或选择要拷贝的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "copyto_dir_path",
+          "label": "目标文件夹",
+          "required": true,
+          "tips": "输入目标文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "copy_way",
+          "label": "如果文件存在",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "tips": "对目标文件夹中已存在的文件，选择覆盖还是不执行拷贝",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "不要拷贝",
+                "value": "not_overwrite"
+              },
+              {
+                "display": "自动添加后缀",
+                "value": "save_as"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "dir_path",
+          "label": "拷贝后的文件夹路径",
+          "variableLabel": "拷贝后的文件夹路径",
+          "tips": "输入一个名字，用来保存拷贝后的文件夹路径",
+          "type": "str",
+          "name": "dir_path"
+        }
+      ]
+    },
+    {
+      "name": "dir.move",
+      "function": "xbot_visual.dir.move",
+      "title": "移动文件夹",
+      "description": "将源文件夹移动到目标文件夹下",
+      "comment": "将源文件夹%source_dir_path%移动到目标文件夹%moveto_dir_path%下，将移动后的文件路径保存到%dir_path%",
+      "icon": "Dir_Move",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/移动文件夹.html",
+      "inputs": [
+        {
+          "name": "source_dir_path",
+          "label": "要移动的文件夹",
+          "required": true,
+          "tips": "输入或选择要移动的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "moveto_dir_path",
+          "label": "目标文件夹",
+          "required": true,
+          "tips": "输入或选择目标文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "dir_path",
+          "label": "移动后的文件夹路径",
+          "variableLabel": "移动后的文件夹路径",
+          "tips": "输入一个名字，用来保存移动后的文件夹路径",
+          "type": "str",
+          "name": "dir_path"
+        }
+      ]
+    },
+    {
+      "name": "dir.get_special_dir",
+      "function": "xbot_visual.dir.get_special_dir",
+      "title": "获取系统文件夹路径",
+      "description": "获取系统文件夹路径",
+      "comment": "获取系统文件夹%special_dir_name%路径，将系统文件夹路径保存到%dir_path%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Dir.GetSpecialDirControl, ShadowBot.Shell.Development",
+      "icon": "Dir_Get_Special_Dir",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/获取系统文件夹路径.html",
+      "inputs": [
+        {
+          "name": "special_dir_name",
+          "label": "系统文件夹名称",
+          "required": true,
+          "default": "10:DesktopDirectory",
+          "defaultDisplay": "文件夹名称",
+          "tips": "选择系统文件夹名称",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "临时",
+                "value": "TEMP"
+              },
+              {
+                "display": "桌面",
+                "value": "DesktopDirectory"
+              },
+              {
+                "display": "应用程序数据",
+                "value": "ApplicationData"
+              },
+              {
+                "display": "常见应用程序数据",
+                "value": "CommonApplicationData"
+              },
+              {
+                "display": "本地应用程序数据",
+                "value": "LocalApplicationData"
+              },
+              {
+                "display": "Cookies",
+                "value": "Cookies"
+              },
+              {
+                "display": "收藏夹",
+                "value": "Favorites"
+              },
+              {
+                "display": "历史",
+                "value": "History"
+              },
+              {
+                "display": "Internet 缓存",
+                "value": "InternetCache"
+              },
+              {
+                "display": "程序",
+                "value": "Programs"
+              },
+              {
+                "display": "音乐",
+                "value": "MyMusic"
+              },
+              {
+                "display": "图片",
+                "value": "MyPictures"
+              },
+              {
+                "display": "最近",
+                "value": "Recent"
+              },
+              {
+                "display": "发送到",
+                "value": "SendTo"
+              },
+              {
+                "display": "开始菜单",
+                "value": "StartMenu"
+              },
+              {
+                "display": "启动",
+                "value": "Startup"
+              },
+              {
+                "display": "系统",
+                "value": "System"
+              },
+              {
+                "display": "模板",
+                "value": "Templates"
+              },
+              {
+                "display": "个人",
+                "value": "Personal"
+              },
+              {
+                "display": "程序文件",
+                "value": "ProgramFiles"
+              },
+              {
+                "display": "常见程序文件",
+                "value": "CommonProgramFiles"
+              },
+              {
+                "display": "系统",
+                "value": "Windows"
+              },
+              {
+                "display": "下载",
+                "value": "Downloads"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "dir_path",
+          "label": "系统文件夹路径",
+          "variableLabel": "系统文件夹路径",
+          "tips": "输入一个名字，用来保存系统文件夹路径",
+          "type": "str",
+          "name": "dir_path"
+        }
+      ]
+    },
+    {
+      "name": "dir.rename",
+      "function": "xbot_visual.dir.rename",
+      "title": "文件夹重命名",
+      "description": "文件夹重命名",
+      "comment": "将文件夹%path%重命名为%new_name%，将新的文件夹路径保存到%new_dir_path%",
+      "icon": "Dir_Rename",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/文件夹/文件夹重命名.html",
+      "inputs": [
+        {
+          "name": "path",
+          "label": "要重命名的文件夹",
+          "required": true,
+          "tips": "输入或选择要重命名的文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "new_name",
+          "label": "新文件夹名称",
+          "required": true,
+          "tips": "输入新的文件夹名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "new_dir_path",
+          "label": "新的文件夹路径",
+          "variableLabel": "重命名后的文件夹路径",
+          "tips": "输入一个名字，用来保存新的文件夹路径",
+          "type": "str",
+          "name": "new_dir_path"
+        }
+      ]
+    }
+  ]
+}

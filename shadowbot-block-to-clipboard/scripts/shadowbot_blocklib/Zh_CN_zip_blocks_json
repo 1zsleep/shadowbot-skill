@@ -1,0 +1,146 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "xzip.zip",
+      "function": "xbot_visual.xzip.zip",
+      "title": "压缩文件/文件夹",
+      "description": "这个指令用于压缩文件/文件夹",
+      "comment": "将%file_folder_path%压缩到%zip_file_path%",
+      "icon": "Xzip_Zip",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/压缩、解压/压缩文件（文件夹）.html",
+      "inputs": [
+        {
+          "name": "file_folder_path",
+          "label": "要压缩的文件(夹)",
+          "required": true,
+          "tips": "输入或选择要压缩的文件或文件夹路径",
+          "type": "str",
+          "editor": {
+            "placeholder": "待压缩的文件/文件夹",
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFiles"
+            }
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "required": false,
+          "tips": "输入密码；若不设置密码，请留空",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入压缩文件路径",
+            "kind": "password"
+          }
+        },
+        {
+          "name": "compress_level",
+          "label": "压缩方式",
+          "required": true,
+          "default": "10:5",
+          "defaultDisplay": "通用",
+          "tips": "请选择压缩方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "通用",
+                "value": "5"
+              },
+              {
+                "display": "压缩最快",
+                "value": "1"
+              },
+              {
+                "display": "压缩最多",
+                "value": "9"
+              }
+            ]
+          }
+        },
+        {
+          "name": "zip_file_path",
+          "label": "压缩文件保存至",
+          "required": true,
+          "tips": "请输入压缩文件保存路径，只支持压缩成zip文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "xzip.unzip",
+      "function": "xbot_visual.xzip.unzip",
+      "title": "解压文件/文件夹",
+      "description": "这个指令用于解压文件/文件夹",
+      "comment": "将%zip_file_path%解压到%unzip_dir_path%，将解压文件夹路径保存到%folder%",
+      "icon": "Xzip_Unzip",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/压缩、解压/解压文件（文件夹）.html",
+      "inputs": [
+        {
+          "name": "zip_file_path",
+          "label": "压缩文件路径",
+          "required": true,
+          "tips": "请输入压缩文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "zip文件 (.zip)|*.zip"
+            }
+          }
+        },
+        {
+          "name": "password",
+          "label": "解压密码",
+          "required": false,
+          "tips": "输入解压密码，若没有则留空",
+          "type": "str",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "unzip_dir_path",
+          "label": "解压文件夹路径",
+          "required": true,
+          "tips": "请输入解压文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "create_dedicated_folder",
+          "label": "",
+          "default": "13:True",
+          "tips": "解压至与压缩文件同名的文件夹中",
+          "type": "bool",
+          "editor": {
+            "label": "创建同名文件夹",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "folder",
+          "label": "保存文件夹路径至",
+          "variableLabel": "解压后的文件夹路径",
+          "tips": "指定一个变量名称,该变量用于保存文件夹路径",
+          "name": "folder",
+          "type": "str"
+        }
+      ]
+    }
+  ]
+}
