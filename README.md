@@ -1,0 +1,3 @@
+# shadowbot-skill
+
+Seeded automatically.
