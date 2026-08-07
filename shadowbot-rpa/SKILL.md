@@ -6,7 +6,7 @@ description: "Use when working with 影刀 RPA apps, APIs, or migration."
 # 影刀 RPA (ShadowBot / WinRobot360) 平台操作
 
 影刀 RPA 客户端 = ShadowBot.exe。云端 API 分两处: 登录走 `api.yingdao.com`, 业务走 `api.winrobot360.com`。
-本技能基于对 Xbot Deployer.exe 的逆向 + mitmproxy 抓包还原; 可运行实现 = shadowbot-rpa-migration 技能自带 `scripts/migrate_app.py`(自包含) + 本机 GUI `D:\xobt`(已真实迁移验证)。
+
 
 ## 本地数据布局 (应用列表来源!)
 
