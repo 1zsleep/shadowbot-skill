@@ -1,13 +1,17 @@
 ---
 name: shadowbot-rpa-migration
-description: Migrate 影刀 RPA apps to cloud;
+description: Migrate 影刀 RPA apps to cloud; extend D:\xobt tool.
 ---
 
 # ShadowBot (影刀) RPA App Migration & API
 
-Publish/migrate local 影刀 RPA apps to the cloud,re-derive a Windows app's real API calls. GUI supports multi-select apps × accounts (N×M serial queue), DPAPI-encrypted account storage, progress panel, safe stop, and retry-failed-only.
+Publish/migrate local 影刀 RPA apps to the cloud, extend the working tool — **now a PySide6 GUI app** — or re-derive a Windows app's real API calls. GUI supports multi-select apps × accounts (N×M serial queue), DPAPI-encrypted account storage, progress panel, safe stop, and retry-failed-only.
 
-**自包含迁移脚本: `scripts/migrate_app.py`**（仅依赖 requests + cryptography）——`SB_PASS=<密码> python migrate_app.py --app <xbot_robot目录> --user <账号> [--name 新名]`；`--check` 只登录+列云端验证；密码优先读环境变量 SB_PASS。已实测登录+列表通过。
+**源码随技能打包，新电脑直接用代码**（本机开发版在 `D:\xobt`，技能目录与之同步；exe 是 PyInstaller 构建产物，不入库）：
+- `main.py` + `src/migration_assistant/` — 完整源码（UI/services/storage 分层），本机可直接 `python main.py` 跑
+- `assistant.spec` + `app_icon.ico` + `pyproject.toml` — 重建环境；spec 用内置 `SPECPATH` 自动定位（PyInstaller 执行 spec 时没有 `__file__`），技能包拷到任何电脑后在该目录执行 `python -m PyInstaller --noconfirm --clean assistant.spec` 即可构建出 `dist/影刀迁移助手.exe`
+
+**自包含迁移脚本: `scripts/migrate_app.py`**（仅依赖 requests + cryptography）——`SB_PASS=<密码> python migrate_app.py --app <xbot_robot目录> --user <账号> [--name 新名]`；`--check` 只登录+列云端验证；密码优先读环境变量 SB_PASS。已实测登录+列表通过，create 流程与 D:\xobt 同源。
 
 ## Core facts
 
@@ -47,7 +51,13 @@ Exact request bodies and full field lists: `references/captured-api-format.md` (
 - Windows console output is GBK: when capturing Python/exe stdout into a pipe, decode with `gbk` (bash shows mojibake otherwise).
 - DNS/connect flakiness to these hosts is common — wrap requests in a small retry (3 tries, 5s wait).
 
+## Packaging
 
+Sources ship **inside this skill directory** (copy the whole `shadowbot-rpa-migration` folder to any PC — no `D:\xobt` needed). The exe is a build artifact, NOT stored in the skill — rebuild it where you need it:
+- **Rebuild** from the skill's own sources: `python -m PyInstaller --noconfirm --clean assistant.spec` (run inside this skill dir) → produces `dist/影刀迁移助手.exe`. Spec is portable — it derives all paths from PyInstaller's built-in `SPECPATH` variable (script `main.py`, `pathex=src`, `datas=theme.qss/app_icon.png → migration_assistant/resources`, `icon=app_icon.ico`), `console=False`. **`__file__` is NOT defined inside a spec** (PyInstaller exec's it) — use `SPECPATH`. **Do NOT hardcode absolute paths like the old `D:/xobt/...` spec** — that died on other machines. Verify: offscreen smoke launch (`QT_QPA_PLATFORM=offscreen`, process alive 6s), SHA256 via `certutil -hashfile`. Portable-spec verification WITHOUT polluting the skill dir: build with `--distpath <temp> --workpath <temp>`, smoke the exe from there, then delete the temp dirs — the skill dir stays source-only.
+- **CLI** (legacy): `--onefile --clean --console`; never `--windowed`.
+
+**PyInstaller pitfalls**: exe file locked by a lingering process → `PermissionError: [WinError 5]` on rebuild; `taskkill /F /IM 影刀迁移助手.exe` first. GUI exe must not be launched with a console wrapper.
 
 ## GUI architecture & PySide6 pitfalls (all cost real debugging time)
 
@@ -62,7 +72,7 @@ Layered: UI (Qt) → services (scan/pack/client/runner) → storage (SQLite + DP
 - **pytest for Qt**: run with `QT_QPA_PLATFORM=offscreen`; `tests/` needs `__init__.py` (or `tests/ui/` won't collect); put fake HTTP fakes in a plain module (`tests/fake_http.py`) — importing them from `conftest.py` via `from tests.conftest import ...` collides with the interpreter's own `tests` package; fake session needs a `headers` attribute or `MigrationClient`'s UA update crashes.
 - **Qt QSS does NOT support CSS `linear-gradient()`** — the rule is silently dropped (no error), buttons fall back to default gray and, on Windows dark mode, text renders white-on-white (the user's "白字白底看不清" complaint). Must use `qlineargradient(x1:0,y1:0,x2:1,y2:0, stop:0 #6157f5, stop:1 #8178ff)`. Diagnose QSS without a vision tool: render offscreen (`QT_QPA_PLATFORM=offscreen`, `win.grab().save(png)`) then PIL-count purple-ish pixels (b>200, b>r+40): ~0% = gradient dropped, healthy UI ≈ 5–10%.
 - **PyInstaller onefile GUI lingers after clicking window X** — closeEvent must wait for EVERY background thread (`_migration_thread.wait(8000)`, `_scan_thread.wait(5000)`), then `QApplication.quit()`; after `app.exec()` returns, close the DB connection in `run()` (unclosed sqlite conn keeps the onefile child process alive → parent lingers too). Init `self._scan_thread = None` in `__init__` or closeEvent raises AttributeError pre-scan; `deleteLater()` the scan thread in its finished slot. Verify: EnumWindows → `PostMessageW(hwnd, WM_CLOSE)` → process exits <2s rc 0; 3 launch/close cycles with zero `tasklist` residue.
-
+- **App icon**: user wants the ShadowBot icon — copy 影刀安装目录 `Standalone\icon.ico` (影刀 logo) to `app_icon.ico` (in skill root), pass `icon=os.path.join(SKILL_DIR, 'app_icon.ico')` in the spec; also convert ico→png into `resources/app_icon.png`, ship via `datas=`, and `app.setWindowIcon(QIcon(...))` in `run()` for the runtime window icon.
 - **账号名/显示名 toggle switch** (user requested "左右滑动开关, 左账号名右显示名, 默认显示名"): `AppInfo` carries both `owner_name` (login id) and `display_name` (显示名) with `""` defaults; scanner fills them from `users\Account.xml` (login↔display map) + `users\<id>\user.db3` `developmentsync_apps_v2` uuid→ownerName, falling back to owner_name when Account.xml has no display entry (e.g. `xxx`). List rows render `应用名 (显示名)` / `应用名 (账号名)`; search must match name + owner_name + display_name (searching "xxx" or "xxx" both filter). Widget pattern: a checkable `QPushButton` subclass (48×24 track) that paints the white knob in `paintEvent` (`isChecked()` → knob at right), QSS colors the track (`QPushButton#modeSwitch:checked` = purple gradient), and two side labels whose active state is toggled via a QSS **property selector** — `QLabel#switchLabel[active="true"]` — which requires `lbl.style().unpolish(lbl); lbl.style().polish(lbl)` after `setProperty` or the highlight never repaints. `stateChanged`/`clicked` still deliver int; track `self._mode` explicitly.
 - **Single-instance (user explicitly wants it)**: double-launching must NOT open a second window — activate the existing one instead. Pattern: module-level `QSharedMemory(_SINGLE_INSTANCE_KEY)`; `attach()` succeeds → existing instance: `detach()` + `_activate_existing_window()` + `return 0` from `run()` before creating the window; else `create(1)` and hold the reference (GC dropping it releases the lock). Activation = `EnumWindows` matching the exact title `影刀迁移助手` + `IsWindowVisible`, then bypass the Windows foreground lock: `ShowWindow(hwnd, SW_RESTORE)` (restores minimized), `AttachThreadInput(current_thread, fg_thread, True)` + `keybd_event(VK_MENU,0,0,0)` (Alt down) + `SetForegroundWindow` + Alt up + `BringWindowToTop`, then detach thread input. Verify with two real exe launches: 2nd exits rc 0, `EnumWindows` count == 1, minimized window gets restored; after closing, a fresh launch works again (lock released).
 

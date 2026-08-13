@@ -1,4 +1,4 @@
-# PySide6 GUI Architecture for 影刀迁移助手 (D:\xobt\src\migration_assistant\)
+# PySide6 GUI Architecture for 影刀迁移助手 
 
 Working patterns from the GUI build. All pitfalls below were hit and fixed in a real session.
 

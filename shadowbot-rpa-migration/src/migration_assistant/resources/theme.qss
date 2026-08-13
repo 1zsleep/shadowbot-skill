@@ -1,0 +1,245 @@
+/* 影刀迁移助手 - 浅色紫色主题 */
+/* 注意: Qt QSS 不支持 CSS 的 linear-gradient(), 必须用 qlineargradient() */
+* {
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Segoe UI", sans-serif;
+    font-size: 13px;
+    color: #26324a;
+}
+QMainWindow, QDialog {
+    background: #f5f7fb;
+}
+QLabel {
+    background: transparent;
+}
+QWidget#topBar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6157f5, stop:1 #8178ff);
+    border-radius: 0;
+    padding: 4px;
+}
+QLabel#titleLabel {
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 6px 14px;
+    background: transparent;
+}
+QLabel#statusLabel {
+    color: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    padding: 3px 12px;
+    font-weight: 500;
+}
+QPushButton#refreshBtn {
+    background: rgba(255,255,255,0.22);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-weight: 600;
+}
+QPushButton#refreshBtn:hover { background: rgba(255,255,255,0.34); }
+QPushButton#refreshBtn:disabled { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.5); }
+
+QFrame#card {
+    background: white;
+    border: 1px solid #e8ebf2;
+    border-radius: 14px;
+}
+QLabel#cardTitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1d2742;
+    background: transparent;
+}
+QLabel#cardCount { color: #939cad; font-weight: 500; background: transparent; }
+QLineEdit#searchBox {
+    border: 1px solid #dfe4ef;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: #f7f8fc;
+    color: #26324a;
+    selection-background-color: #665cf6;
+    selection-color: white;
+}
+QLineEdit#searchBox:focus { border-color: #665cf6; background: white; }
+QCheckBox { spacing: 8px; font-weight: 600; color: #26324a; background: transparent; }
+
+QLabel#switchLabel {
+    color: #939cad;
+    font-weight: 600;
+    font-size: 12px;
+}
+QLabel#switchLabel[active="true"] {
+    color: #665cf6;
+    font-weight: 700;
+}
+QPushButton#modeSwitch {
+    background: #cfd4e4;
+    border: none;
+    border-radius: 12px;
+}
+QPushButton#modeSwitch:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6157f5, stop:1 #8178ff);
+}
+QPushButton#modeSwitch:hover { background: #bcc3d8; }
+QPushButton#modeSwitch:checked:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #574fe0, stop:1 #6f66f8);
+}
+
+QListWidget#appList, QListWidget#accountList {
+    border: 1px solid #e5e9f1;
+    border-radius: 10px;
+    background: white;
+    outline: none;
+    padding: 4px;
+    color: #26324a;
+}
+QListWidget#appList::item, QListWidget#accountList::item {
+    border-radius: 8px;
+    padding: 7px 8px;
+    margin: 1px 0;
+    color: #26324a;
+}
+QListWidget#appList::item:hover, QListWidget#accountList::item:hover {
+    background: #f4f5fb;
+}
+QListWidget#appList::item:selected, QListWidget#accountList::item:selected {
+    background: #eceafd;
+    color: #4f47d9;
+}
+QListWidget#accountList::item:disabled { color: #c3c8d4; }
+
+QPushButton#addAccountBtn {
+    background: #665cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-weight: 600;
+}
+QPushButton#addAccountBtn:hover { background: #574fe0; }
+QPushButton#addAccountBtn:disabled { background: #c5c2ea; color: #f0effa; }
+
+QFrame#footerBar {
+    background: white;
+    border: 1px solid #e8ebf2;
+    border-radius: 14px;
+}
+QLabel#taskSummary { font-weight: 600; color: #1d2742; background: transparent; }
+QLabel#taskSummary b { color: #665cf6; }
+
+/* 主操作按钮 */
+QPushButton#startBtn {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6157f5, stop:1 #8178ff);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 9px 26px;
+    font-size: 14px;
+    font-weight: 700;
+}
+QPushButton#startBtn:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #574fe0, stop:1 #6f66f8);
+}
+QPushButton#startBtn:pressed { background: #4f47d9; }
+QPushButton#startBtn:disabled { background: #cfcce8; color: #f0effa; }
+
+/* 停止按钮 */
+QPushButton#stopBtn {
+    background: #ef5350;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 9px 26px;
+    font-size: 14px;
+    font-weight: 700;
+}
+QPushButton#stopBtn:hover { background: #e0433f; }
+QPushButton#stopBtn:disabled { background: #f3c4c2; color: #fdeeec; }
+
+/* 次级/取消按钮 */
+QPushButton#cancelBtn {
+    background: white;
+    color: #5e6678;
+    border: 1px solid #d5dae6;
+    border-radius: 9px;
+    padding: 9px 26px;
+    font-size: 14px;
+    font-weight: 600;
+}
+QPushButton#cancelBtn:hover { background: #f4f5fb; border-color: #b9c0d4; }
+QPushButton#cancelBtn:pressed { background: #e9ebf4; }
+
+/* 对话框通用按钮兜底 */
+QDialog QPushButton {
+    min-height: 30px;
+    padding: 4px 18px;
+    border-radius: 8px;
+    border: 1px solid #d5dae6;
+    background: white;
+    color: #26324a;
+    font-weight: 600;
+}
+QDialog QPushButton:hover { background: #f4f5fb; }
+QDialog QPushButton#startBtn {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #6157f5, stop:1 #8178ff);
+    color: white;
+    border: none;
+}
+
+QFrame#progressPanel {
+    background: white;
+    border: 1px solid #e8ebf2;
+    border-radius: 14px;
+}
+QProgressBar {
+    border: none;
+    border-radius: 6px;
+    background: #e8eaf1;
+    height: 10px;
+    text-align: center;
+    color: #4f47d9;
+    font-weight: 600;
+    font-size: 11px;
+}
+QProgressBar::chunk {
+    border-radius: 6px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #665cf6, stop:1 #8178ff);
+}
+QPlainTextEdit#logView {
+    border: 1px solid #e5e9f1;
+    border-radius: 10px;
+    background: #fafbfe;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 12px;
+    color: #3a445c;
+    selection-background-color: #665cf6;
+    selection-color: white;
+}
+QLabel#stageLabel { font-weight: 600; color: #4f47d9; background: transparent; }
+QLabel#currentLabel { color: #687187; background: transparent; }
+QLabel { background: transparent; }
+
+QMenu {
+    background: white;
+    border: 1px solid #e4e8f0;
+    border-radius: 8px;
+    padding: 4px;
+    color: #26324a;
+}
+QMenu::item { padding: 6px 22px; border-radius: 6px; color: #26324a; }
+QMenu::item:selected { background: #eceafd; color: #4f47d9; }
+
+QMessageBox {
+    background: white;
+}
+QMessageBox QLabel { color: #26324a; }
+
+QToolTip {
+    background: #2d3350;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
