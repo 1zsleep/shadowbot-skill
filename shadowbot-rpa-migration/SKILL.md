@@ -24,6 +24,7 @@ Publish/migrate local 影刀 RPA apps to the cloud, extend the working tool — 
 - **Cloud APIs live under `https://api.winrobot360.com/api/client/app/...`**, auth via `https://api.yingdao.com/oauth/token`. The `/app/...` paths WITHOUT `/api/client` prefix return 404; `/api/rpa/...` 404s too.
 - **Migration semantics**: each upload creates a NEW cloud app — fresh `uuid4()` + name suffix `_云迁_接收于<YYYY年MM月DD日 HH时MM分SS秒>`.
 - ShadowBot official CLI: 影刀安装目录下的 `shadowbot.shell-cli.exe` (auth login/current, studio create/open/save). Studio APIs need an **enterprise** account; free/basic accounts get `API 不可用`.
+- **运行本地应用（真实执行，非模拟）**: `shadowbot.shell-cli console task run --app-id <uuid> --app-type developed`（默认同步模式带流式日志，`--wait-timeout 120s` 限时）。app 列表用 `console app --page-size 50`（含本地开发的 developed 应用，appId=本地 uuid）；客户端需在线（`system health` → console-restapi ready）。实测对本地"新建应用1"运行 success=true，7.4s。注意 Code-Activity/Zh-CN 里的 xbot/xbot_visual 是**代码模板**（visual_action 全 pass、xbot_ai 包不存在），脱离客户端 python 直跑 main.py 不可行。
 - Original tool stores creds plaintext in `%APPDATA%\Xbot Deployer\contacts.db3` (table `user`).
 
 ## Migration workflow (per app)
