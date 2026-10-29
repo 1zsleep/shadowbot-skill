@@ -1,0 +1,584 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual.datetime.DateTimeParts",
+      "localName": "日期时间详情",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "year",
+          "type": "int",
+          "label": "年份"
+        },
+        {
+          "name": "month",
+          "type": "int",
+          "label": "月份"
+        },
+        {
+          "name": "day",
+          "type": "int",
+          "label": "天数"
+        },
+        {
+          "name": "hour",
+          "type": "int",
+          "label": "小时"
+        },
+        {
+          "name": "minute",
+          "type": "int",
+          "label": "分钟"
+        },
+        {
+          "name": "second",
+          "type": "int",
+          "label": "秒数"
+        },
+        {
+          "name": "weekday",
+          "type": "int",
+          "label": "星期"
+        },
+        {
+          "name": "lastday_of_month",
+          "type": "int",
+          "label": "当月最后一天"
+        },
+        {
+          "name": "week_of_year",
+          "type": "int",
+          "label": "当年第几周"
+        },
+        {
+          "name": "day_of_year",
+          "type": "int",
+          "label": "当年第几天"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "datetime.now",
+      "function": "xbot_visual.datetime.now",
+      "title": "获取当前日期时间",
+      "description": "获取当前日期时间",
+      "comment": "获取当前日期时间，将结果保存到%datetime_instance%",
+      "icon": "Datetime_Now",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/获取当前时间.html",
+      "outputs": [
+        {
+          "id": "datetime_instance",
+          "label": "保存当前日期时间至",
+          "variableLabel": "当前的日期时间对象",
+          "tips": "输入一个变量，用来保存当前日期时间",
+          "type": "datetime",
+          "name": "current_datetime"
+        }
+      ]
+    },
+    {
+      "name": "datetime.difference",
+      "function": "xbot_visual.datetime.difference",
+      "title": "获取时间间隔",
+      "description": "获取时间间隔",
+      "comment": "获取%begin_datetime%到%end_datetime%间隔的%unit%数，将结果保存至%datetime_difference%",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.DifferenceHandler"
+        }
+      ],
+      "icon": "Datetime_Difference",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/获取时间间隔.html",
+      "inputs": [
+        {
+          "name": "begin_datetime",
+          "label": "开始时间",
+          "required": false,
+          "tips": "输入开始时间。若日期是文本，只支持常用格式，如：2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本。若空，则为系统的当前时间"
+          }
+        },
+        {
+          "name": "end_datetime",
+          "label": "结束时间",
+          "required": false,
+          "tips": "输入结束时间。若日期是文本，只支持常用格式，如：2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等",
+          "type": "datetime",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本。若空，则为系统的当前时间"
+          }
+        },
+        {
+          "name": "unit",
+          "label": "时间间隔单位",
+          "required": true,
+          "default": "10:second",
+          "defaultDisplay": "秒",
+          "tips": "选择时间间隔的时间单位",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "秒",
+                "value": "second"
+              },
+              {
+                "display": "分钟",
+                "value": "minute"
+              },
+              {
+                "display": "小时",
+                "value": "hour"
+              },
+              {
+                "display": "天",
+                "value": "day"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datetime_difference",
+          "label": "保存时间间隔至",
+          "variableLabel": "时间间隔",
+          "tips": "输入一个变量，用来保存时间间隔",
+          "type": "int",
+          "name": "datetime_difference"
+        }
+      ]
+    },
+    {
+      "name": "datetime.add",
+      "function": "xbot_visual.datetime.add",
+      "title": "增加/减少时间",
+      "description": "在指定日期时间上进行时间增加或者减少，支持文本格式的日期",
+      "comment": "将%datetime%%timeway%%duration%%unit%，将结果保存到%datetime_instance%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Datetime.AddControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.AddHandler"
+        }
+      ],
+      "icon": "Datetime_Add",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/增加时间.html",
+      "inputs": [
+        {
+          "name": "datetime",
+          "label": "原日期时间",
+          "required": false,
+          "tips": "输入日期时间。若日期是文本，只支持常用格式，如: 2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本。若空，为系统的当前时间"
+          }
+        },
+        {
+          "name": "timeway",
+          "label": "调整方式",
+          "required": true,
+          "default": "10:increase",
+          "defaultDisplay": "增加",
+          "tips": "选择增加时间或者减少时间",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "增加",
+                "value": "increase"
+              },
+              {
+                "display": "减少",
+                "value": "decrease"
+              }
+            ]
+          }
+        },
+        {
+          "name": "duration",
+          "label": "时间长度",
+          "required": true,
+          "tips": "输入时间长度",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "unit",
+          "label": "时间单位",
+          "required": true,
+          "default": "10:second",
+          "defaultDisplay": "秒",
+          "tips": "选择时间单位",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "秒",
+                "value": "second"
+              },
+              {
+                "display": "分钟",
+                "value": "minute"
+              },
+              {
+                "display": "小时",
+                "value": "hour"
+              },
+              {
+                "display": "天",
+                "value": "day"
+              },
+              {
+                "display": "月",
+                "value": "month"
+              },
+              {
+                "display": "年",
+                "value": "year"
+              }
+            ]
+          }
+        },
+        {
+          "name": "output_text",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "若勾选，指明该指令的输出为新日期的文本格式，否则为日期时间对象",
+          "type": "bool",
+          "editor": {
+            "label": "输出日期时间的文本",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datetime_instance",
+          "label": "保存新的日期时间至",
+          "variableLabel": "更改时间后的日期时间对象",
+          "tips": "输入一个名字，用来保存更改后的日期时间",
+          "type": "datetime",
+          "name": "datetime_instance"
+        },
+        {
+          "id": "datetime_text",
+          "label": "保存新的日期文本至",
+          "variableLabel": "更改时间后的日期时间文本",
+          "tips": "输入一个名字，用来保存更改后的日期时间的文本",
+          "type": "str",
+          "name": "datetime_text"
+        }
+      ]
+    },
+    {
+      "name": "datetime.from_string",
+      "function": "xbot_visual.datetime.from_string",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Datetime.FromStringControl, ShadowBot.Shell.Development",
+      "title": "转换到日期时间",
+      "keywords": "文本转换",
+      "description": "将文本转换成日期时间，默认采用%Y-%m-%d的时间格式",
+      "comment": "将%text%按%format%格式转换成日期时间，并将结果保存到%datetime_instance%",
+      "icon": "Datetime_From_String",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/转换到日期时间.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.FromStringHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本",
+          "required": true,
+          "tips": "输入待转换到日期时间的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_custom_format",
+          "label": "",
+          "required": true,
+          "tips": "是否使用自定义格式",
+          "type": "bool",
+          "default": "13:False",
+          "editor": {
+            "label": "使用自定义格式",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "format",
+          "label": "时间格式",
+          "required": false,
+          "tips": "设置待转换文本的日期时间格式。自定义的时间格式请参考Python日期时间相关文档。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datetime_instance",
+          "label": "保存日期时间至",
+          "variableLabel": "文本转换后的日期时间对象",
+          "tips": "输入一个名字，用来保存转换后的日期时间",
+          "type": "datetime",
+          "name": "datetime_instance"
+        }
+      ]
+    },
+    {
+      "name": "datetime.to_string",
+      "function": "xbot_visual.datetime.to_string",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Datetime.ToStringControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.ToStringHandler"
+        }
+      ],
+      "title": "日期时间转换为文本",
+      "keywords": "星期;格式化",
+      "description": "将日期时间转换到文本",
+      "comment": "将%datetime%按%format%格式转换成文本，将结果保存到%text%",
+      "icon": "Datetime_To_String",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/时间转换到文本.html",
+      "inputs": [
+        {
+          "name": "datetime",
+          "label": "日期时间",
+          "required": false,
+          "tips": "输入待转换日期。若日期是文本，只支持常用格式，如: 2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本。若空，为系统的当前时间"
+          }
+        },
+        {
+          "name": "format",
+          "label": "时间格式",
+          "required": true,
+          "tips": "设置待转换文本的日期时间格式。自定义的时间格式请参考Python日期时间相关文档。",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text",
+          "label": "保存文本至",
+          "variableLabel": "日期时间转换后的文本",
+          "tips": "输入一个名字，用来保存转换后的文本",
+          "type": "str",
+          "name": "text"
+        }
+      ]
+    },
+    {
+      "name": "datetime.get_parts",
+      "function": "xbot_visual.datetime.get_parts",
+      "title": "获取时间详细信息",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.DetailHandler"
+        }
+      ],
+      "keywords": "日期时间;年月日时分秒;星期;当月最后一天;当年第几周;当年第几天",
+      "description": "获取日期时间的年、月、日、时、分、秒、星期、当月最后一天、当年第几周、当年第几天",
+      "comment": "获取%datetime%的时间详细信息，将结果保存到%datetime_parts%",
+      "icon": "Datetime_Get_Parts",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/获取时间详细信息.html",
+      "inputs": [
+        {
+          "name": "datetime",
+          "label": "日期时间",
+          "required": false,
+          "tips": "输入日期时间。若日期是文本，只支持常用格式，如: 2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本。若空，为系统的当前时间"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datetime_parts",
+          "label": "保存日期时间数据至",
+          "variableLabel": "时间的详情数据",
+          "tips": "输入一个名字，用来保存获得的年月日时分秒数据",
+          "required": true,
+          "type": "xbot_visual.datetime.DateTimeParts",
+          "name": "datetime_parts"
+        }
+      ]
+    },
+    {
+      "name": "datetime.to_timestamp",
+      "function": "xbot_visual.datetime.to_timestamp",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Datetime.ToTimestampControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.ToTimestampHandler"
+        }
+      ],
+      "title": "日期时间转换为时间戳",
+      "keywords": "星期;格式化",
+      "description": "将日期时间转换为时间戳",
+      "comment": "将%datetime%转换成%timestamp_level%时间戳，将结果保存到%timestamp%",
+      "icon": "Datetime_To_Timestamp",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/日期时间转换为时间戳.html",
+      "inputs": [
+        {
+          "name": "datetime",
+          "label": "日期时间",
+          "required": false,
+          "tips": "输入待转换日期。若日期是文本，只支持常用格式，如: 2020-02-02、2020/02/02 02:02:02、2020年2月2日 2时2分2秒等",
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "日期时间对象或文本。若空，为系统的当前时间"
+          }
+        },
+        {
+          "name": "timestamp_level",
+          "label": "时间戳级别",
+          "required": true,
+          "default": "10:second",
+          "defaultDisplay": "秒级",
+          "tips": "选择时间戳级别，分别为秒级，毫秒级，微秒级",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "秒级",
+                "value": "second"
+              },
+              {
+                "display": "毫秒级",
+                "value": "millisecond"
+              },
+              {
+                "display": "微秒级",
+                "value": "microsecond"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "timestamp",
+          "label": "保存时间戳至",
+          "variableLabel": "日期时间转换后的时间戳",
+          "tips": "输入一个变量名，用来保存转换后的时间戳",
+          "type": "str",
+          "name": "timestamp"
+        }
+      ]
+    },
+    {
+      "name": "datetime.from_timestamp",
+      "function": "xbot_visual.datetime.from_timestamp",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Datetime.FromTimestampControl, ShadowBot.Shell.Development",
+      "title": "时间戳转换为日期时间",
+      "description": "将时间戳转换为日期时间，默认采用秒级时间戳",
+      "comment": "将%timestamp%按%timestamp_level%时间戳转换成日期时间，将结果保存到%datetime_instance%",
+      "icon": "Datetime_From_Timestamp",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/日期时间/时间戳转换为日期时间.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Datetime.FromTimestampHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "timestamp",
+          "label": "时间戳",
+          "required": true,
+          "tips": "输入待转换到日期时间的时间戳",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timestamp_level",
+          "label": "时间戳级别",
+          "required": true,
+          "default": "10:second",
+          "defaultDisplay": "秒级",
+          "tips": "选择时间戳级别，分别为秒级，毫秒级，微秒级",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "秒级",
+                "value": "second"
+              },
+              {
+                "display": "毫秒级",
+                "value": "millisecond"
+              },
+              {
+                "display": "微秒级",
+                "value": "microsecond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "output_text",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "若勾选，指明该指令的输出为日期时间文本格式(采用默认格式%Y-%m-%d %H:%M:%S)，否则为日期时间对象",
+          "type": "bool",
+          "editor": {
+            "label": "输出日期时间的文本",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datetime_instance",
+          "label": "保存日期时间至",
+          "variableLabel": "时间戳转换后的日期时间对象",
+          "tips": "输入一个变量名，用来保存转换后的日期时间",
+          "type": "datetime",
+          "name": "datetime_instance"
+        },
+        {
+          "id": "datetime_text",
+          "label": "保存日期文本至",
+          "variableLabel": "时间戳转换后的日期时间文本",
+          "tips": "输入一个变量名，用来保存转换后的日期时间的文本",
+          "type": "str",
+          "name": "datetime_text"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "resourcesfile.read",
+      "function": "xbot_visual.resourcesfile.read",
+      "title": "读取资源文件内容",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.ResourcesFile.ReadFileControl, ShadowBot.Shell.Development",
+      "description": "读取资源文件内容",
+      "icon": "Resourcesfile_Read",
+      "comment": "获取资源文件%file_name%的%read_way%",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/资源文件/读取资源文件内容.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.ResourcesFile.ReadFileHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "file_name",
+          "label": "资源文件名",
+          "required": true,
+          "tips": "请选择资源文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "read_way",
+          "label": "读取内容",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "文本内容",
+          "tips": "选择文件的读取方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "文本内容",
+                "value": "text"
+              },
+              {
+                "display": "二进制内容",
+                "value": "binary"
+              }
+            ]
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "文件编码",
+          "default": "10:UTF-8",
+          "defaultDisplay": "UTF-8",
+          "tips": "选择文本编码",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认",
+                "value": "default"
+              },
+              {
+                "display": "ANSI",
+                "value": "ANSI"
+              },
+              {
+                "display": "GB2312",
+                "value": "GB2312"
+              },
+              {
+                "display": "GBK",
+                "value": "GBK"
+              },
+              {
+                "display": "UTF-8",
+                "value": "UTF-8"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_content",
+          "label": "保存文件内容至",
+          "variableLabel": "资源文件内容",
+          "tips": "输入一个名字，用来保存文件内容",
+          "type": "any",
+          "name": "file_content"
+        }
+      ]
+    },
+    {
+      "name": "resourcesfile.copy_to",
+      "title": "拷贝资源文件",
+      "keywords": "复制资源文件",
+      "comment": "将资源文件%file_name%的内容拷贝到%dest_file_name%中",
+      "description": "将资源文件的内容拷贝到指定文件中",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.ResourcesFile.CopyToControl, ShadowBot.Shell.Development",
+      "icon": "Resourcesfile_Copy_To",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/资源文件/拷贝资源文件.html",
+      "function": "xbot_visual.resourcesfile.copy_to",
+      "inputs": [
+        {
+          "name": "file_name",
+          "label": "资源文件名",
+          "required": true,
+          "tips": "请选择资源文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "dest_file_name",
+          "label": "资源文件拷贝至",
+          "required": true,
+          "tips": "需要将资源文件拷贝到的文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "copy_way",
+          "label": "存在同名文件时",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "tips": "指定当目标文件夹下已存在同名文件时要执行的操作",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "不要拷贝",
+                "value": "not_copy"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "resourcesfile.get_resourcesfile_path",
+      "function": "xbot_visual.resourcesfile.get_resourcesfile_path",
+      "title": "获取资源文件路径",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.ResourcesFile.GetResourcesFilePath, ShadowBot.Shell.Development",
+      "description": "这个指令用来获取指定资源文件路径, 可用于资源文件的快速获取",
+      "comment": "获取资源文件%file_name%的路径，将文件路径保存到%file_path%",
+      "icon": "Resourcesfile_Get_Resourcesfile_Path",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/资源文件/获取资源文件路径.html",
+      "inputs": [
+        {
+          "name": "file_name",
+          "label": "资源文件名",
+          "required": true,
+          "tips": "输入资源文件名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_path",
+          "label": "保存文件路径至",
+          "variableLabel": "资源文件路径",
+          "tips": "输入一个名字，用来保存文件路径",
+          "type": "str",
+          "name": "file_path"
+        }
+      ]
+    },
+    {
+      "name": "resourcesfile.copy_to_clipboard",
+      "function": "xbot_visual.resourcesfile.copy_to_clipboard",
+      "title": "将资源文件添加到剪切板",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.ResourcesFile.CopyToClipboardControl, ShadowBot.Shell.Development",
+      "description": "用来将资源文件添加到剪切板中，可用于资源文件的快捷发送",
+      "comment": "将资源文件%file_name%添加到剪切板中",
+      "icon": "Resourcesfile_Copy_To_Clipboard",
+      "helpUrl": "language/zh-cn/指令文档/流程、应用/资源文件/将资源文件添加到剪切板.html",
+      "inputs": [
+        {
+          "name": "file_name",
+          "label": "资源文件名",
+          "required": true,
+          "tips": "输入资源文件名",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    }
+  ]
+}

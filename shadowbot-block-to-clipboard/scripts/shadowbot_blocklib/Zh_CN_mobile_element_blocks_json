@@ -1,0 +1,1449 @@
+{
+  "types": [
+    {
+      "name": "xbot._mobile.element.Point",
+      "localName": "元素坐标",
+      "methods": [
+        {
+          "display": "横坐标",
+          "function": "$0.get_x()",
+          "type": "int"
+        },
+        {
+          "display": "纵坐标",
+          "function": "$0.get_y()",
+          "type": "int"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "mobile.element.click",
+      "title": "点击元素(手机)",
+      "description": "点击手机内的元素,如按钮、链接或其他任何元素",
+      "comment": "在手机%session%中%clicks%元素%element%",
+      "icon": "Mobile_Element_Click",
+      "function": "xbot_visual.mobile.element.click",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ClickElementControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.ClickHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/点击元素（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "",
+          "required": true,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "clicks",
+          "label": "点击方式",
+          "required": true,
+          "category": "advanced",
+          "default": "10:click",
+          "defaultDisplay": "单击",
+          "tips": "可以选择单击，双击和长按模式，默认为单击",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单击",
+                "value": "click"
+              },
+              {
+                "display": "双击",
+                "value": "dbclick"
+              },
+              {
+                "display": "长按",
+                "value": "longpress"
+              }
+            ]
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "category": "advanced",
+          "default": "10:1",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "锚点",
+          "required": true,
+          "tips": "支持点击元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)",
+          "type": "str",
+          "default": "10:center",
+          "category": "advanced",
+          "defaultDisplay": "中心点",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.find_images",
+      "icon": "Mobile_Element_Find_Images",
+      "description": "获取由指定图像在屏幕上匹配到的所有图像位置",
+      "keywords": "",
+      "comment": "在手机%session%中搜索图像%template_images%，返回匹配到的位置列表至%element_positions%",
+      "title": "获取图像坐标(手机)",
+      "function": "xbot_visual.mobile.element.find_images",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/获取图像位置（手机）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.FindImagesControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张存在，则继续执行流程",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "anchor_type",
+          "label": "选择图像的部位",
+          "required": true,
+          "tips": "支持元素中心位置(元素矩形区域的中心点)、随机位置(自动随机指定元素矩形范围内的点)、自定义位置(手动指定目标点)",
+          "type": "str",
+          "default": "10:center",
+          "defaultDisplay": "中心点位置",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "中心点",
+                "value": "center"
+              },
+              {
+                "display": "随机位置",
+                "value": "random"
+              },
+              {
+                "display": "自定义",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sudoku_part",
+          "label": "目标图像的部位",
+          "default": "10:middleCenter",
+          "tips": "选择你要将鼠标移动到图像的哪个部位上",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "sudoku"
+          }
+        },
+        {
+          "name": "offset_x",
+          "label": "横向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向右移动 5px，输入负数代表向左移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "offset_y",
+          "label": "纵向偏移",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入 5 表示将鼠标向下移动 5px，输入负数代表向上移动鼠标",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "element_positions",
+          "label": "保存图像位置列表至",
+          "variableLabel": "图像位置列表",
+          "tips": "指定一个变量名称,该变量用于保存匹配到的图像位置信息",
+          "name": "mobile_image_positions",
+          "type": "list<xbot._mobile.element.Point>"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.exist_images",
+      "icon": "Mobile_Element_Exist_Images",
+      "statement": "workflow.if",
+      "description": "检测手机屏幕上目标图像是否存在",
+      "keywords": "图片存在",
+      "comment": "在手机%session%中是否%exist_mode%目标图像%template_images%",
+      "title": "IF 图像存在(手机)",
+      "indent": "1",
+      "scope": "1",
+      "isCondition": true,
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ExistsImageControl, ShadowBot.Shell.Development",
+      "function": "xbot_visual.mobile.element.exist_images",
+      "helpUrl": "language/zh-cn/指令文档/条件判断/if图像存在（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "exist_mode",
+          "label": "查找方式",
+          "required": true,
+          "default": "10:exist",
+          "defaultDisplay": "存在",
+          "tips": "指定查找范围内指定的图像存在or不存在",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "存在",
+                "value": "exist"
+              },
+              {
+                "display": "不存在",
+                "value": "notexist"
+              }
+            ]
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张存在，则继续执行流程",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "is_find_all_images",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "检测所有图像或者只检测其中一张",
+          "type": "bool",
+          "editor": {
+            "label": "全部图像存在(不存在)后再执行",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.wait_images",
+      "icon": "Mobile_Element_Wait_Images",
+      "description": "等待目标图像出现或消失，再继续执行流程",
+      "comment": "等待%session%中图像%template_images%出现，最多等待%timeout%秒",
+      "title": "等待图像(手机)",
+      "keywords": "等待图片",
+      "function": "xbot_visual.mobile.element.wait_images",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.WaitImageControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.WaitImageHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/等待图像（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "wait_mode",
+          "label": "等待方式",
+          "required": true,
+          "default": "10:appear",
+          "defaultDisplay": "等待目标图像出现",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等待目标图像出现",
+                "value": "appear"
+              },
+              {
+                "display": "等待目标图像消失",
+                "value": "disappear"
+              }
+            ]
+          }
+        },
+        {
+          "name": "template_images",
+          "label": "目标图像",
+          "tips": "可从图像库选择多张图，其中任一张\"出现/消失\"，则继续执行流程",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "images"
+          }
+        },
+        {
+          "name": "is_wait_all_images",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "等待所有图像或者只等待其中一张",
+          "type": "bool",
+          "editor": {
+            "label": "等待全部图像出现(消失)后再执行",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "iswait",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "设置等待超时时间，超时后流程将自动往下继续执行",
+          "type": "bool",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间（秒）",
+          "default": "10:20",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "wait_result",
+          "label": "等待结果",
+          "tips": "如果为True则等待成功,否则等待超时",
+          "name": "image_wait_result",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.input",
+      "title": "输入文本(手机)",
+      "description": "向手机指定位置输入文本",
+      "comment": "在手机%session%中的%element%元素中输入%text%",
+      "icon": "Mobile_Element_Input",
+      "function": "xbot_visual.mobile.element.input",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/填写输入框（手机）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.InputControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.InputHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "input_object",
+          "label": "输入对象",
+          "required": true,
+          "tips": "向手机屏幕光标所在位置，或者指定的输入框发送文本",
+          "type": "str",
+          "default": "10:input",
+          "defaultDisplay": "指定输入框",
+          "autoFill": true,
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "光标所在位置",
+                "value": "focus"
+              },
+              {
+                "display": "指定输入框",
+                "value": "input"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": false,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "text",
+          "label": "输入内容",
+          "tips": "填写要输入的内容",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "append",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "如果勾选追加输入则在现有内容后继续追加输入,否则清空现有内容后再进行输入",
+          "type": "bool",
+          "editor": {
+            "label": "追加输入",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "end_with_enter",
+          "label": " ",
+          "required": false,
+          "default": "13:False",
+          "tips": "输入后回车",
+          "type": "bool",
+          "editor": {
+            "kind": "checkbox",
+            "label": "输入后回车"
+          }
+        },
+        {
+          "name": "delay_after",
+          "label": "执行后延迟（秒）",
+          "required": true,
+          "default": "10:1",
+          "category": "advanced",
+          "tips": "指令执行完成后的等待时间",
+          "type": "float",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.get_details",
+      "title": "获取手机元素信息",
+      "keywords": "元素位置",
+      "description": "获取手机内的指定元素的文本内容、属性、元素位置等信息",
+      "comment": "%operation%，目标元素为%element%，将结果保存至到%element_attribute%",
+      "icon": "Mobile_Element_Get_Details",
+      "function": "xbot_visual.mobile.element.get_details",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/获取元素信息（手机）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.GetElementDetailsControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:text",
+          "defaultDisplay": "获取元素文本内容",
+          "tips": "选择要获取的元素信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取元素文本内容",
+                "value": "text"
+              },
+              {
+                "display": "获取元素属性",
+                "value": "other"
+              },
+              {
+                "display": "获取元素位置",
+                "value": "bound"
+              }
+            ]
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "tips": "填写要获取的元素的属性名称，支持获取的属性名称列表，请查看指令使用说明",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "element_attribute",
+          "label": "保存元素信息至",
+          "variableLabel": "元素信息",
+          "tips": "指定一个变量名称,该变量用于保存获取到的元素信息",
+          "name": "mobile_element_attribute",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.screenshot",
+      "title": "元素截图(手机)",
+      "description": "对手机中的元素进行截图,并将结果保存至指定文件",
+      "comment": "在手机%session%中对%element%元素进行截图，将结果保存到%folder_path%",
+      "icon": "Mobile_Element_Screenshot",
+      "function": "xbot_visual.mobile.element.screenshot",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/元素截图（手机）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ScreenShotControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "folder_path",
+          "label": "保存文件夹",
+          "required": true,
+          "tips": "截图保存的文件夹",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "random_filename",
+          "label": "",
+          "required": true,
+          "default": "13:True",
+          "tips": "自动生成不重复的文件名",
+          "type": "bool",
+          "editor": {
+            "label": "使用自动随机文件名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "filename",
+          "label": "自定义文件名",
+          "tips": "自定义文件名 如: screenshot.png",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "screenshot_save_file_name",
+          "label": "截图保存位置",
+          "variableLabel": "元素截图位置",
+          "tips": "截图文件所在的位置：文件路径+名称",
+          "name": "screenshot_save_file_name",
+          "type": "str"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.wait",
+      "title": "等待元素(手机)",
+      "description": "等待手机中元素出现或消失,再执行接下来的流程",
+      "comment": "在手机%session%中等待元素%element% %state%,再执行接下来的流程",
+      "icon": "Mobile_Element_Wait",
+      "function": "xbot_visual.mobile.element.wait",
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/等待元素（手机）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.WaitElementControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.WaitMobileElementHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "state",
+          "label": "等待状态",
+          "required": true,
+          "default": "10:appear",
+          "defaultDisplay": "等待元素出现",
+          "tips": "选择等待状态",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "等待元素出现",
+                "value": "appear"
+              },
+              {
+                "display": "等待元素消失",
+                "value": "disappear"
+              }
+            ]
+          }
+        },
+        {
+          "name": "iswait",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "设置等待超时时间，超时后流程将自动往下继续执行",
+          "type": "bool",
+          "editor": {
+            "label": "设置超时时间",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间(秒)",
+          "default": "10:20",
+          "tips": "设置最大等待时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "wait_result",
+          "label": "等待结果",
+          "tips": "如果为True则等待成功,否则等待超时",
+          "name": "web_wait_result",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.get_element",
+      "title": "获取元素对象(手机)",
+      "description": "获取手机元素的具体数据项，可对该项进行内容提取、值设置等自动化操作",
+      "comment": "在%session%中获取元素对象，将结果保存到%mobile_element%",
+      "icon": "Mobile_Element_Get_Element",
+      "function": "xbot_visual.mobile.element.get_element",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.GetElementControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.GetElementHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/手机操作自动化/获取元素对象（手机）.html",
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "select_type",
+          "label": "定位方式",
+          "required": true,
+          "default": "10:xbot_selector",
+          "defaultDisplay": "默认方式",
+          "tips": "指定一种定位元素的方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认方式",
+                "value": "xbot_selector"
+              },
+              {
+                "display": "id",
+                "value": "id"
+              },
+              {
+                "display": "text",
+                "value": "text"
+              },
+              {
+                "display": "accessibility_id",
+                "value": "accessibility_id"
+              },
+              {
+                "display": "label_name",
+                "value": "label_name"
+              },
+              {
+                "display": "xpath",
+                "value": "xpath"
+              },
+              {
+                "display": "uiautomator_selector",
+                "value": "uiautomator_selector"
+              }
+            ]
+          }
+        },
+        {
+          "name": "xbot_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "str_selector",
+          "label": "元素特征",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "is_related_parent",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否关联父元素",
+          "type": "bool",
+          "editor": {
+            "label": "关联父元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "parent",
+          "label": "父元素",
+          "required": false,
+          "tips": "在指定的父元素内查找目标元素",
+          "autoFill": false,
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "mobile_element",
+          "label": "保存元素对象至",
+          "variableLabel": "元素对象",
+          "tips": "指定一个变量名称,该变量用于保存获取到的元素对象",
+          "name": "mobile_element",
+          "type": "xbot._mobile.element.DeviceElement"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.get_all_elements",
+      "title": "获取相似元素列表(手机)",
+      "description": "获取相似元素列表，对该列表中的项进行自动化操作",
+      "comment": "在%session%手机中%operation%，将结果保存到%mobile_element_list%",
+      "icon": "Mobile_Element_Get_All_Elements",
+      "function": "xbot_visual.mobile.element.get_all_elements",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.GetAllElementsControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/相似元素操作/获取相似元素列表（手机）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.GetAllElementsHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "select_type",
+          "label": "定位方式",
+          "required": true,
+          "default": "10:xbot_selector",
+          "defaultDisplay": "默认方式",
+          "tips": "指定一种定位元素的方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认方式",
+                "value": "xbot_selector"
+              },
+              {
+                "display": "id",
+                "value": "id"
+              },
+              {
+                "display": "accessibility_id",
+                "value": "accessibility_id"
+              },
+              {
+                "display": "label_name",
+                "value": "label_name"
+              },
+              {
+                "display": "xpath",
+                "value": "xpath"
+              },
+              {
+                "display": "uiautomator_selector",
+                "value": "uiautomator_selector"
+              }
+            ]
+          }
+        },
+        {
+          "name": "xbot_selector",
+          "label": "操作目标",
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "str_selector",
+          "label": "元素特征",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:element",
+          "defaultDisplay": "获取元素对象",
+          "tips": "选择要获取的元素信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取元素对象",
+                "value": "element"
+              },
+              {
+                "display": "获取元素文本内容",
+                "value": "text"
+              },
+              {
+                "display": "获取元素属性",
+                "value": "attr"
+              }
+            ]
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "tips": "填写要获取的手机元素的属性名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_related_parent",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否关联父元素",
+          "type": "bool",
+          "editor": {
+            "label": "关联父元素",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "parent",
+          "label": "父元素",
+          "required": false,
+          "tips": "在指定的父元素内查找目标元素",
+          "autoFill": false,
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "mobile_element_list",
+          "label": "保存相似元素列表至",
+          "variableLabel": "相似元素列表",
+          "tips": "指定一个变量名称,该变量用于保存获取到的相似元素列表",
+          "name": "mobile_element_list",
+          "type": "list<xbot._mobile.element.DeviceElement>"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.foreach_element",
+      "statement": "workflow.forin",
+      "function": "xbot_visual.mobile.element.iter_all_elements",
+      "title": "循环相似元素(手机)",
+      "description": "依次循环软件相似元素列表中的每一项进行自动化操作",
+      "comment": "从手机连接对象%session%中获取相似元素%selector%，将结果依次循环保存到%loop_item%",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "icon": "Mobile_Element_Foreach_Element",
+      "helpUrl": "language/zh-cn/指令文档/相似元素操作/循环手机相似元素（手机）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Mobile.ForInControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.ForInControlHandler",
+          "settings": {
+            "inputName": "output_with_index",
+            "outputName": "loop_index"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "select_type",
+          "label": "定位方式",
+          "required": true,
+          "default": "10:xbot_selector",
+          "defaultDisplay": "默认方式",
+          "tips": "指定一种定位元素的方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "默认方式",
+                "value": "xbot_selector"
+              },
+              {
+                "display": "id",
+                "value": "id"
+              },
+              {
+                "display": "accessibility_id",
+                "value": "accessibility_id"
+              },
+              {
+                "display": "label_name",
+                "value": "label_name"
+              },
+              {
+                "display": "xpath",
+                "value": "xpath"
+              },
+              {
+                "display": "uiautomator_selector",
+                "value": "uiautomator_selector"
+              }
+            ]
+          }
+        },
+        {
+          "name": "selector",
+          "label": "操作目标",
+          "required": false,
+          "tips": "选择要操作的手机元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "onlySelector": true,
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "str_selector",
+          "label": "元素特征",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "output_with_index",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "是否输出循环项的位置",
+          "type": "bool",
+          "editor": {
+            "label": "输出循环项的位置",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "operation",
+          "label": "操作",
+          "required": true,
+          "default": "10:element",
+          "defaultDisplay": "获取元素对象",
+          "tips": "选择要获取的元素信息",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "获取元素对象",
+                "value": "element"
+              },
+              {
+                "display": "获取元素文本内容",
+                "value": "text"
+              },
+              {
+                "display": "获取元素属性",
+                "value": "attr"
+              }
+            ]
+          }
+        },
+        {
+          "name": "attribute_name",
+          "label": "属性名称",
+          "tips": "填写要获取的手机元素的属性名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "slice_start",
+          "label": "循环开始位置",
+          "required": false,
+          "default": "10:0",
+          "tips": "循环开始位置，0表示第一项",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "slice_end",
+          "label": "循环结束位置",
+          "required": false,
+          "default": "10:-1",
+          "tips": "循环结束位置，-1表示倒数第一项，结果包含结束位置的项",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待目标元素出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "spin",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_item",
+          "label": "保存当前循环项至",
+          "variableLabel": "当前循环项",
+          "tips": "指定一个变量名称,用于存储一组相似元素中的当前循环项",
+          "name": "mobile_element",
+          "type": "xbot._mobile.element.DeviceElement"
+        },
+        {
+          "id": "loop_index",
+          "label": "保存当前循环位置至",
+          "variableLabel": "当前循环项的位置",
+          "tips": "指定一个变量名称,用于存储一组相似元素中的当前循环项位置",
+          "name": "mobile_element_index",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "mobile.element.get_associated_elements",
+      "title": "获取关联元素(手机)",
+      "keywords": "父元素;子元素;相邻元素",
+      "description": "获取元素的关联元素（父元素、子元素、相邻元素）",
+      "comment": "获取元素%element%的%associated_kind%，将对象保存到%mobile_element_result%",
+      "icon": "Mobile_Element_Get_Associated_Elements",
+      "function": "xbot_visual.mobile.element.get_associated_elements",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Element.GetAssociatedElementsControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/元素操作/获取关联元素（mobile）.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Mobile.GetAssociatedElementsHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "session",
+          "label": "手机连接对象",
+          "required": true,
+          "tips": "",
+          "type": "xbot._mobile.session.DeviceSession",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的元素",
+          "type": "xbot._mobile.element.DeviceElement",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "associated_kind",
+          "label": "关联方式",
+          "required": true,
+          "default": "10:parent",
+          "defaultDisplay": "父元素",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "父元素",
+                "value": "parent"
+              },
+              {
+                "display": "子元素",
+                "value": "child"
+              },
+              {
+                "display": "相邻元素",
+                "value": "sibling"
+              }
+            ]
+          }
+        },
+        {
+          "name": "child_access_kind",
+          "label": "子元素获取方式",
+          "default": "10:all",
+          "defaultDisplay": "所有子元素",
+          "tips": "指定子元素的获取方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "所有子元素",
+                "value": "all"
+              },
+              {
+                "display": "指定位置的子元素",
+                "value": "index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "child_index",
+          "label": "子元素位置",
+          "default": "10:0",
+          "type": "int",
+          "tips": "在父元素中的索引位置，从0开始计数",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "sibling_direction",
+          "label": "相邻方向",
+          "default": "10:next",
+          "defaultDisplay": "下一个相邻元素",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "上一个相邻元素",
+                "value": "previous"
+              },
+              {
+                "display": "下一个相邻元素",
+                "value": "next"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:5",
+          "tips": "等待关联元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "mobile_element_result",
+          "label": "保存软件元素至",
+          "variableLabel": "软件元素",
+          "tips": "指定一个变量名称,该变量用于保存获取到的软件元素",
+          "name": "mobile_element_result",
+          "type": "xbot._mobile.element.DeviceElement"
+        }
+      ]
+    }
+  ]
+}

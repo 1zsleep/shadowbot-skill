@@ -1,0 +1,67 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "json.to_text",
+      "function": "xbot_visual.json.to_text",
+      "title": "Json转换成文本",
+      "description": "将Json对象转换成文本",
+      "comment": "将Json对象%json_obj%转换成文本，将结果保存到%text_instance%",
+      "icon": "Json_To_Text",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/json转换/转换成文本.html",
+      "inputs": [
+        {
+          "name": "json_obj",
+          "label": "Json对象",
+          "required": true,
+          "tips": "输入待转换成文本的Json对象",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "text_instance",
+          "label": "保存文本至",
+          "variableLabel": "Json转换后的文本",
+          "tips": "输入一个名字，用来保存Json对象转换成的文本",
+          "type": "str",
+          "name": "text_instance"
+        }
+      ]
+    },
+    {
+      "name": "json.to_json",
+      "function": "xbot_visual.json.to_json",
+      "title": "转换成Json对象",
+      "description": "这个指令用于将输入的文本转换成Json对象",
+      "comment": "将文本%text%转换成Json对象，将对象保存到%json_instance%",
+      "icon": "Json_To_Json",
+      "helpUrl": "language/zh-cn/指令文档/数据处理/json转换/转换成json对象.html",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "文本",
+          "required": true,
+          "tips": "输入待转换成Json对象的文本",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "json_instance",
+          "label": "保存Json对象至",
+          "variableLabel": "文本转换后的Json对象",
+          "tips": "输入一个名字，用来保存转换得到的Json对象",
+          "type": "any",
+          "name": "json_instance"
+        }
+      ]
+    }
+  ]
+}

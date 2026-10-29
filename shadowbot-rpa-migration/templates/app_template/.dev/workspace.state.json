@@ -1,0 +1,14 @@
+{
+  "openedFlows": [
+    "main"
+  ],
+  "activeBottomPanel": "元素库",
+  "activeFlow": "main",
+  "breakPoints": [
+    {
+      "FlowName": "main",
+      "Lines": null,
+      "BlockIds": []
+    }
+  ]
+}

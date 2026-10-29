@@ -1,0 +1,938 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "win32.element.expand_tree_and_select_node",
+      "title": "选中树节点(SAP)",
+      "keywords": "选中目标节点",
+      "description": "扩展树以显示目标节点，然后选中目标节点",
+      "comment": "在窗口%window%内，选中树%element%的节点%path%，并保存至%output%",
+      "icon": "Win32_Element_Expand_Tree_And_Select_Node",
+      "function": "xbot_visual.win32.element.expand_tree_and_select_node",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/选中树节点（sap）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.ExpandSapTreeControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.SapPathHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "text_path",
+          "label": "节点路径",
+          "tips": "填写目标节点的位置路径，如 SAP 菜单/会计核算/控制",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "output",
+          "label": "保存元素对象至",
+          "variableLabel": "元素对象",
+          "tips": "指定一个变量名称,该变量用于保存获取到的元素对象",
+          "name": "win_element",
+          "type": "xbot.win32.element.Win32Element"
+        }
+      ]
+    },
+    {
+      "name": "win32.element.click_toolbar_button",
+      "title": "点击工具栏按钮(SAP)",
+      "keywords": "点击工具栏按钮",
+      "description": "在工具栏中，点击目标按钮",
+      "comment": "在窗口%window%内，点击工具栏%element%的按钮%path%",
+      "icon": "Win32_Element_Click_Toolbar_Button",
+      "function": "xbot_visual.win32.element.click_toolbar_button",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/点击工具栏按钮（sap）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.ClickSapToolbarButtonControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.SapPathHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "path",
+          "label": "按钮名",
+          "tips": "填写按钮名，如：帮助   (F1)",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.element.get_table_row_count",
+      "title": "读取表格总行数(SAP)",
+      "description": "读取数据表格总行数",
+      "comment": "读取数据表格%element%的总行数，将结果保存到%row_count%",
+      "icon": "Win32_Element_Get_Table_Row_Count",
+      "function": "xbot_visual.win32.element.get_table_row_count",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/获取表格总行数（sap）.html",
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择数据表格 或者 单元格",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "row_count",
+          "label": "保存总行数至",
+          "variableLabel": "总行数",
+          "tips": "指定一个变量名称, 该变量用于保存获取到的总行数",
+          "name": "row_count",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "win32.element.get_table_column_count",
+      "title": "读取表格总列数(SAP)",
+      "description": "读取数据表格总列数",
+      "comment": "读取数据表格%element%的总列数，将结果保存到%column_count%",
+      "icon": "Win32_Element_Get_Table_Column_Count",
+      "function": "xbot_visual.win32.element.get_table_column_count",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/获取表格总列数（sap）.html",
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择数据表格 或者 单元格",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "column_count",
+          "label": "保存总列数至",
+          "variableLabel": "总列数",
+          "tips": "指定一个变量名称, 该变量用于保存获取到的总列数",
+          "name": "column_count",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "win32.element.wait_load_completed",
+      "title": "等待加载完成(SAP)",
+      "keywords": "等待SAP加载完成",
+      "description": "等待SAP加载完成",
+      "comment": "在窗口%window%内，等待%timeout%秒，将结果保存到%result%",
+      "icon": "Win32_Element_Wait_Load_Completed",
+      "function": "xbot_visual.win32.element.wait_load_completed",
+      "helpUrl": "",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.UpdateCommentHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "defaultDisplay": "根据操作目标自动匹配",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "超时时间(s)",
+          "required": true,
+          "default": "10:20",
+          "tips": "等待SAP加载完成的时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "等待结果",
+          "variableLabel": "字符串",
+          "tips": "指定一个变量名称,该变量用于保存SAP是否在指定时间内加载完成",
+          "name": "sap_wait_result",
+          "type": "bool",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.element.call_transaction",
+      "title": "启动事务(SAP)",
+      "keywords": "启动事务",
+      "description": "执行事务",
+      "comment": "在窗口%window%内，执行事务%tcode%",
+      "icon": "Win32_Element_Call_Transaction",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/执行事务（sap）.html",
+      "function": "xbot_visual.win32.element.call_transaction",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.UpdateCommentHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "defaultDisplay": "根据操作目标自动匹配",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tcode",
+          "label": "事务码",
+          "required": true,
+          "tips": "事务码",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.element.select_date_in_calendar",
+      "title": "选中日期(SAP)",
+      "keywords": "选中日期或日期范围",
+      "description": "选中日期或日期范围",
+      "comment": "",
+      "icon": "Win32_Element_Select_Date_In_Calendar",
+      "function": "xbot_visual.win32.element.select_date_in_calendar",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/选中日期（sap）.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.SelectDateInSapCalendarControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.SelectDateInSapCalendarHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "kind",
+          "label": "日期选择方式",
+          "required": true,
+          "default": "10:date",
+          "defaultDisplay": "日期选择方式",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "日期",
+                "value": "date"
+              },
+              {
+                "display": "日期范围",
+                "value": "range"
+              },
+              {
+                "display": "周",
+                "value": "week"
+              }
+            ]
+          }
+        },
+        {
+          "name": "date",
+          "label": "日期",
+          "required": false,
+          "tips": "字符串，格式：yyyy-mm-dd",
+          "type": "str",
+          "editor": {
+            "placeholder": "字符串，格式：yyyy-mm-dd",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "start_date",
+          "label": "起始日期",
+          "required": false,
+          "tips": "字符串，格式：yyyy-mm-dd",
+          "type": "str",
+          "editor": {
+            "placeholder": "字符串，格式：yyyy-mm-dd",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "end_date",
+          "label": "结束日期",
+          "required": false,
+          "tips": "字符串，格式：yyyy-mm-dd",
+          "type": "str",
+          "editor": {
+            "placeholder": "字符串，格式：yyyy-mm-dd",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "year",
+          "label": "年",
+          "required": false,
+          "tips": "第几年",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 1
+          }
+        },
+        {
+          "name": "week",
+          "label": "周",
+          "required": false,
+          "tips": "第几个完整周",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.element.read_status_bar",
+      "title": "获取状态栏信息(SAP)",
+      "keywords": "获取状态栏信息",
+      "description": "该指令读取状态栏的信息类型及文本",
+      "comment": "在窗口%window%内，读取状态栏的信息类型保存至%status_bar_type%，信息文本保存至%status_bar_text%",
+      "icon": "Win32_Element_Read_Status_Bar",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/读取状态栏信息（sap）.html",
+      "function": "xbot_visual.win32.element.read_status_bar",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.UpdateCommentHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "defaultDisplay": "根据操作目标自动匹配",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "status_bar_type",
+          "label": "保存信息类型至",
+          "variableLabel": "字符串",
+          "tips": "指定一个变量名称，该变量用于保存读取到的信息类型。S：成功，W：警告，E：错误，A：终止，I：信息",
+          "name": "status_bar_type",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "id": "status_bar_text",
+          "label": "保存信息内容至",
+          "variableLabel": "字符串",
+          "tips": "指定一个变量名称，该变量用于保存读取到的信息内容",
+          "name": "status_bar_text",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.element.select_menu_item",
+      "title": "选中菜单项(SAP)",
+      "keywords": "从菜单栏中选中菜单项",
+      "description": "从菜单栏中选中菜单项",
+      "comment": "在窗口%window%内，选中菜单项：%path%",
+      "icon": "Win32_Element_Select_Menu_Item",
+      "function": "xbot_visual.win32.element.select_menu_item",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.SelectMenuItemControl, ShadowBot.Shell.Development",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/选中菜单栏（sap）.html",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.SapPathHandler"
+        },
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.UpdateCommentHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "defaultDisplay": "根据操作目标自动匹配",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "path",
+          "label": "菜单项",
+          "tips": "填写菜单项的位置路径，如：菜单/用户菜单",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.element.get_table_cells",
+      "title": "读取表格内容(SAP)",
+      "icon": "Win32_Element_Get_Table_Cells",
+      "comment": "从SAP的表格中读取单元格（第%cell_row_num%行，第%cell_column_name%列）中的内容，将数据保存到%datatable%",
+      "description": "从SAP的表格中读取内容，支持矩形区域范围读取",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/读取表格内容（sap）.html",
+      "function": "xbot_visual.win32.element.get_table_cells",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Win32.ReadDataFromSapTableControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": " ShadowBot.Runtime.Development.Blockly.Handlers.Win32.ReadDataFromSapTableHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择要操作的桌面软件元素",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标元素存在的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "read_way",
+          "label": "读取方式",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "区域内容",
+                "value": "range"
+              },
+              {
+                "display": "行内容",
+                "value": "row"
+              },
+              {
+                "display": "列内容",
+                "value": "column"
+              },
+              {
+                "display": "全部内容",
+                "value": "all"
+              }
+            ]
+          }
+        },
+        {
+          "name": "need_header",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "勾选后，会在输出列中自动填充表列名",
+          "type": "bool",
+          "editor": {
+            "label": "是否需要表格列名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "cell_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "cell_column_name",
+          "label": "列号",
+          "required": false,
+          "tips": "列号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_column_name",
+          "label": "列号",
+          "required": false,
+          "tips": "列号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_column_name",
+          "label": "列号",
+          "required": false,
+          "tips": "列号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "row_row_num",
+          "label": "行号",
+          "required": false,
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_column_name",
+          "label": "列号",
+          "tips": "列号",
+          "type": "int",
+          "required": false,
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datatable",
+          "label": "保存SAP表格内容到",
+          "variableLabel": "SAP表格内容",
+          "tips": "指定一个变量名称,该变量用于保存SAP表格内容",
+          "type": "any",
+          "name": "datatable"
+        }
+      ]
+    },
+    {
+      "name": "win32.element.get_table_cell_by_rownum_and_columnnum",
+      "title": "获取单元格(sap)",
+      "description": "获取表格指定位置的单元格",
+      "comment": "获取数据表格%element%位于（第%row_num%行，第%column_num%列）处的单元格对象，将对象保存到%table_cell_element%",
+      "icon": "Win32_Element_Get_Table_Cell_By_Rownum_And_Columnnum",
+      "function": "xbot_visual.win32.element.get_table_cell_by_rownum_and_columnnum",
+      "helpUrl": "language/zh-cn/指令文档/桌面软件自动化/sap/获取单元格（sap）.html",
+      "inputs": [
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": true,
+          "default": "10:0",
+          "tips": "输入一个窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "autoFill": false,
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "根据操作目标自动匹配",
+                "value": "0"
+              }
+            ]
+          }
+        },
+        {
+          "name": "element",
+          "label": "操作目标",
+          "required": true,
+          "tips": "选择数据表格 或者 单元格",
+          "type": "xbot.win32.element.Win32Element",
+          "editor": {
+            "kind": "uitarget",
+            "selectorType": "simple"
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "required": true,
+          "tips": "单元格所在行的行号, 从1开始",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "单元格所在行的行号, 从1开始"
+          }
+        },
+        {
+          "name": "column_num",
+          "label": "列号",
+          "required": true,
+          "tips": "单元格所在的列的列号, 从1开始",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "单元格所在列的列号, 从1开始"
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "等待元素存在(s)",
+          "required": true,
+          "category": "advanced",
+          "default": "10:20",
+          "tips": "等待目标表格出现的超时时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "table_cell_element",
+          "label": "保存单元格元素至",
+          "variableLabel": "单元格元素",
+          "tips": "指定一个变量名称,该变量用于保存获取到的单元格元素",
+          "name": "table_cell_element",
+          "type": "xbot.win32.element.Win32Element"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1001 @@
+{
+  "types": [],
+  "blocks": [
+    {
+      "name": "programing.databook.foreach",
+      "statement": "workflow.for",
+      "title": "循环数据表格",
+      "description": "循环读取数据表格内容",
+      "comment": "循环数据表格，从第%start%行到第%stop%行，步长为%step%，将循环的行号保存到%loop_index%",
+      "icon": "",
+      "indent": "1",
+      "scope": "1",
+      "function": "xbot_visual.programing.databook.foreach",
+      "helpUrl": "language/zh-cn/指令文档/循环/循环数据表格内容.html",
+      "video": {
+        "time": "06:30"
+      },
+      "inputs": [
+        {
+          "name": "start",
+          "label": "起始行号",
+          "required": true,
+          "tips": "起始行号，从1开始，支持负数，-n表示倒数第n行",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "起始行号，从1开始，支持负数，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "stop",
+          "label": "结束行号",
+          "required": true,
+          "tips": "结束行号，从1开始，支持负数，-n表示倒数第n行",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "结束行号，从1开始，支持负数，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "step",
+          "label": "递增步长",
+          "required": true,
+          "default": "10:1",
+          "tips": null,
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_index",
+          "label": "循环索引位置",
+          "type": "int",
+          "name": "row_index"
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.active",
+      "title": "激活Sheet页",
+      "comment": "%mode%激活%workbook%中的Sheet页%value%",
+      "description": "根据Sheet页的名称或位置激活指定的Sheet页",
+      "icon": "Programing_Databook_Active",
+      "function": "xbot_visual.programing.databook.active",
+      "helpUrl": "",
+      "inputs": [
+        {
+          "name": "mode",
+          "label": "激活方式",
+          "required": true,
+          "default": "10:name",
+          "defaultDisplay": "根据Sheet页的名称",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据Sheet页的名称",
+                "value": "name"
+              },
+              {
+                "display": "根据Sheet页的位置",
+                "value": "index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "value",
+          "label": "Sheet页的名称/位置",
+          "required": true,
+          "tips": "填写要打开激活的Sheet页的名称或位置(从1开始)",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.create_sheet",
+      "title": "添加Sheet页",
+      "comment": "添加一个Sheet页，%create_way%，命名为%sheet_name%",
+      "description": "在数据表格面板中添加一个新的sheet页，可以指定在头部添加或尾部添加",
+      "icon": "Programing_Databook_Create_Sheet",
+      "function": "xbot_visual.programing.databook.create_sheet",
+      "helpUrl": "",
+      "inputs": [
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "required": true,
+          "tips": "请输入sheet页的名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "create_way",
+          "label": "添加方式",
+          "required": true,
+          "default": "10:first",
+          "defaultDisplay": "作为第一个sheet页",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "作为第一个sheet页",
+                "value": "first"
+              },
+              {
+                "display": "作为最后一个sheet页",
+                "value": "last"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.remove_row",
+      "title": "删除数据表格行",
+      "keywords": "删除行",
+      "comment": "删除数据表格中的第%index%行",
+      "description": "删除行",
+      "icon": "Programing_Databook_Remove_Row",
+      "function": "xbot_visual.programing.databook.remove_row",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/删除行.html",
+      "video": {
+        "time": "06:22"
+      },
+      "inputs": [
+        {
+          "name": "index",
+          "label": "行号",
+          "required": true,
+          "tips": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入行号，多行用1,2,3或1:3，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.remove_column",
+      "title": "删除数据表格列",
+      "keywords": "删除列",
+      "comment": "删除数据表格中的第%column_name%列",
+      "description": "删除列",
+      "icon": "Programing_Databook_Remove_Column",
+      "function": "xbot_visual.programing.databook.remove_column",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/删除列.html",
+      "video": {
+        "time": "06:22"
+      },
+      "inputs": [
+        {
+          "name": "column_name",
+          "label": "列号",
+          "required": true,
+          "tips": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列名（支持A或1），多列用A,B,C或A:C，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.remove_all_rows",
+      "title": "清空数据表格",
+      "comment": "删除数据表格中的所有数据",
+      "description": "清空数据表格",
+      "icon": "Programing_Databook_Remove_All_Rows",
+      "function": "xbot_visual.programing.databook.remove_all_rows",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/清空数据表格.html",
+      "video": {
+        "time": "00:32"
+      }
+    },
+    {
+      "name": "programing.databook.get_row_count",
+      "title": "读取数据表格总行数",
+      "comment": "读取数据表格总行数，将结果保存到%row_count%",
+      "description": "读取数据表格总行数",
+      "icon": "Programing_Databook_Get_Row_Count",
+      "function": "xbot_visual.programing.databook.get_row_count",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/读取数据表格总行数.html",
+      "video": {
+        "time": "01:43"
+      },
+      "outputs": [
+        {
+          "id": "row_count",
+          "label": "保存总行数至",
+          "variableLabel": "数据表格总行数",
+          "tips": "指定一个变量名称,该变量用于保存总行数",
+          "type": "int",
+          "name": "databook_row_count"
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.write_data_to_workbook",
+      "title": "写入内容至数据表格",
+      "icon": "Programing_Databook_Write_Data_To_Workbook",
+      "comment": "写入内容到数据表格",
+      "keywords": "写入内容",
+      "description": "在数据表格写入内容，支持追加、插入或覆盖",
+      "function": "xbot_visual.programing.databook.write_data_to_workbook",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/写入内容至数据表格.html",
+      "video": {
+        "time": "08:04"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.Databook.WriteDataToWorkBookControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.WriteDataToWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "write_range",
+          "label": "写入范围",
+          "required": true,
+          "default": "10:area",
+          "defaultDisplay": "区域",
+          "tips": "将数据写入到区域（包含单元格）、一行或一列",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "区域",
+                "value": "area"
+              },
+              {
+                "display": "行",
+                "value": "row"
+              },
+              {
+                "display": "列",
+                "value": "column"
+              }
+            ]
+          }
+        },
+        {
+          "name": "write_way",
+          "label": "写入方式",
+          "default": "10:append",
+          "defaultDisplay": "追加一行",
+          "tips": "提示",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "追加一行",
+                "value": "append"
+              },
+              {
+                "display": "插入一行",
+                "value": "insert"
+              },
+              {
+                "display": "覆盖一行",
+                "value": "override"
+              }
+            ]
+          }
+        },
+        {
+          "name": "write_column_way",
+          "label": "写入方式",
+          "default": "10:override",
+          "defaultDisplay": "覆盖一列",
+          "tips": "提示",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "追加一列",
+                "value": "append"
+              },
+              {
+                "display": "插入一列",
+                "value": "insert"
+              },
+              {
+                "display": "覆盖一列",
+                "value": "override"
+              }
+            ]
+          }
+        },
+        {
+          "name": "row_num",
+          "label": "行号",
+          "default": "10:1",
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列号",
+          "tips": "列",
+          "type": "str",
+          "editor": {
+            "placeholder": "A或1代表A列, 支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "begin_row_num",
+          "label": "起始行号",
+          "default": "10:1",
+          "category": "advanced",
+          "tips": "起始行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "输入行号，从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "begin_column_name",
+          "label": "起始列号",
+          "category": "advanced",
+          "default": "10:",
+          "tips": "起始列号",
+          "type": "str",
+          "editor": {
+            "placeholder": "输入列号，A或1代表A列，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "content",
+          "label": "写入内容",
+          "required": true,
+          "tips": "写入内容",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.read_data_from_workbook",
+      "title": "读取数据表格内容",
+      "icon": "Programing_Databook_Read_Data_From_Workbook",
+      "comment": "从数据表格中读取单元格（第%cell_row_num%行，第%cell_column_name%列）中的内容，将数据保存到%datatable%",
+      "description": "从数据表格中读取内容，支持矩形区域范围读取",
+      "function": "xbot_visual.programing.databook.read_data_from_workbook",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/读取数据表格内容.html",
+      "video": {
+        "time": "04:41"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.Databook.ReadDataFromWorkBookControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.ReadDataFromWorkBookHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "read_way",
+          "label": "读取方式",
+          "required": true,
+          "default": "10:cell",
+          "defaultDisplay": "单元格",
+          "tips": "",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "单元格",
+                "value": "cell"
+              },
+              {
+                "display": "区域内容",
+                "value": "range"
+              },
+              {
+                "display": "行内容",
+                "value": "row"
+              },
+              {
+                "display": "列内容",
+                "value": "column"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cell_row_num",
+          "label": "行号",
+          "required": false,
+          "default": "10:1",
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "cell_column_name",
+          "label": "列号",
+          "required": false,
+          "default": "10:",
+          "tips": "列号",
+          "type": "str",
+          "editor": {
+            "placeholder": "A或1代表A列, 支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_row_num",
+          "label": "行号",
+          "required": false,
+          "default": "10:1",
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_begin_column_name",
+          "label": "列号",
+          "default": "10:",
+          "required": false,
+          "tips": "列号",
+          "type": "str",
+          "editor": {
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_row_num",
+          "label": "行号",
+          "required": false,
+          "default": "10:1",
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "area_end_column_name",
+          "label": "列号",
+          "required": false,
+          "default": "10:",
+          "tips": "列号",
+          "type": "str",
+          "editor": {
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "row_row_num",
+          "label": "行号",
+          "required": false,
+          "default": "10:1",
+          "tips": "行号",
+          "type": "int",
+          "editor": {
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行",
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "get_display_text",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "获取单元格的值作为纯文本",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "has_header_row",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "区域第一行包含列名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "column_column_name",
+          "label": "列号",
+          "tips": "列号",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "placeholder": "A或1代表A列，从1开始，支持负数，-n表示倒数第n列",
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "datatable",
+          "label": "保存区域内容至",
+          "variableLabel": "数据表格内容",
+          "tips": "指定一个变量名称,该变量用于保存区域数据内容",
+          "type": "any",
+          "name": "datatable"
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.loop_data_from_workbook",
+      "statement": "excel.forin",
+      "indent": "1",
+      "scope": "1",
+      "isLoop": true,
+      "title": "循环数据表格内容",
+      "icon": "Programing_Databook_Loop_Data_From_Workbook",
+      "comment": "循环数据表格的内容，将每次循环的项保存到%loop_item%",
+      "description": "循环数据表格的内容，并保存循环项",
+      "function": "xbot_visual.programing.databook.loop_data_from_workbook_with_return_item_location",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/循环数据表格内容.html",
+      "video": {
+        "time": "06:30"
+      },
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.Databook.ExcelLoopControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.DataTableLoopHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "loop_way",
+          "label": "循环方式",
+          "required": true,
+          "default": "10:used_range",
+          "defaultDisplay": "循环已使用区域",
+          "tips": "循环数据表格的方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "循环区域",
+                "value": "loop_range"
+              },
+              {
+                "display": "循环行",
+                "value": "loop_row"
+              },
+              {
+                "display": "循环列",
+                "value": "loop_column"
+              },
+              {
+                "display": "循环已使用区域",
+                "value": "used_range"
+              }
+            ]
+          }
+        },
+        {
+          "name": "begin_row_num",
+          "label": "起始行号",
+          "default": "10:1",
+          "tips": "循环开始行号",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "end_row_num",
+          "label": "结束行号",
+          "default": "10:-1",
+          "tips": "循环结束行号",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "begin_column_name",
+          "label": "起始列号",
+          "required": false,
+          "default": "10:",
+          "tips": "循环开始列号",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "A或1代表A列, 支持负数，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "end_column_name",
+          "label": "结束列号",
+          "required": false,
+          "default": "10:",
+          "tips": "循环结束列号",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "has_header_row",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "区域第一行包含列名",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "range_begin_row_num",
+          "label": "行号",
+          "default": "10:1",
+          "tips": "循环开始行号",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "range_begin_column_name",
+          "label": "列号",
+          "default": "10:",
+          "required": false,
+          "tips": "循环起始列号",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "range_end_row_num",
+          "label": "行号",
+          "default": "10:-1",
+          "tips": "循环结束行号",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "从1开始，支持负数，-n表示倒数第n行"
+          }
+        },
+        {
+          "name": "range_end_column_name",
+          "label": "列号",
+          "default": "10:",
+          "required": false,
+          "tips": "循环结束列号",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "get_display_text",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "获取单元格的值作为纯文本",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "loop_item",
+          "label": "当前循环项保存至",
+          "variableLabel": "当前循环项数据对象",
+          "tips": "指定一个变量名称,该变量用于保存数据表格的当前循环项",
+          "type": "list<any>",
+          "name": "loop_datatable"
+        },
+        {
+          "id": "loop_item_rownum",
+          "label": "当前行号保存至",
+          "variableLabel": "当前循环项的行号",
+          "tips": "指定一个变量名称,该变量用于保存数据表格当前循环项的行号",
+          "type": "int",
+          "name": "loop_item_rownum"
+        },
+        {
+          "id": "loop_item_columnname",
+          "label": "当前列名保存至",
+          "variableLabel": "当前循环项的列名",
+          "tips": "指定一个变量名称,该变量用于保存数据表格当前循环项的列名",
+          "type": "str",
+          "name": "loop_item_columnname"
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.export_data",
+      "title": "数据表格导出",
+      "keywords": "保存数据表格;保存表格",
+      "comment": "导出数据表格到%folder_source%\\%file_name%，将文件路径保存到%file_path%",
+      "description": "将数据表格导出为文件",
+      "icon": "Programing_Databook_Export_Data",
+      "function": "xbot_visual.programing.databook.export_data",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/数据表格导出.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.Databook.ExportDataControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.DataTableExportHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "folder_source",
+          "label": "文件夹",
+          "required": true,
+          "default": "10:desktop",
+          "defaultDisplay": "桌面",
+          "tips": "选择保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "桌面",
+                "value": "desktop"
+              },
+              {
+                "display": "下载目录",
+                "value": "download"
+              },
+              {
+                "display": "临时目录",
+                "value": "tmp"
+              },
+              {
+                "display": "自定义目录",
+                "value": "custom"
+              }
+            ]
+          }
+        },
+        {
+          "name": "custom_folder_path",
+          "label": "文件夹路径",
+          "tips": "指定文件夹路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "file_name",
+          "label": "文件名称",
+          "required": true,
+          "default": "10:影刀数据表格.xlsx",
+          "tips": "指定文件名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "export_header",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "导出列头信息",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "file_path",
+          "label": "文件路径",
+          "variableLabel": "导出的文件路径",
+          "tips": "指定一个变量名称, 该变量用于保存导出文件的位置",
+          "type": "str",
+          "name": "file_path"
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.import_data",
+      "title": "数据表格导入",
+      "comment": "导入文件%file_path%的Sheet页%sheet_name%到数据表格",
+      "description": "导入数据到数据表格",
+      "icon": "Programing_Databook_Import_Data",
+      "function": "xbot_visual.programing.databook.import_data",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/数据表格导入.html",
+      "inputs": [
+        {
+          "name": "file_path",
+          "label": "文件路径",
+          "required": true,
+          "tips": "填写要导入的文件路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "Excel 工作簿|*.xlsx;*.xls;*.xlsm;*.csv"
+            }
+          }
+        },
+        {
+          "name": "sheet_name",
+          "label": "Sheet页名称",
+          "required": true,
+          "default": "10:Sheet1",
+          "tips": "指定要导入的sheet页名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "import_header",
+          "label": "",
+          "required": true,
+          "default": "13:False",
+          "tips": "",
+          "type": "bool",
+          "editor": {
+            "label": "使用第一行数据作为列头",
+            "kind": "checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.get_column_info",
+      "title": "获取列信息",
+      "comment": "从数据表格中%access_kind%，将结果保存到%databook_column_info%",
+      "description": "获取列名称、列描述",
+      "icon": "Programing_Databook_Get_Column_Info",
+      "function": "xbot_visual.programing.databook.get_column_info",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Programing.Databook.GetColumnInfoControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.Programing.GetColumnInfoHandler"
+        }
+      ],
+      "helpUrl": "language/zh-cn/指令文档/数据表格/获取列信息.html",
+      "inputs": [
+        {
+          "name": "access_kind",
+          "label": "获取方式",
+          "required": true,
+          "default": "10:get_column_desc_by_name",
+          "defaultDisplay": "根据列名称获取列描述",
+          "tips": "获取方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "根据列名称获取列描述",
+                "value": "get_column_desc_by_name"
+              },
+              {
+                "display": "根据列描述获取列名称",
+                "value": "get_column_name_by_desc"
+              }
+            ]
+          }
+        },
+        {
+          "name": "column_name",
+          "label": "列名称",
+          "tips": "支持负数，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "column_desc",
+          "label": "列描述",
+          "tips": "列描述",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "databook_column_info",
+          "label": "保存列信息至",
+          "variableLabel": "数据表格列信息",
+          "tips": "指定一个变量名称,该变量用于保存数据表格列信息",
+          "type": "str",
+          "name": "databook_column_info"
+        }
+      ]
+    },
+    {
+      "name": "programing.databook.set_column_info",
+      "title": "设置列信息",
+      "comment": "将内容%column_desc%设置到数据表格列%column_name%",
+      "description": "为数据表格列设置描述信息",
+      "icon": "Programing_Databook_Set_Column_Info",
+      "function": "xbot_visual.programing.databook.set_column_info",
+      "helpUrl": "language/zh-cn/指令文档/数据表格/设置列信息.html",
+      "inputs": [
+        {
+          "name": "column_name",
+          "label": "列名称",
+          "tips": "支持负数，-n表示倒数第n列",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "placeholder": "A或1代表A列，支持负数，-n表示倒数第n列"
+          }
+        },
+        {
+          "name": "column_desc",
+          "label": "列描述",
+          "tips": "列描述",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    }
+  ]
+}

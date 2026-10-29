@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# 构建产物 (exe 不入库, 用 assistant.spec 在本机构建)
+build/
+dist/
+*.manifest
+
+# 运行时数据
+*.db
+*.log
+logs/
+
+# 编辑器
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# 单技能自带指令库副本 (默认走 ../shadowbot-block-to-clipboard/scripts/shadowbot_blocklib)
+shadowbot-rpa-migration/vendor/

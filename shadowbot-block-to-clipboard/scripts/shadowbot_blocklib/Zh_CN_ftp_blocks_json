@@ -1,0 +1,684 @@
+{
+  "types": [
+    {
+      "name": "xbot.ftp.FTPBase",
+      "localName": "FTP对象"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "ftp.connection",
+      "function": "xbot_visual.ftp.connection",
+      "title": "建立FTP连接",
+      "description": "创建一个文件服务器连接，并返回连接对象",
+      "comment": "使用输入密码为用户%user_name%建立%server_kind%（%server_ip%:%server_port%）的连接，将连接对象保存到%ftp_instance%",
+      "icon": "Ftp_Connection",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/建立ftp连接.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.FTP.ConnectionControl, ShadowBot.Shell.Development",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.FTP.ConnectionHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "server_kind",
+          "label": "服务器类型",
+          "tips": "要创建的连接对象的服务器类型",
+          "type": "str",
+          "required": true,
+          "default": "10:FTP",
+          "defaultDisplay": "FTP服务器",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "FTP服务器",
+                "value": "FTP"
+              },
+              {
+                "display": "SFTP服务器",
+                "value": "SFTP"
+              }
+            ]
+          }
+        },
+        {
+          "name": "server_ip",
+          "label": "FTP服务器地址",
+          "required": true,
+          "tips": "FTP服务器地址",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "server_port",
+          "label": "FTP服务器端口",
+          "required": true,
+          "tips": "FTP服务器端口",
+          "default": "10:21",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        },
+        {
+          "name": "is_active",
+          "label": "",
+          "default": "13:False",
+          "tips": "通常更推荐使用ftp被动模式。但如果FTP服务器配置为仅支持主动模式或者服务端网络配置不允许被动模式的数据连接，此时客户端就需要使用主动模式。",
+          "type": "bool",
+          "editor": {
+            "kind": "checkbox",
+            "label": "启用主动模式"
+          }
+        },
+        {
+          "name": "ispasv",
+          "label": "",
+          "default": "13:False",
+          "tips": "当客户端和服务端之间存在连接安全问题如存在防火墙导致服务端无法主动创建数据传输连接时可以启用主动连接模式",
+          "type": "bool",
+          "editor": {
+            "kind": "checkbox",
+            "label": "启用主动连接"
+          }
+        },
+        {
+          "name": "login_kind",
+          "label": "连接方式",
+          "tips": "连接远程服务器的方式,默认使用密码连接",
+          "type": "str",
+          "required": true,
+          "default": "10:usePassword",
+          "defaultDisplay": "密码连接",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "密码连接",
+                "value": "usePassword"
+              },
+              {
+                "display": "密钥连接",
+                "value": "usePrivateKey"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_name",
+          "label": "用户名",
+          "required": true,
+          "tips": "用于连接到FTP服务器的用户名称",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "password",
+          "label": "密码",
+          "tips": "用于连接到FTP服务器的用户密码",
+          "type": "str",
+          "default": "10:",
+          "editor": {
+            "kind": "password"
+          }
+        },
+        {
+          "name": "private_key",
+          "label": "密钥文件",
+          "tips": "用于连接到服务器的密钥文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "timeout",
+          "label": "连接超时时间",
+          "tips": "FTP连接的超时时间,默认超时时间10s,设置为-1表示一直等待,0表示不等待",
+          "required": true,
+          "category": "advanced",
+          "default": "10:10",
+          "type": "int",
+          "editor": {
+            "kind": "textbox",
+            "minValue": 0
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "ftp_instance",
+          "label": "保存FTP连接对象至",
+          "tips": "指定一个变量名称,该变量用于保存FTP连接对象",
+          "name": "ftp_instance",
+          "type": "xbot.ftp.FTPBase"
+        }
+      ]
+    },
+    {
+      "name": "ftp.disconnection",
+      "function": "xbot_visual.ftp.disconnection",
+      "title": "断开FTP连接",
+      "description": "断开当前FTP连接",
+      "comment": "断开当前%ftp%连接",
+      "icon": "Ftp_Disconnection",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/断开ftp连接.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要断开连接的FTP对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.get_ftp_files",
+      "function": "xbot_visual.ftp.get_ftp_files",
+      "title": "获取全部文件",
+      "description": "获取FTP服务端当前路径下的全部文件和子文件夹",
+      "comment": "获取FTP连接%ftp%中当前工作路径下的全部文件和子文件夹，将结果保存到%files_result%",
+      "icon": "Ftp_Get_Ftp_Files",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/获取全部文件.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.FTP.GetFTPFilesBlockHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要获取文件和文件夹信息的FTP连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "files_result",
+          "label": "保存返回的文件至",
+          "tips": "指定一个变量名称,该变量用于保存返回的文件和子文件数据",
+          "name": "files_result",
+          "type": "dict"
+        }
+      ]
+    },
+    {
+      "name": "ftp.change_workspace_path",
+      "function": "xbot_visual.ftp.change_workspace_path",
+      "title": "切换工作路径",
+      "description": "切换FTP连接的工作路径",
+      "comment": "切换FTP连接%ftp%中的工作路径到%new_remote_path%",
+      "icon": "Ftp_Change_Workspace_Path",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/切换工作路径.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要切换工作路径的ftp连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "new_remote_path",
+          "label": "工作路径",
+          "tips": "需要切换到的新工作路径",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.download_files",
+      "function": "xbot_visual.ftp.download_files",
+      "title": "文件下载(ftp)",
+      "keywords": "下载文件;FTP下载",
+      "description": "将FTP远程服务器指定路径下的一个或多个文件下载到本地指定的路径下",
+      "comment": "将FTP连接%ftp%中的文件%download_files%下载到本地路径%local_path%中，如果本地存在同名文件则%download_mode%",
+      "icon": "Ftp_Download_Files",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/文件下载.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "要下载的文件的ftp连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "download_files",
+          "label": "远程文件(文件列表)",
+          "tips": "需要下载的文件或文件列表",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "local_path",
+          "label": "本地路径",
+          "tips": "远程文件将要下载到本地的路径",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "download_mode",
+          "label": "下载模式",
+          "tips": "需要下载的文件在本地文件夹存在时的处理方式",
+          "type": "str",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "放弃下载",
+                "value": "notdownload"
+              },
+              {
+                "display": "自动生成文件名",
+                "value": "uniquename"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.download_folders",
+      "function": "xbot_visual.ftp.download_folders",
+      "title": "文件夹下载(ftp)",
+      "keywords": "下载文件夹;FTP下载",
+      "description": "将FTP远程服务器指定路径下的一个或多个文件夹下载到本地指定的路径下",
+      "comment": "将FTP连接%ftp%中的文件夹%remote_paths%下载到本地路径%local_path%中",
+      "icon": "Ftp_Download_Folders",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/文件夹下载.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "要下载的文件夹的ftp连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "remote_paths",
+          "label": "远程文件夹(文件夹列表)",
+          "tips": "下载文件夹的远程路径,不填则默认下载当前工作路径",
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "local_path",
+          "label": "本地路径",
+          "tips": "文件夹下载保存的本地路径",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "download_mode",
+          "label": "子文件存在时",
+          "tips": "需要下载的文件夹中子文件在本地文件夹存在时的处理方式",
+          "type": "str",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "放弃下载",
+                "value": "notdownload"
+              },
+              {
+                "display": "自动生成文件名",
+                "value": "uniquename"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.uoload_files",
+      "function": "xbot_visual.ftp.upload_files",
+      "title": "文件上传(ftp)",
+      "keywords": "上传文件;FTP上传",
+      "description": "将本地一个或多个文件上传到FTP远程服务的指定路径下",
+      "comment": "将本地文件%local_files%上传到FTP连接%ftp%中指定的路径%remote_path%下，如果远程路径下存在同名文件则%upload_mode%",
+      "icon": "Ftp_Uoload_Files",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/文件上传.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "文件要上传到的FTP连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "remote_path",
+          "label": "远程路径",
+          "tips": "文件要上传到远程服务器的路径,不填则默认上传到当前工作路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "local_files",
+          "label": "本地文件(文件列表)",
+          "tips": "要上传的本地文件或文件列表",
+          "required": true,
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile",
+              "filter": "所有文件 (.*)|*.*"
+            }
+          }
+        },
+        {
+          "name": "upload_mode",
+          "label": "上传模式",
+          "tips": "要上传的文件在远程服务器上存在时的处理方式",
+          "type": "str",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "放弃上传",
+                "value": "notupload"
+              },
+              {
+                "display": "自动生成文件名",
+                "value": "uniquename"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.upload_folders",
+      "function": "xbot_visual.ftp.upload_folders",
+      "title": "文件夹上传(ftp)",
+      "keywords": "上传文件夹;FTP上传",
+      "description": "将本地一个或多个文件夹上传到FTP远程服务的指定路径下",
+      "comment": "将本地文件夹%local_folders%上传到FTP连接%ftp%中",
+      "icon": "Ftp_Upload_Folders",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/文件夹上传.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "文件夹要上传到的FTP连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "remote_path",
+          "label": "远程路径",
+          "tips": "本地文件夹需要上传到的远程路径,不填则默认上传到当前工作路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "local_folders",
+          "label": "本地文件夹(文件夹列表)",
+          "tips": "需要上传到远程服务器的本地的一个或多个文件夹",
+          "required": true,
+          "type": "any",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "upload_mode",
+          "label": "子文件存在时",
+          "tips": "要上传的文件夹中子文件在远程服务器上存在时的处理方式",
+          "type": "str",
+          "required": true,
+          "default": "10:overwrite",
+          "defaultDisplay": "覆盖",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "覆盖",
+                "value": "overwrite"
+              },
+              {
+                "display": "放弃上传",
+                "value": "notupload"
+              },
+              {
+                "display": "自动生成文件名",
+                "value": "uniquename"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.delete_files",
+      "function": "xbot_visual.ftp.delete_files",
+      "title": "文件删除(ftp)",
+      "keywords": "删除文件",
+      "description": "删除远程路径指定的一个或多个文件",
+      "comment": "删除FTP连接%ftp%中的文件%remote_files%",
+      "icon": "Ftp_Delete_Files",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/文件删除.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要删除文件的FTP远程连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "remote_files",
+          "label": "删除的文件(文件列表)",
+          "tips": "需要删除的远程文件名称",
+          "required": true,
+          "type": "any",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.rename_file",
+      "function": "xbot_visual.ftp.rename_file",
+      "title": "文件重命名(ftp)",
+      "description": "重命名远程服务器的文件",
+      "comment": "将FTP连接%ftp%中的文件%remote_file%重命名为%new_name%",
+      "icon": "Ftp_Rename_File",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/文件重命名.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要重命名文件的FTP远程连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "remote_file",
+          "label": "远程文件",
+          "tips": "需要重命名的远程文件",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "new_name",
+          "label": "新名称",
+          "tips": "远程文件重命名后的名称",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.creat_directory",
+      "function": "xbot_visual.ftp.creat_directory",
+      "title": "创建文件夹(ftp)",
+      "description": "在远程服务器上创建文件夹",
+      "comment": "在FTP连接%ftp%中创建文件夹%new_remote_path%",
+      "icon": "Ftp_Creat_Directory",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/创建文件夹.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要创建文件夹的FTP连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "new_remote_path",
+          "label": "新文件夹",
+          "tips": "需要创建的文件夹名称",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ftp.delete_folder",
+      "function": "xbot_visual.ftp.delete_folder",
+      "title": "删除文件夹(ftp)",
+      "description": "删除远程服务器上的文件夹",
+      "comment": "删除FTP连接%ftp%中的文件夹%remote_path%",
+      "icon": "Ftp_Delete_Folder",
+      "helpUrl": "language/zh-cn/指令文档/其他/ftp/删除文件夹.html",
+      "inputs": [
+        {
+          "name": "ftp",
+          "label": "FTP连接对象",
+          "tips": "需要删除文件夹的FTP连接对象",
+          "required": true,
+          "type": "xbot.ftp.FTPBase",
+          "editor": {
+            "useVariableOptions": true,
+            "kind": "select"
+          }
+        },
+        {
+          "name": "remote_path",
+          "label": "远程文件夹",
+          "tips": "需要删除的文件夹名称,不填则默认删除当前工作路径",
+          "required": true,
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    }
+  ]
+}

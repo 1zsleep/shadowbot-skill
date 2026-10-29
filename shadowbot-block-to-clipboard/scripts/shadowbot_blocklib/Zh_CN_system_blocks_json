@@ -1,0 +1,747 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual.system.LaunchResult",
+      "localName": "应用启动信息",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "pid",
+          "type": "int",
+          "label": "进程唯一标识码"
+        },
+        {
+          "name": "main_window_handle",
+          "type": "int",
+          "label": "主窗口句柄"
+        },
+        {
+          "name": "exit_code",
+          "type": "int",
+          "label": "退出码"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "system.run_application",
+      "function": "xbot_visual.system.run_application",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.RunApplicationControl, ShadowBot.Shell.Development",
+      "title": "启动程序",
+      "description": "这个指令用于执行一个程序或者打开一个文件",
+      "comment": "运行应用或者打开文件，路径为%application_path%",
+      "icon": "System_Run_Application",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/启动程序.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.SystemOperation.RunApplicationHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "application_path",
+          "label": "应用路径",
+          "required": true,
+          "tips": "打开一个程序或者文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile"
+            }
+          }
+        },
+        {
+          "name": "command_line_arguments",
+          "label": "命令行参数",
+          "required": false,
+          "tips": "程序执行的额外参数",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "working_folder",
+          "label": "工作目录",
+          "required": false,
+          "tips": "进程中命令的工作目录",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "after_application_launch",
+          "label": "在应用启动之后",
+          "required": true,
+          "default": "10:continue",
+          "defaultDisplay": "继续执行下一条指令",
+          "tips": "选择是否继续执行指令,或者等待程序执行结束、文件关闭",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "继续执行下一条指令",
+                "value": "continue"
+              },
+              {
+                "display": "等待应用执行完成",
+                "value": "wait_to_complete"
+              }
+            ]
+          }
+        },
+        {
+          "name": "is_wait_not_more_than",
+          "label": "",
+          "required": false,
+          "default": "13:False",
+          "tips": "如果不勾选,表示无限等待",
+          "type": "bool",
+          "editor": {
+            "label": "等待时间不超过",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "wait_time",
+          "label": "等待时间",
+          "required": false,
+          "default": "10:10",
+          "tips": "等待程序执行结束或者文件关闭的最长时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "process_id",
+          "label": "保存进程id至",
+          "variableLabel": "进程Id",
+          "tips": "输入一个名称作为保存进程ID,其类型是整数",
+          "type": "int",
+          "name": "process_id"
+        },
+        {
+          "id": "exit_code",
+          "label": "保存退出码至",
+          "variableLabel": "退出码",
+          "tips": "输入一个名称作为保存应用退出码, 其类型是整数，-1表示非正常退出",
+          "type": "int",
+          "name": "exit_code"
+        }
+      ]
+    },
+    {
+      "name": "system.run_dos_command",
+      "function": "xbot_visual.system.run_dos_command",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.RunDosCommandControl, ShadowBot.Shell.Development",
+      "title": "运行DOS命令",
+      "description": "这个指令用于执行DOS命令并返回结果",
+      "comment": "运行DOS命令%dos_command%，将执行结果保存到%output_info%，将错误信息保存到%err_info%，将退出代码保存到%exit_code%",
+      "icon": "System_Run_Dos_Command",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/运行dos命令.html",
+      "inputs": [
+        {
+          "name": "dos_command",
+          "label": "DOS命令",
+          "required": false,
+          "tips": "输入DOS命令字符串",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile"
+            }
+          }
+        },
+        {
+          "name": "working_folder",
+          "label": "工作目录",
+          "required": false,
+          "tips": "进程中命令的工作目录",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "encoding",
+          "label": "编码格式",
+          "required": false,
+          "tips": "设置命令行的文本格式",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "output_info",
+          "label": "保存执行结果至",
+          "variableLabel": "DOS执行结果",
+          "tips": "输入一个名称作为保存DOS命令执行结果",
+          "type": "str",
+          "name": "output_info"
+        },
+        {
+          "id": "err_info",
+          "label": "保存错误信息至",
+          "variableLabel": "DOS错误信息",
+          "tips": "输入一个名称作为保存错误信息",
+          "type": "str",
+          "name": "err_info"
+        },
+        {
+          "id": "exit_code",
+          "label": "保存退出代码至",
+          "variableLabel": "DOS退出代码",
+          "tips": "输入一个名称作为保存退出代码,其类型是整数",
+          "type": "int",
+          "name": "exit_code"
+        }
+      ]
+    },
+    {
+      "name": "system.terminal_process",
+      "function": "xbot_visual.system.terminal_process",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.TerminalProcessControl, ShadowBot.Shell.Development",
+      "title": "终止程序",
+      "description": "这个指令用于终止一个程序",
+      "comment": "终止程序",
+      "icon": "System_Terminal_Process",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/终止程序.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.SystemOperation.TerminalProcessHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "terminal_way",
+          "label": "终止方式",
+          "required": true,
+          "default": "10:id",
+          "defaultDisplay": "进程Id",
+          "tips": "指定通过进程Id或者进程名称来终止进程",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "进程Id",
+                "value": "id"
+              },
+              {
+                "display": "进程名称",
+                "value": "name"
+              }
+            ]
+          }
+        },
+        {
+          "name": "process_id",
+          "label": "进程Id",
+          "required": false,
+          "tips": "输入你想要终止的进程的Id号",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "process_name",
+          "label": "进程名称",
+          "required": false,
+          "tips": "输入你想要终止的进程的名称,如xxx.exe,如果有多个同名的进程将会全部被关闭",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "system.take_screenshot",
+      "icon": "System_Take_Screenshot",
+      "description": "对屏幕或者窗口截图，保存到剪切板或者文件",
+      "comment": "从%image_source%截屏，将图像保存到%save_to%",
+      "title": "截屏",
+      "keywords": "截图",
+      "function": "xbot_visual.system.take_screenshot",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/截屏.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.SystemOperation.TakeScreenshotHandler"
+        }
+      ],
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.TakeScreenshotControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "image_source",
+          "label": "截屏来源",
+          "required": true,
+          "default": "10:screen",
+          "defaultDisplay": "屏幕",
+          "tips": "选择一个截屏来源",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "屏幕",
+                "value": "screen"
+              },
+              {
+                "display": "窗口对象",
+                "value": "window"
+              },
+              {
+                "display": "当前激活窗口",
+                "value": "foreground_window"
+              },
+              {
+                "display": "动态选择",
+                "value": "dynamic_select"
+              }
+            ]
+          }
+        },
+        {
+          "name": "window",
+          "label": "窗口对象",
+          "required": false,
+          "tips": "请选择窗口对象",
+          "type": "xbot.win32.window.Win32Window",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "image_region",
+          "label": "提取区域",
+          "default": "10:all_region",
+          "defaultDisplay": "提取区域",
+          "tips": "选择图片提取区域",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all_region"
+              },
+              {
+                "display": "指定部分区域",
+                "value": "sub_region"
+              }
+            ]
+          }
+        },
+        {
+          "name": "region_x1",
+          "label": "X1",
+          "tips": "图片左上角X值",
+          "type": "int",
+          "default": "10:0",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y1",
+          "label": "Y1",
+          "tips": "图片左上角Y值",
+          "type": "int",
+          "default": "10:0",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_x2",
+          "label": "X2",
+          "tips": "图片右下角X值",
+          "type": "int",
+          "default": "10:0",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "region_y2",
+          "label": "Y2",
+          "tips": "图片右下角Y值",
+          "type": "int",
+          "default": "10:0",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "save_to",
+          "label": "保存截屏至",
+          "required": true,
+          "default": "10:clipboard",
+          "defaultDisplay": "剪切板",
+          "tips": "选择一个保存当前截屏的方法",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "剪切板",
+                "value": "clipboard"
+              },
+              {
+                "display": "文件",
+                "value": "file"
+              }
+            ]
+          }
+        },
+        {
+          "name": "image_path",
+          "label": "图片路径",
+          "required": false,
+          "tips": "请选择图片保存路径",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SaveFile",
+              "filter": "图片(*.jpg;*.bmp;*.png)|*.jpg;*.bmp;*.png"
+            }
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "is_user_cancel",
+          "label": "用户是否取消截图",
+          "variableLabel": "截图操作是否取消",
+          "tips": "输入一个名称作为保存用户是否取消了截图",
+          "type": "bool",
+          "name": "is_user_cancel"
+        }
+      ]
+    },
+    {
+      "name": "win32.set_ime",
+      "icon": "Win32_Set_Ime",
+      "description": "设置当前激活窗口的输入法",
+      "comment": "设置当前激活窗口的输入法为%lang%",
+      "title": "设置输入法",
+      "function": "xbot_visual.win32.set_ime",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/输入法/设置输入法.html",
+      "inputs": [
+        {
+          "name": "lang",
+          "label": "切换到",
+          "required": true,
+          "default": "10:english",
+          "defaultDisplay": "英文输入法",
+          "tips": "选择一个输入法",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "英文输入法",
+                "value": "english"
+              },
+              {
+                "display": "中文输入法",
+                "value": "chinese"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "win32.get_ime",
+      "icon": "Win32_Get_Ime",
+      "description": "获取当前激活窗口的输入法的中英文输入状态",
+      "comment": "获取当前激活窗口的输入法的中英文输入状态，将结果保存到%lang_name%",
+      "title": "获取输入法",
+      "function": "xbot_visual.win32.get_ime",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/输入法/获取输入法.html",
+      "inputs": [],
+      "outputs": [
+        {
+          "id": "lang_name",
+          "label": "将输入法名称保存至",
+          "variableLabel": "输入法名称",
+          "tips": "输入一个名称用来保存输入法名称",
+          "type": "str",
+          "name": "lang_name"
+        }
+      ]
+    },
+    {
+      "name": "system.open_screen_saver",
+      "icon": "System_Open_Screen_Saver",
+      "description": "可在保护屏幕信息不被窥视的状态下执行指令，并可展示自定义的文字提示",
+      "comment": "唤起屏幕保护，在屏保上显示文字%default_text%",
+      "title": "唤起屏幕保护",
+      "keywords": "屏保",
+      "function": "xbot_visual.system.open_screen_saver",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/屏幕保护/唤起屏幕保护.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.CreateScreenSaverControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "settings",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "default_text",
+          "label": "提示文字",
+          "default": "10:影刀机器人正在工作中，请勿操作此电脑",
+          "tips": "设置屏保显示文字",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "system.append_screen_saver_text",
+      "title": "设置屏保提示",
+      "icon": "System_Append_Screen_Saver_Text",
+      "description": "设置显示在屏幕保护上的提示文字",
+      "comment": "在屏保上显示自定义提示内容%text%",
+      "function": "xbot_visual.system.append_screen_saver_text",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/屏幕保护/设置屏保提示.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.SetScreenSaverTextControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "text",
+          "label": "屏保提示",
+          "required": true,
+          "tips": "设置屏保显示文字",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "settings",
+          "label": "提示内容",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    },
+    {
+      "name": "system.clear_screen_saver_text",
+      "title": "清空屏保提示",
+      "icon": "System_Clear_Screen_Saver_Text",
+      "description": "清空屏保上显示的提示",
+      "comment": "清空屏保上显示的提示",
+      "function": "xbot_visual.system.clear_screen_saver_text",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/屏幕保护/清空屏保提示.html"
+    },
+    {
+      "name": "system.close_screen_saver",
+      "title": "关闭屏幕保护",
+      "keywords": "屏保",
+      "icon": "System_Close_Screen_Saver",
+      "description": "关闭已唤起的屏保",
+      "comment": "关闭已唤起的屏保",
+      "function": "xbot_visual.system.close_screen_saver",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/屏幕保护/关闭屏幕保护.html"
+    },
+    {
+      "name": "system.run_or_open",
+      "function": "xbot_visual.system.run_or_open",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.SystemOperation.RunOrOpenControl, ShadowBot.Shell.Development",
+      "title": "运行或打开",
+      "keywords": "启动;运行;执行;程序;软件",
+      "description": "运行软件、打开文件、打开文件夹、打开网址、执行系统命令等",
+      "comment": "运行或打开%application_path%，将执行结果保存到%process_info%",
+      "icon": "System_Run_Or_Open",
+      "helpUrl": "language/zh-cn/指令文档/操作系统/运行或打开.html",
+      "handlers": [
+        {
+          "name": "ShadowBot.Runtime.Development.Blockly.Handlers.SystemOperation.RunOrOpenHandler"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "application_path",
+          "label": "路径或命令",
+          "required": true,
+          "tips": "打开一个程序或者文件",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "OpenFile"
+            }
+          }
+        },
+        {
+          "name": "command_line_arguments",
+          "label": "参数(可选)",
+          "required": false,
+          "tips": "程序执行的额外参数",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "working_folder",
+          "label": "工作目录(可选)",
+          "required": false,
+          "tips": "进程中命令的工作目录",
+          "category": "advanced",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "SelectFolder"
+            }
+          }
+        },
+        {
+          "name": "after_application_launch",
+          "label": "在指令执行之后",
+          "required": true,
+          "default": "10:continue",
+          "defaultDisplay": "继续执行下一条指令",
+          "tips": "选择是否继续执行指令,或者等待程序执行结束、文件关闭",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "继续执行下一条指令",
+                "value": "continue"
+              },
+              {
+                "display": "等待主窗口出现",
+                "value": "wait_to_mainwindow"
+              },
+              {
+                "display": "等待应用执行完成",
+                "value": "wait_to_complete"
+              }
+            ]
+          }
+        },
+        {
+          "name": "is_waitexit_not_more_than",
+          "label": "",
+          "default": "13:False",
+          "tips": "如果不勾选, 表示无限等待",
+          "type": "bool",
+          "editor": {
+            "label": "等待时间不超过",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout_for_exit",
+          "label": "等待时间",
+          "default": "10:10",
+          "tips": "等待程序执行结束或者文件关闭的最长时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "is_waithwnd_not_more_than",
+          "label": "",
+          "default": "13:False",
+          "tips": "如果不勾选, 表示无限等待",
+          "type": "bool",
+          "editor": {
+            "label": "等待时间不超过",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "timeout_for_hwnd",
+          "label": "等待时间",
+          "default": "10:3",
+          "tips": "等待主窗口出现的最长时间",
+          "type": "int",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "start_as_admin",
+          "label": "",
+          "default": "13:False",
+          "tips": "是否以管理员身份运行",
+          "category": "advanced",
+          "type": "bool",
+          "editor": {
+            "label": "以管理员身份运行",
+            "kind": "checkbox"
+          }
+        },
+        {
+          "name": "window_style",
+          "label": "窗口风格",
+          "default": "10:normal",
+          "defaultDisplay": "普通",
+          "tips": "指定新窗口应如何显示：普通、最小化、最大化",
+          "type": "str",
+          "category": "advanced",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "普通",
+                "value": "normal"
+              },
+              {
+                "display": "最小化",
+                "value": "minimized"
+              },
+              {
+                "display": "最大化",
+                "value": "maximized"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "process_info",
+          "label": "保存执行结果至",
+          "variableLabel": "执行结果",
+          "tips": "输入一个名称，用于保存执行结果",
+          "type": "xbot_visual.system.LaunchResult",
+          "name": "process_info"
+        }
+      ]
+    }
+  ]
+}

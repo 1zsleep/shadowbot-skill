@@ -1,0 +1,4 @@
+# 一律不做行尾转换: 影刀应用模板 (templates/app_template/**) 与
+# shadowbot_blocklib 的 JSON 要求字节级一致, 换行被改写会导致
+# md5/sigstore 校验失败、指令库重新生成后 diff 满屏。
+* -text

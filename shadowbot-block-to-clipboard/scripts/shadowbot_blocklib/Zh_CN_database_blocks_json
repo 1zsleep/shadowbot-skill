@@ -1,0 +1,250 @@
+{
+  "types": [
+    {
+      "name": "xbot.database",
+      "localName": "数据库连接",
+      "pythonName": "xbot.ado.Database",
+      "props": []
+    }
+  ],
+  "blocks": [
+    {
+      "name": "database.connect",
+      "icon": "Database_Connect",
+      "description": "使用数据库连接字符串连接到数据库",
+      "comment": "使用%conn_str%数据库连接字符串创建数据库连接对象，并保存到%database%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Database.ConnectControl, ShadowBot.Shell.Development",
+      "title": "连接数据库",
+      "helpUrl": "language/zh-cn/指令文档/其他/数据库/连接数据库.html",
+      "function": "xbot_visual.database.connect",
+      "inputs": [
+        {
+          "name": "conn_str",
+          "label": "连接字符串",
+          "required": true,
+          "tips": "输入数据库连接字符串",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "Custom"
+            }
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "database",
+          "label": "保存数据库连接对象至",
+          "variableLabel": "数据库连接",
+          "tips": "指定一个变量名称，该变量用于存储数据库连接对象",
+          "type": "xbot.database",
+          "name": "database"
+        }
+      ]
+    },
+    {
+      "name": "database.close",
+      "icon": "Database_Close",
+      "description": "关闭数据库",
+      "comment": "关闭数据库连接%database%",
+      "title": "关闭数据库",
+      "helpUrl": "language/zh-cn/指令文档/其他/数据库/关闭数据库.html",
+      "function": "xbot_visual.database.close",
+      "inputs": [
+        {
+          "name": "database",
+          "label": "数据库连接对象",
+          "required": true,
+          "tips": "输入数据库连接对象",
+          "type": "xbot.database",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "database.exec",
+      "icon": "Database_Exec",
+      "description": "在指定数据库中，执行Insert、Update、Delete、Select等SQL语句",
+      "comment": "在%database%中执行SQL：%sql%，结果保存到%recordset%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Database.ExecControl, ShadowBot.Shell.Development",
+      "title": "执行SQL语句",
+      "keywords": "查询;修改;删除;插入;Insert;Update;Delete;Select",
+      "helpUrl": "language/zh-cn/指令文档/其他/数据库/查询数据库.html",
+      "function": "xbot_visual.database.exec",
+      "inputs": [
+        {
+          "name": "connect_way",
+          "label": "连接方式",
+          "required": true,
+          "default": "10:database",
+          "defaultDisplay": "数据库连接对象",
+          "tips": "选择一个数据库连接方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数据库连接对象",
+                "value": "database"
+              },
+              {
+                "display": "数据库连接字符串",
+                "value": "conn_str"
+              }
+            ]
+          }
+        },
+        {
+          "name": "database",
+          "label": "数据库连接对象",
+          "required": false,
+          "tips": "选择数据库连接对象",
+          "type": "xbot.database",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "conn_str",
+          "label": "数据库连接字符串",
+          "required": false,
+          "tips": "请输入数据库连接字符串",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "Custom"
+            }
+          }
+        },
+        {
+          "name": "sql",
+          "label": "数据库查询语句",
+          "required": true,
+          "tips": "请输入数据库查询语句",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit"
+          }
+        },
+        {
+          "name": "timeout_seconds",
+          "label": "超时秒数",
+          "required": true,
+          "tips": "请输入数据库查询超时秒数",
+          "type": "int",
+          "default": "10:30",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "result_toString",
+          "label": "",
+          "category": "advanced",
+          "type": "bool",
+          "tips": "若勾选，查询结果的每一个值会转成文本格式输出，否则保留原格式输出",
+          "default": "13:True",
+          "editor": {
+            "label": "以文本格式输出",
+            "kind": "checkbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "recordset",
+          "label": "保存查询结果至",
+          "variableLabel": "数据库查询结果",
+          "tips": "指定一个变量名称，该变量用于存储数据库查询结果",
+          "type": "list<list<str>>",
+          "name": "recordset"
+        }
+      ]
+    },
+    {
+      "name": "database.batch_insert",
+      "icon": "Database_Batch_Insert",
+      "description": "将多组数据一次性插入到一张表中，结果为全部正确或全部失败",
+      "comment": "在%database%中执行批量插入%sql%",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Database.BatchInsertControl, ShadowBot.Shell.Development",
+      "title": "数据库批量插入数据",
+      "helpUrl": "language/zh-cn/指令文档/其他/数据库/数据库批量插入数据.html",
+      "function": "xbot_visual.database.batch_insert",
+      "inputs": [
+        {
+          "name": "connect_way",
+          "label": "连接方式",
+          "required": true,
+          "default": "10:database",
+          "defaultDisplay": "数据库连接对象",
+          "tips": "选择一个数据库连接方式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "数据库连接对象",
+                "value": "database"
+              },
+              {
+                "display": "数据库连接字符串",
+                "value": "conn_str"
+              }
+            ]
+          }
+        },
+        {
+          "name": "database",
+          "label": "数据库连接对象",
+          "required": false,
+          "tips": "选择数据库连接对象",
+          "type": "xbot.database",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true
+          }
+        },
+        {
+          "name": "conn_str",
+          "label": "数据库连接字符串",
+          "required": false,
+          "tips": "请输入数据库连接字符串",
+          "type": "str",
+          "editor": {
+            "kind": "textbox",
+            "dialog": {
+              "type": "Custom"
+            }
+          }
+        },
+        {
+          "name": "sql",
+          "label": "数据库插入语句",
+          "required": true,
+          "tips": "请输入数据库插入语句",
+          "type": "str",
+          "editor": {
+            "kind": "memoedit",
+            "placeholder": "例：INSERT INTO `test` 或 INSERT INTO `test` (`id`, `name`)"
+          }
+        },
+        {
+          "name": "data",
+          "label": "待插入数据",
+          "required": true,
+          "tips": "请输入需要批量插入的数据，格式为二维列表",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ]
+    }
+  ]
+}

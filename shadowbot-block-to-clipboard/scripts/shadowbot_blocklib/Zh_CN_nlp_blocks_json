@@ -1,0 +1,410 @@
+{
+  "types": [
+    {
+      "name": "xbot_visual_ocr_lexical_words",
+      "localName": "文本分词",
+      "python": "xbot_visual._core.xbot_visual_ocr_lexical_words",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "words",
+          "type": "list<str>",
+          "label": "词汇集"
+        },
+        {
+          "name": "raw_data",
+          "type": "any",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_lexical_item",
+      "localName": "实体属性对象",
+      "python": "xbot_visual._core.xbot_visual_ocr_lexical_item",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "word",
+          "type": "str",
+          "label": "词汇"
+        },
+        {
+          "name": "type",
+          "type": "str",
+          "label": "实体类型"
+        },
+        {
+          "name": "pos",
+          "type": "str",
+          "label": "词性"
+        }
+      ]
+    },
+    {
+      "name": "list<xbot_visual_ocr_lexical_item>",
+      "localName": "实体属性对象列表",
+      "base": "list",
+      "listItemType": "xbot_visual_ocr_lexical_item"
+    },
+    {
+      "name": "xbot_visual_ocr_lexical_detail",
+      "localName": "实体抽取结果",
+      "pythonName": "xbot_visual._core.xbot_visual_ocr_lexical_detail",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "words",
+          "type": "list<xbot_visual_ocr_lexical_item>",
+          "label": "属性集"
+        },
+        {
+          "name": "raw_data",
+          "type": "any",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_sentiment",
+      "localName": "情感分析结果",
+      "python": "xbot_visual._core.xbot_visual_ocr_sentiment",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "sentiment",
+          "type": "str",
+          "label": "分类结果"
+        },
+        {
+          "name": "positive",
+          "type": "float",
+          "label": "积极类别的概率"
+        },
+        {
+          "name": "negative",
+          "type": "float",
+          "label": "消极类别的概率"
+        },
+        {
+          "name": "raw_data",
+          "type": "any",
+          "label": "原始数据"
+        }
+      ]
+    },
+    {
+      "name": "xbot_visual_ocr_similarity",
+      "localName": "相似度分析结果",
+      "python": "xbot_visual._core.xbot_visual_ocr_similarity",
+      "isTrivialType": true,
+      "props": [
+        {
+          "name": "score",
+          "type": "float",
+          "label": "相似度"
+        },
+        {
+          "name": "raw_data",
+          "type": "any",
+          "label": "原始数据"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "nlp.lexical_analysis",
+      "icon": "Nlp_Lexical_Analysis",
+      "description": "将连续的自然语言文本切分成具有语义合理性和完整性的词汇列表",
+      "comment": "使用%ai_engine%AI引擎对文本%text%进行分词，将分词结果保存到%lexer_result%",
+      "title": "文本分词",
+      "function": "xbot_visual.nlp.lexical_analysis",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/自然语言处理nlp/文本分词.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Nlp.LexicalAnalysisControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "default": "10:shadowbot",
+          "defaultDisplay": "{{ProductName}}",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "文本",
+          "required": true,
+          "tips": "输入需要进行分词的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "flag",
+          "label": "分析模式",
+          "default": "10:common",
+          "defaultDisplay": "通用识别",
+          "tips": "选择一种识别模式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "通用模式",
+                "value": "common"
+              },
+              {
+                "display": "高精度模式",
+                "value": "accurate"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "lexer_result",
+          "label": "分词结果保存至",
+          "variableLabel": "文本分词结果",
+          "tips": "指定一个变量名称，该变量用于存储文本分词结果",
+          "type": "xbot_visual_ocr_lexical_words",
+          "name": "lexer_result"
+        }
+      ]
+    },
+    {
+      "name": "nlp.lexical_analysis_include_location",
+      "icon": "Nlp_Lexical_Analysis_Include_Location",
+      "description": "从目标文本中，识别出实体词汇，比如人名、地名、机构名等",
+      "comment": "使用%ai_engine%AI引擎对文本%text%进行实体抽取，将抽取结果保存到%lexer_deatil_result%",
+      "title": "实体抽取",
+      "function": "xbot_visual.nlp.lexical_analysis_include_location",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/自然语言处理nlp/实体抽取.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Nlp.LexicalAnalysisIncludeLocationControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "default": "10:shadowbot",
+          "defaultDisplay": "{{ProductName}}",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "文本",
+          "required": true,
+          "tips": "输入需要进行实体抽取的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "flag",
+          "label": "分析模式",
+          "default": "10:common",
+          "defaultDisplay": "通用识别",
+          "tips": "选择一种识别模式",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "通用模式",
+                "value": "common"
+              },
+              {
+                "display": "高精度模式",
+                "value": "accurate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pump_type",
+          "label": "提取目标",
+          "default": "10:all",
+          "defaultDisplay": "全部",
+          "tips": "选择一种需要提取的实体类型",
+          "type": "str",
+          "editor": {
+            "kind": "select",
+            "options": [
+              {
+                "display": "全部",
+                "value": "all"
+              },
+              {
+                "display": "人名",
+                "value": "PER"
+              },
+              {
+                "display": "地名",
+                "value": "LOC"
+              },
+              {
+                "display": "机构团体名",
+                "value": "ORG"
+              },
+              {
+                "display": "时间",
+                "value": "TIME"
+              },
+              {
+                "display": "产品名",
+                "value": "PRODUCTION"
+              }
+            ]
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "lexer_deatil_result",
+          "label": "实体抽取结果保存至",
+          "variableLabel": "实体抽取结果",
+          "tips": "指定一个变量名称，该变量用于存储实体抽取结果",
+          "type": "xbot_visual_ocr_lexical_detail",
+          "name": "lexer_deatil_result"
+        }
+      ]
+    },
+    {
+      "name": "nlp.sentiment_analysis",
+      "icon": "Nlp_Sentiment_Analysis",
+      "description": "从文本中识别出用户的情感倾向，是积极还是消极，并且提供各自概率",
+      "comment": "使用%ai_engine%AI引擎，对文本%text%进行情感分析，将分析结果保存到%sentiment_result%",
+      "title": "情感倾向分析",
+      "function": "xbot_visual.nlp.sentiment_analysis",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/自然语言处理nlp/情感倾向分析.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Nlp.SentimentAnalysisControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "default": "10:shadowbot",
+          "defaultDisplay": "{{ProductName}}",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "label": "文本",
+          "required": true,
+          "tips": "输入需要进行情感分析的文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "sentiment_result",
+          "label": "情感分析结果保存至",
+          "variableLabel": "情感分析结果",
+          "tips": "指定一个变量名称，该变量用于存储情感分析结果",
+          "type": "xbot_visual_ocr_sentiment",
+          "name": "sentiment_result"
+        }
+      ]
+    },
+    {
+      "name": "nlp.text_similarity",
+      "icon": "Nlp_Text_Similarity",
+      "description": "分析两个短文本的相似度，相似度结果取值0～1，值越大说明相似度越高",
+      "comment": "使用%ai_engine%AI引擎比较文本1%src_text%与文本2%target_text%的相似性，将比较结果保存到%similarity_result%",
+      "title": "文本相似度分析",
+      "function": "xbot_visual.nlp.text_similarity",
+      "helpUrl": "language/zh-cn/指令文档/人工智能ai/自然语言处理nlp/文本相似度分析.html",
+      "settingsControl": "ShadowBot.Shell.Development.BlockSettings.Controls.Nlp.TextSimilarityControl, ShadowBot.Shell.Development",
+      "inputs": [
+        {
+          "name": "ai_engine",
+          "label": "AI引擎",
+          "default": "10:shadowbot",
+          "defaultDisplay": "{{ProductName}}",
+          "required": true,
+          "tips": "选择一个AI引擎",
+          "type": "xbot.ai.AIEngine",
+          "editor": {
+            "kind": "select",
+            "useVariableOptions": true,
+            "options": [
+              {
+                "display": "{{ProductName}}",
+                "value": "shadowbot"
+              }
+            ]
+          }
+        },
+        {
+          "name": "src_text",
+          "label": "文本1",
+          "required": true,
+          "tips": "需要与目标文本计算相似度的源文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        },
+        {
+          "name": "target_text",
+          "label": "文本2",
+          "required": true,
+          "tips": "需要与源文本计算相似度的目标文本",
+          "type": "str",
+          "editor": {
+            "kind": "textbox"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "similarity_result",
+          "label": "相似度结果保存至",
+          "variableLabel": "文本相似度分析结果",
+          "tips": "指定一个变量名称，该变量用于存储文本相似度分析结果",
+          "type": "xbot_visual_ocr_similarity",
+          "name": "similarity_result"
+        }
+      ]
+    }
+  ]
+}
